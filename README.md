@@ -1,1 +1,1 @@
-# QuickGrocer-Application
+# quickgrocer_application
