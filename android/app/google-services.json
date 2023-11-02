@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:644386846756:android:08f52fab85d4b1289300b1",
+        "mobilesdk_app_id": "1:644386846756:android:82626d61f47ed4099300b1",
         "android_client_info": {
-          "package_name": "com.jjjj.quickgrocer"
+          "package_name": "com.example.quickgrocer_application"
         }
       },
       "oauth_client": [],

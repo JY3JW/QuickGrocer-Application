@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/home/main_grocery_page.dart';
+import 'package:quickgrocer_application/home/testingDatabaseConnection.dart';
 import 'package:quickgrocer_application/utils/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() //async 
+{
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -19,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.mainPineColor),
         useMaterial3: true,
       ),
-      home: const MainGroceryPage(),
+      home: const UserDetailsPage(),
     );
   }
 }
