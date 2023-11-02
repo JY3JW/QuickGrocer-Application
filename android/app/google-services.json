@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644386846756",
+    "project_id": "appdev-a0da7",
+    "storage_bucket": "appdev-a0da7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644386846756:android:08f52fab85d4b1289300b1",
+        "android_client_info": {
+          "package_name": "com.jjjj.quickgrocer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBegHaS5cjmQ-JXuJzFZxjKzmMSDb4uaGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
