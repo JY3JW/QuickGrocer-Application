@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quickgrocer_application/home/main_grocery_page.dart';
-import 'package:quickgrocer_application/home/testingDatabaseConnection.dart';
-import 'package:quickgrocer_application/utils/colors.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,11 +22,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.mainPineColor),
-        useMaterial3: true,
-      ),
-      home: const UserDetailsPage(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      home: const WelcomeScreen(),
     );
   }
 }

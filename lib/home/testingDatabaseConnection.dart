@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:quickgrocer_application/utils/colors.dart';
+import 'package:quickgrocer_application/src/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -43,11 +43,25 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   }
 
   addUser() {
-    print('added');
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("users").doc(name);
+
+    Map<String, dynamic> users = {
+      "name": name,
+      "email": email,
+      "password": password,
+      "mobileNum": mobileNum,
+      "dob": dob
+    };
+
+    documentReference.set(users).whenComplete(() {
+      print("$name created");
+    });
   }
 
   readUser() {
-    print('read');
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("users").doc(name);
   }
 
   updateUser() {
