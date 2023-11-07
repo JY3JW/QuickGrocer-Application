@@ -4,23 +4,21 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 
 class LoginFooterWidget extends StatelessWidget {
-  const LoginFooterWidget({
-    super.key,
-  });
+  const LoginFooterWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("OR"),
+        const Text("OR"),
         const SizedBox(height: formHeight - 20.0,),
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
-              icon: Image(image: AssetImage(googleLogoImage), width: 20.0,),
+              icon: const Image(image: AssetImage(googleLogoImage), width: 20.0,),
               onPressed: () {}, 
-              label: Text(signInWithGoogle),
+              label: const Text(signInWithGoogle),
             ),
         ),
         const SizedBox(height: formHeight - 20.0,),

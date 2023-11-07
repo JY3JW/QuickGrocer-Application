@@ -5,7 +5,9 @@ const String welcomeSubtitle =
 
 // Login Screen Text
 const String loginTitle = "Welcome Back,";
-const String loginSubtitle = "Buy it ease, buy it right, but it fast.";
+const String loginSubtitle = "Buy it ease, buy it right, buy it fast.";
+const String signUpTitle = "Get On Board!";
+const String signUpSubtitle = "Create your profilr to start your Journey.";
 const String rememberMe = "Remember Me?";
 const String alreadyHaveAnAccount = "Already have an Account?";
 const String dontHaveAnAccount = "Don't have an Account?";

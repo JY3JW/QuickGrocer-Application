@@ -6,7 +6,7 @@ import 'package:quickgrocer_application/src/features/authentication/screens/logi
 import 'package:quickgrocer_application/src/utils/colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
       backgroundColor: isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(defaultSize),
+          padding: const EdgeInsets.all(defaultSize),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -36,17 +36,25 @@ class WelcomeScreen extends StatelessWidget {
                       textAlign: TextAlign.center),
                 ],
               ),
+              const SizedBox(height: formHeight - 20.0,),
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => const LoginScreen()),
                         );
-                        print("pushed");
                       },
-                      child: Text(login.toUpperCase()),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      child: Text(
+                        login.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10.0),

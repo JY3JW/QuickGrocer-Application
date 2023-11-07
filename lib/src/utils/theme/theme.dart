@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quickgrocer_application/src/utils/colors.dart';
 import 'package:quickgrocer_application/src/utils/theme/widget_themes/text_theme.dart';
 
@@ -8,7 +7,7 @@ class AppTheme {
 
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    primarySwatch: MaterialColor(0xFF234E1F, <int, Color>{
+    primarySwatch: const MaterialColor(0xFF234E1F, <int, Color>{
       50: Color(0x1A234E1F),
       100: Color(0x33234E1F),
       200: Color(0x4D234E1F),

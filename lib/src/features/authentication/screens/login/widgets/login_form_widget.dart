@@ -3,20 +3,18 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
-    super.key,
-  });
+  const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: formHeight - 10.0),
+        padding: const EdgeInsets.symmetric(vertical: formHeight - 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: email,
                   hintText: email,
@@ -24,7 +22,7 @@ class LoginForm extends StatelessWidget {
             ),
             const SizedBox(height: formHeight),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),
                   labelText: password,
                   hintText: password,
@@ -33,15 +31,16 @@ class LoginForm extends StatelessWidget {
                       onPressed: null,
                       icon: Icon(Icons.remove_red_eye_sharp))),
             ),
-            const SizedBox(height: formHeight),
+            const SizedBox(height: formHeight - 10.0),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {},
-                child: Text(forgetPassword),
+                child: const Text(forgetPassword),
               ),
             ),
             SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {},
                 child: Text(login.toUpperCase()),
