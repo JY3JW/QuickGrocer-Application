@@ -24,3 +24,12 @@ const String fullName = "Full Name";
 // password
 const String phoneNum = "Phone Number";
 const String dateOfBirth = "Date of Birth";
+
+// Forget Password Screen Text
+const String forgetPasswordTitle = "Forget Password";
+const String forgetPasswordSubtitle = "Select one of the options given below to reset your password.";
+const String resetViaEmail = "Reset via E-mail Verification";
+const String resetViaPhoneNum = "Reset via Phone Verification";
+const String emailVerification = "E-mail Verification";
+const String phoneVerification = "Phone Verification";
+const String next = "Next";

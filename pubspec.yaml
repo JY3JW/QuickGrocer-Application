@@ -38,10 +38,23 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
   google_fonts: ^6.1.0
+  flutter_native_splash: ^2.3.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_native_splash:
+  color: "#f7f6f1"
+  dark_color: "272727"
+  image: assets/images/splash_images/shopping_cart.png
+  image_dark: assets/images/splash_images/shopping_cart.png
+
+  android_12:
+    image: assets/images/splash_images/shopping_cart.png
+    icon_background_color: "#f7f6f1"
+    image_dark: assets/images/splash_images/shopping_cart.png
+    icon_background_color_dark: "272727"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
