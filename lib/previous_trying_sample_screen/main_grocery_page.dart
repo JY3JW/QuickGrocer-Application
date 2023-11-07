@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quickgrocer_application/src/utils/colors.dart';
+import 'package:quickgrocer_application/src/constants/colors.dart';
 
 class MainGroceryPage extends StatefulWidget {
   const MainGroceryPage({super.key});

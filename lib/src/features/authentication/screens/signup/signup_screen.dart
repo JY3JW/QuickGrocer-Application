@@ -3,7 +3,8 @@ import 'package:quickgrocer_application/src/common_widgets/form/form_header_widg
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
-import 'package:quickgrocer_application/src/utils/colors.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/signup/widgets/sign_up_footer_widget.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/signup/widgets/sign_up_form_widget.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -15,37 +16,15 @@ class SignUpScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
-            child: Column(
+            child: const Column(
               children: [
-                const FormHeaderWidget(
-                    image: welcomeScreenImage,
-                    title: signUpTitle,
-                    subTitle: signUpSubtitle),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: formHeight - 10.0),
-                  child: Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text("Full Name"),
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(
-                              Icons.person_outline_rounded,
-                              color: Colors.black,
-                            ),
-                            labelStyle: TextStyle(color: Colors.black),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 2.0, color: AppColors.mainPineColor),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                FormHeaderWidget(
+                  image: welcomeScreenImage,
+                  title: signUpTitle,
+                  subTitle: signUpSubtitle
                 ),
+                SignUpFormWidget(),
+                SignUpFooterWidget(),
               ],
             ),
           ),
