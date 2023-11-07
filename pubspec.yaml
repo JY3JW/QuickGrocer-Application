@@ -66,9 +66,9 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
-assets:
-  - assets/images/welcome_images/quickgrocer_logo.png
-  - assets/logo/google_logo.png
+  assets:
+    - assets/images/welcome_images/quickgrocer_logo.png
+    - assets/logo/google_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
