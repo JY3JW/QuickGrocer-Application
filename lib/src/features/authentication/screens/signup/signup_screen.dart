@@ -21,7 +21,10 @@ class SignUpScreen extends StatelessWidget {
                 FormHeaderWidget(
                   image: welcomeScreenImage,
                   title: signUpTitle,
-                  subTitle: signUpSubtitle
+                  subTitle: signUpSubtitle,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  heightBetween: 30.0,
+                  textAlign: TextAlign.center,
                 ),
                 SignUpFormWidget(),
                 SignUpFooterWidget(),

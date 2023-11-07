@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/forget_password/forget_password_mail/forget_password_mail.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/forget_password/forget_password_options/forget_password_btn_widget.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/forget_password/forget_password_phone/forget_password_phone.dart';
 
 class ForgetPasswordScreen {
   // static function can be accessed by class name
@@ -25,7 +27,13 @@ class ForgetPasswordScreen {
               btnIcon: Icons.mail_outline_rounded,
               title: email,
               subTitle: resetViaEmail,
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const ForgetPasswordMailScreen()),
+                );
+              },
             ),
             const SizedBox(
               height: 20.0,
@@ -34,7 +42,13 @@ class ForgetPasswordScreen {
               btnIcon: Icons.mobile_friendly_rounded,
               title: phoneNum,
               subTitle: resetViaPhoneNum,
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const ForgetPasswordPhoneScreen()),
+                );
+              },
             ),
           ],
         ),

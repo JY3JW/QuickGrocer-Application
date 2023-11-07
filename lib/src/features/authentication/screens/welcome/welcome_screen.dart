@@ -13,11 +13,9 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     var height = mediaQuery.size.height;
-    var brightness = mediaQuery.platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor,
+      backgroundColor: AppColors.mainPineColor,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(defaultSize),

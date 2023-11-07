@@ -17,12 +17,14 @@ class LoginScreen extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
             child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FormHeaderWidget(
                   image: welcomeScreenImage,
                   title: loginTitle,
                   subTitle: loginSubtitle,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  heightBetween: 30.0,
+                  textAlign: TextAlign.center,
                 ),
                 LoginForm(),
                 LoginFooterWidget(),

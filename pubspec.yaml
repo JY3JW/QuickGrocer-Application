@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^2.21.0
+  flutter_otp_text_field: ^1.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -46,15 +47,15 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#f7f6f1"
-  dark_color: "272727"
-  image: assets/images/splash_images/shopping_cart.png
-  image_dark: assets/images/splash_images/shopping_cart.png
+  dark_color: "#272727"
+  image: assets/images/splash_images/quickgrocer_splash_image.png
+  image_dark: assets/images/splash_images/quickgrocer_splash_image.png
 
   android_12:
-    image: assets/images/splash_images/shopping_cart.png
+    image: assets/images/splash_images/quickgrocer_splash_image.png
     icon_background_color: "#f7f6f1"
-    image_dark: assets/images/splash_images/shopping_cart.png
-    icon_background_color_dark: "272727"
+    image_dark: assets/images/splash_images/quickgrocer_splash_image.png
+    icon_background_color_dark: "#272727"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -82,6 +83,7 @@ flutter:
   assets:
     - assets/images/welcome_images/quickgrocer_logo.png
     - assets/logo/google_logo.png
+    - assets/images/reset_password_images/reset_password.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -27,9 +27,15 @@ const String dateOfBirth = "Date of Birth";
 
 // Forget Password Screen Text
 const String forgetPasswordTitle = "Forget Password";
-const String forgetPasswordSubtitle = "Select one of the options given below to reset your password.";
+const String forgetPasswordSubtitle =
+    "Select one of the options given below to reset your password.";
 const String resetViaEmail = "Reset via E-mail Verification";
 const String resetViaPhoneNum = "Reset via Phone Verification";
-const String emailVerification = "E-mail Verification";
-const String phoneVerification = "Phone Verification";
+const String emailVerification = "Enter your registered E-mail to receive OTP";
+const String phoneVerification = "Enter your registered Phone Number to receive OTP";
 const String next = "Next";
+
+// OTP Screen Text
+const String otpTitle = "CO\nDE";
+const String otpSubtitle = "verification";
+const String otpMessage = "Enter the verification code sent at";

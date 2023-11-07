@@ -5,8 +5,8 @@ import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/forget_password/forget_password_otp/otp_screen.dart';
 
-class ForgetPasswordMailScreen extends StatelessWidget {
-  const ForgetPasswordMailScreen({super.key});
+class ForgetPasswordPhoneScreen extends StatelessWidget {
+  const ForgetPasswordPhoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ForgetPasswordMailScreen extends StatelessWidget {
                 FormHeaderWidget(
                   image: resetPasswordImage,
                   title: forgetPasswordTitle,
-                  subTitle: emailVerification,
+                  subTitle: phoneVerification,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   heightBetween: 30.0,
                   textAlign: TextAlign.center,
@@ -32,8 +32,8 @@ class ForgetPasswordMailScreen extends StatelessWidget {
                     children:[
                       TextFormField(
                         decoration: InputDecoration(
-                          label: Text(email),
-                          hintText: email,
+                          label: Text(phoneNum),
+                          hintText: phoneNum,
                         ),
                       ),
                       const SizedBox(height: 20.0),

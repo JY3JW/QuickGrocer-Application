@@ -16,8 +16,8 @@ class AppTheme {
   );
 
   static ThemeData darkTheme = ThemeData(
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppColors.subPistachioColor, 
-              brightness: Brightness.dark),
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.subPistachioColor),
     textTheme: TTextTheme.darkTextTheme,
     //elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
     //outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
