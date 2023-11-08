@@ -8,7 +8,7 @@ class TOutlinedButtonTheme {
   static final lightOutlinedButtonTheme =
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
           side:  BorderSide(color: Colors.black),
@@ -19,7 +19,7 @@ class TOutlinedButtonTheme {
   static final darkOutlinedButtonTheme =
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           foregroundColor: Colors.black,
           backgroundColor: AppColors.subPistachioColor,
           side:  BorderSide(color: Colors.black),

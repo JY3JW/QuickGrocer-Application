@@ -35,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
                       textAlign: TextAlign.center),
                 ],
               ),
-              const SizedBox(height: formHeight - 20.0,),
+              const SizedBox(height: formHeight),
               Row(
                 children: [
                   Expanded(
