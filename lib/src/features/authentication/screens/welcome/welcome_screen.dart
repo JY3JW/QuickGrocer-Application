@@ -39,21 +39,13 @@ class WelcomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton(
+                    child: OutlinedButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => const LoginScreen()),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      child: Text(
-                        login.toUpperCase(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
+                      child: Text(login.toUpperCase(),),
                     ),
                   ),
                   const SizedBox(width: 10.0),

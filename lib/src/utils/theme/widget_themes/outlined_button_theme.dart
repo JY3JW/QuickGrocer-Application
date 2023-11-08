@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 
-class TElevatedButtonTheme {
-  TElevatedButtonTheme._();
+class TOutlinedButtonTheme {
+  TOutlinedButtonTheme._();
 
-  static final lightElevatedButtonTheme =
-      ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
+  static final lightOutlinedButtonTheme =
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(),
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.black,
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
           side:  BorderSide(color: Colors.black),
           padding: EdgeInsets.symmetric(vertical: buttonHeight),
         ),
       );
   
-  static final darkElevatedButtonTheme =
-      ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
+  static final darkOutlinedButtonTheme =
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(),
-          foregroundColor: AppColors.subPistachioColor,
-          backgroundColor: Colors.black,
+          foregroundColor: Colors.black,
+          backgroundColor: AppColors.subPistachioColor,
           side:  BorderSide(color: Colors.black),
           padding: EdgeInsets.symmetric(vertical: buttonHeight),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/utils/theme/widget_themes/elevated_button_theme.dart';
+import 'package:quickgrocer_application/src/utils/theme/widget_themes/outlined_button_theme.dart';
 import 'package:quickgrocer_application/src/utils/theme/widget_themes/text_field_theme.dart';
 import 'package:quickgrocer_application/src/utils/theme/widget_themes/text_theme.dart';
 
@@ -10,17 +12,16 @@ class AppTheme {
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSeed(seedColor: AppColors.mainPineColor),
     textTheme: TTextTheme.lightTextTheme,
-    //elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
-    //outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
+    outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
     inputDecorationTheme: TextFormFieldTheme.lightInputDecorationTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.subPistachioColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.subPistachioColor, brightness: Brightness.dark,),
     textTheme: TTextTheme.darkTextTheme,
-    //elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
-    //outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
+    outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: TextFormFieldTheme.darkInputDecorationTheme,
   );
 }
