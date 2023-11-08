@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAFauBrMUw8RbaXxx_inV_BgBC9_9d6aPk',
-    appId: '1:644386846756:web:29a5a0b554a54ae69300b1',
-    messagingSenderId: '644386846756',
-    projectId: 'appdev-a0da7',
-    authDomain: 'appdev-a0da7.firebaseapp.com',
-    storageBucket: 'appdev-a0da7.appspot.com',
-    measurementId: 'G-B41TLQ3G80',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBegHaS5cjmQ-JXuJzFZxjKzmMSDb4uaGI',
     appId: '1:644386846756:android:82626d61f47ed4099300b1',
     messagingSenderId: '644386846756',
     projectId: 'appdev-a0da7',
     storageBucket: 'appdev-a0da7.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCRVFuSOO_g6Dccu1CxWmbqx6sib8dcL5Y',
-    appId: '1:644386846756:ios:7436c3bab63aa0e09300b1',
-    messagingSenderId: '644386846756',
-    projectId: 'appdev-a0da7',
-    storageBucket: 'appdev-a0da7.appspot.com',
-    iosBundleId: 'com.example.quickgrocerApplication',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCRVFuSOO_g6Dccu1CxWmbqx6sib8dcL5Y',
-    appId: '1:644386846756:ios:1140df4937f80caf9300b1',
-    messagingSenderId: '644386846756',
-    projectId: 'appdev-a0da7',
-    storageBucket: 'appdev-a0da7.appspot.com',
-    iosBundleId: 'com.example.quickgrocerApplication.RunnerTests',
   );
 }

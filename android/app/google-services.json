@@ -12,7 +12,16 @@
           "package_name": "com.example.quickgrocer_application"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "644386846756-u8sdpejprf1hsgc8ff1035h0mbumn7kq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quickgrocer_application",
+            "certificate_hash": "4c428aaf7b6eda330cac5890e81689be14b1001d"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBegHaS5cjmQ-JXuJzFZxjKzmMSDb4uaGI"
