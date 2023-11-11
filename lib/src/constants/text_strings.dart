@@ -32,10 +32,16 @@ const String forgetPasswordSubtitle =
 const String resetViaEmail = "Reset via E-mail Verification";
 const String resetViaPhoneNum = "Reset via Phone Verification";
 const String emailVerification = "Enter your registered E-mail to receive OTP";
-const String phoneVerification = "Enter your registered Phone Number to receive OTP";
+const String phoneVerification =
+    "Enter your registered Phone Number to receive OTP";
 const String next = "Next";
 
 // OTP Screen Text
 const String otpTitle = "CO\nDE";
 const String otpSubtitle = "verification";
 const String otpMessage = "Enter the verification code sent at";
+
+// Profile Screen Text
+const String profile = "Profile";
+const String editProfile = "Edit Profile";
+const String logout = "Logout";
