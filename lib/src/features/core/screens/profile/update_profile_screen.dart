@@ -5,6 +5,8 @@ import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({super.key});
@@ -14,68 +16,142 @@ class UpdateProfileScreen extends StatelessWidget {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor =
         isDark ? AppColors.mainPineColor : AppColors.subPistachioColor;
+    var iconLineColor = isDark ? Colors.white : Colors.black;
+    final controller = Get.put(ProfileController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          profile,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(defaultSize),
-          child: Column(
-            children: [
-              SizedBox(
-                width: 120,
-                height: 120,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: const Image(image: AssetImage(profileImage))),
-              ),
-              const SizedBox(height: 20),
-              Text("username",
-                  style: Theme.of(context).textTheme.headlineMedium),
-              Text("email", style: Theme.of(context).textTheme.bodyMedium),
-              SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    onPressed: () => Get.to(() => const UpdateProfileScreen()),
-                    style: ElevatedButton.styleFrom(
-                      shape: StadiumBorder(),
-                    ),
-                    child: const Text(editProfile),
-                  )),
-              const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(height: 10),
-              ListTile(
-                onTap: () {},
-                leading: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: iconColor.withOpacity(0.1),
-                  ),
-                  child: Icon(LineAwesomeIcons.alternate_sign_out, color: iconColor),
-                ),
-                title: Text(logout,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.apply(color: Colors.red)),
-              )
-            ],
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(LineAwesomeIcons.angle_left)),
+          title: Text(
+            editProfile,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(defaultSize),
+            child: FutureBuilder(
+              future: controller.getUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    UserModel user = snapshot.data as UserModel;
+                      // Controllers
+                      final _email = TextEditingController(text: user.email);
+                      final _password = TextEditingController(text: user.password);
+                      final name = TextEditingController(text: user.fullName);
+                      final phone = TextEditingController(text: user.phoneNo);
+
+                    return Column(
+                      children: [
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: const Image(
+                                      image: AssetImage(profileImage))),
+                            ),
+                            Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                    width: 35,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: iconColor),
+                                    child: Icon(
+                                      LineAwesomeIcons.camera,
+                                      color: iconLineColor,
+                                      size: 20,
+                                    )))
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                        Form(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormField(
+                                controller: name,
+                                decoration: const InputDecoration(
+                                  label: Text(fullName),
+                                  prefixIcon: Icon(
+                                    Icons.person_outline_rounded,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: formHeight - 20.0),
+                              TextFormField(
+                                controller: _email,
+                                decoration: const InputDecoration(
+                                  label: Text(email),
+                                  prefixIcon: Icon(
+                                    Icons.email_outlined,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: formHeight - 20.0),
+                              TextFormField(
+                                controller: phone,
+                                decoration: const InputDecoration(
+                                  label: Text(phoneNum),
+                                  prefixIcon: Icon(
+                                    Icons.numbers,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: formHeight - 20.0),
+                              TextFormField(
+                                controller: _password,
+                                decoration: const InputDecoration(
+                                  label: Text(password),
+                                  prefixIcon: Icon(
+                                    Icons.fingerprint,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: formHeight),
+                              SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      final userData = UserModel(
+                                        email: _email.text.trim(),
+                                        password: _password.text.trim(),
+                                        phoneNo: phone.text.trim(),
+                                        fullName: name.text.trim(),
+                                      );
+
+                                      await controller.updateRecord(user);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                    ),
+                                    child: const Text(editProfile),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text(snapshot.error.toString()));
+                  } else {
+                    return const Center(child: Text("Something went wrong"));
+                  }
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
+        ));
   }
 }

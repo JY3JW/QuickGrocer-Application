@@ -10,8 +10,10 @@ class AuthenticationRepository extends GetxController {
   //Variables
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
+  var verificationId = ''.obs;
 
   @override
+  //Will be load when app launches this func will be called and set the firebaseUser state
   void onReady() {
     Future.delayed(const Duration(seconds: 6));
     firebaseUser = Rx<User?>(_auth.currentUser);
@@ -19,6 +21,7 @@ class AuthenticationRepository extends GetxController {
     ever(firebaseUser, _setInitialScreen);
   }
 
+  // Setting initial screen onLOAD
   _setInitialScreen(User? user) {
     //check whether user already logged in, if logged in direct to dashboard page, else direct to welcome page
     user == null
@@ -28,14 +31,34 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> phoneAuthentication(String phone) async {
     await _auth.verifyPhoneNumber(
-        phoneNumber: phone,
-        verificationCompleted: (credentials) {},
-        verificationFailed: (e) {},
-        codeSent: ((verificationId, forceResendingToken) {}),
-        codeAutoRetrievalTimeout: (verificationId) {});
+      phoneNumber: phone,
+      verificationCompleted: (credential) async {
+        await _auth.signInWithCredential(credential);
+      },
+      codeSent: (verificationId, forceResendingToken) {
+        this.verificationId.value = verificationId;
+      },
+      codeAutoRetrievalTimeout: (verificationId) {
+        this.verificationId.value = verificationId;
+      },
+      verificationFailed: (e) {
+        if (e.code == 'invalid-phone-number') {
+          Get.snackbar('Error', 'The provided phone number is not valid.');
+        } else {
+          Get.snackbar('Error', 'Something went wrong. try again.');
+        }
+      },
+    );
   }
 
-  Future<String?> createUserWithEmailAndPassword(
+  Future<bool> verifyOTP(String otp) async {
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: this.verificationId.value, smsCode: otp));
+    return credentials.user != null ? true : false;
+  }
+
+  Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(

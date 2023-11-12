@@ -16,6 +16,8 @@ class ProfileScreen extends StatelessWidget {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor =
         isDark ? AppColors.mainPineColor : AppColors.subPistachioColor;
+    var iconLineColor =
+        isDark ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,12 +39,25 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(defaultSize),
           child: Column(
             children: [
-              SizedBox(
-                width: 120,
-                height: 120,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: const Image(image: AssetImage(profileImage))),
+              Stack(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Image(image: AssetImage(profileImage))),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 35, height: 35,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: iconColor),
+                      child: Icon(LineAwesomeIcons.alternate_pencil, color: iconLineColor, size: 20,)
+                    )
+                  )
+                ],
               ),
               const SizedBox(height: 20),
               Text("username",
