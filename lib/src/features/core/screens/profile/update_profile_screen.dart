@@ -123,14 +123,14 @@ class UpdateProfileScreen extends StatelessWidget {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      final user = UserModel(
+                                      final userData = UserModel(
                                         email: _email.text.trim(),
                                         password: _password.text.trim(),
                                         phoneNo: phone.text.trim(),
                                         fullName: name.text.trim(),
                                       );
 
-                                      await controller.updateRecord(user);
+                                      await controller.updateRecord(userData);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),
