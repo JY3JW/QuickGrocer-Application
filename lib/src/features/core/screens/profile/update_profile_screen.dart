@@ -25,9 +25,10 @@ class UpdateProfileScreen extends StatelessWidget {
               onPressed: () => Get.back(),
               icon: const Icon(LineAwesomeIcons.angle_left)),
           title: Text(
-            editProfile,
-            style: Theme.of(context).textTheme.headlineMedium,
+            profile,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
+          backgroundColor: Colors.transparent, elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -122,7 +123,7 @@ class UpdateProfileScreen extends StatelessWidget {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      final userData = UserModel(
+                                      final user = UserModel(
                                         email: _email.text.trim(),
                                         password: _password.text.trim(),
                                         phoneNo: phone.text.trim(),
@@ -134,7 +135,7 @@ class UpdateProfileScreen extends StatelessWidget {
                                     style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),
                                     ),
-                                    child: const Text(editProfile),
+                                    child: const Text("Save Profile"),
                                   )),
                             ],
                           ),
