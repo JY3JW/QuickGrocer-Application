@@ -5,8 +5,6 @@ import 'package:quickgrocer_application/src/repository/authentication_repository
 class OTPController extends GetxController {
   static OTPController get instance => Get.find();
 
-//! "OTPController" not found. You need to call "Get.put(OTPController())" or "Get.lazyPut(()=>OTPController())""
-
   void verifyOTP(String otp) async {
     var isVerified = await AuthenticationRepository.instance.verifyOTP(otp);
     isVerified ? Get.offAll(const Dashboard()) : Get.back();

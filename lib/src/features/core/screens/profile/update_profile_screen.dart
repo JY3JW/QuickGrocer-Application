@@ -13,17 +13,13 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    var iconColor =
-        isDark ? AppColors.mainPineColor : AppColors.subPistachioColor;
-    var iconLineColor = isDark ? Colors.white : Colors.black;
     final controller = Get.put(ProfileController());
 
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
               onPressed: () => Get.back(),
-              icon: const Icon(LineAwesomeIcons.angle_left)),
+              icon: Icon(LineAwesomeIcons.angle_left, color: Colors.black)),
           title: Text(
             profile,
             style: Theme.of(context).textTheme.headlineSmall,
@@ -66,10 +62,10 @@ class UpdateProfileScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        color: iconColor),
+                                        color: AppColors.mainPineColor),
                                     child: Icon(
                                       LineAwesomeIcons.camera,
-                                      color: iconLineColor,
+                                      color: Colors.white,
                                       size: 20,
                                     )))
                           ],
@@ -111,11 +107,14 @@ class UpdateProfileScreen extends StatelessWidget {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: _password,
+                                obscureText: true,
                                 decoration: const InputDecoration(
                                   label: Text(password),
                                   prefixIcon: Icon(
                                     Icons.fingerprint,
                                   ),
+                                  suffixIcon: IconButton(
+                                    onPressed: null, icon: Icon(Icons.remove_red_eye_sharp)),
                                 ),
                               ),
                               const SizedBox(height: formHeight),
@@ -130,7 +129,7 @@ class UpdateProfileScreen extends StatelessWidget {
                                         fullName: name.text.trim(),
                                       );
 
-                                      await controller.updateRecord(userData);
+                                      await controller.updateRecord(userData, user.id);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),

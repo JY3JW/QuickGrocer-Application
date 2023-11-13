@@ -16,8 +16,8 @@ class SignUpController extends GetxController {
   final userRepo = Get.put(UserRepository());
 
   //Call this Function from Design and it will do the rest
-  void registerUser(String email, String password) {
-    AuthenticationRepository.instance
+  Future<String?> registerUser(String email, String password) {
+    return AuthenticationRepository.instance
         .createUserWithEmailAndPassword(email, password);
   }
 
@@ -26,14 +26,8 @@ class SignUpController extends GetxController {
     AuthenticationRepository.instance.phoneAuthentication(phone);
   }
 
-  void createEmailAuthentication(String email, String password) {
-    AuthenticationRepository.instance
-        .createUserWithEmailAndPassword(email, password);
-  }
-
   Future<void> createUser(UserModel user) async {
-    await userRepo.createUser(user);
-    phoneAuthentication(user.phoneNo);
-    createEmailAuthentication(user.email, user.password);
+    String? userID = await registerUser(user.email, user.password);
+    await userRepo.createUser(user, userID);
   }
 }

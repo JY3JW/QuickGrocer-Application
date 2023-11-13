@@ -23,7 +23,7 @@ class ProfileController extends GetxController {
   // Fetch List of user records
   Future<List<UserModel>> getAllUsers() async => await _userRepo.allUsers();
 
-  updateRecord(UserModel user) async {
-    await _userRepo.updateUserRecord(user);
+  updateRecord(UserModel user, String? userId) async {
+    await _userRepo.updateUserRecord(user, userId);
   }
 }

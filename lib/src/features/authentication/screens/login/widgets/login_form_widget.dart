@@ -25,17 +25,16 @@ class LoginForm extends StatelessWidget {
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: email,
-                  hintText: email,
-                  border: OutlineInputBorder()),
+                  hintText: email,),
             ),
             const SizedBox(height: formHeight),
             TextFormField(
               controller: controller.password,
+              obscureText: true,
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),
                   labelText: password,
                   hintText: password,
-                  border: OutlineInputBorder(),
                   suffixIcon: IconButton(
                       onPressed: null, icon: Icon(Icons.remove_red_eye_sharp))),
             ),
@@ -59,7 +58,7 @@ class LoginForm extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    LoginController.instance.loginUser(email, password);
+                    LoginController.instance.loginUser(controller.email.text.trim(), controller.password.text.trim());
                   }
                 },
                 child: Text(login.toUpperCase()),

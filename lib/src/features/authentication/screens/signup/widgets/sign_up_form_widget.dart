@@ -55,12 +55,14 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.password,
+              obscureText: true,
               decoration: const InputDecoration(
                 label: Text(password),
                 prefixIcon: Icon(
                   Icons.fingerprint,
                 ),
-              ),
+                suffixIcon: IconButton(
+                      onPressed: null, icon: Icon(Icons.remove_red_eye_sharp))),
             ),
             const SizedBox(height: formHeight - 10.0),
             SizedBox(
@@ -83,7 +85,6 @@ class SignUpFormWidget extends StatelessWidget {
                     phoneNo: controller.phone.text.trim(),
                   );
                   SignUpController.instance.createUser(user);
-                  Get.to(() => const OTPScreen());
                   }
                 },
                 child: Text(signup.toUpperCase()),

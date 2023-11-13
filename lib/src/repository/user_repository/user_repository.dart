@@ -8,10 +8,10 @@ class UserRepository extends GetxController {
 
   final _db = FirebaseFirestore.instance;
 
-  createUser(UserModel user) async {
+  createUser(UserModel user, String? uid) async {
     await _db
-        .collection("users")
-        .add(user.toJson())
+        .collection("users").doc(uid)
+        .set(user.toJson())
         .whenComplete(
           () => Get.snackbar("Success", "Your account has been created.",
               snackPosition: SnackPosition.BOTTOM,
@@ -43,7 +43,7 @@ class UserRepository extends GetxController {
     return userData;
   }
 
-  Future<void> updateUserRecord(UserModel user) async {
-    await _db.collection("users").doc(user.id).update(user.toJson());
+  Future<void> updateUserRecord(UserModel user, String? userId) async {
+    await _db.collection("users").doc(userId).update(user.toJson());
   }
 }

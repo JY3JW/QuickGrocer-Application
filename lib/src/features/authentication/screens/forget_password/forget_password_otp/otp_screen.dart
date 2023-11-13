@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/otp_controller.dart';
+import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 
 class OTPScreen extends StatelessWidget {
   const OTPScreen({super.key});
@@ -13,7 +15,7 @@ class OTPScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var otp;
     var otpController = Get.put(OTPController());
-    
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(defaultSize),

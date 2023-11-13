@@ -5,6 +5,8 @@ import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 
@@ -13,11 +15,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
+
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor =
         isDark ? AppColors.mainPineColor : AppColors.subPistachioColor;
-    var iconLineColor =
-        isDark ? Colors.white : Colors.black;
+    var iconLineColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
@@ -25,12 +28,11 @@ class ProfileScreen extends StatelessWidget {
           profile,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
-        backgroundColor: Colors.transparent, elevation: 0,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
         ],
       ),
@@ -49,20 +51,45 @@ class ProfileScreen extends StatelessWidget {
                         child: const Image(image: AssetImage(profileImage))),
                   ),
                   Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35, height: 35,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: iconColor),
-                      child: Icon(LineAwesomeIcons.alternate_pencil, color: iconLineColor, size: 20,)
-                    )
-                  )
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: iconColor),
+                          child: Icon(
+                            LineAwesomeIcons.alternate_pencil,
+                            color: iconLineColor,
+                            size: 20,
+                          )))
                 ],
               ),
               const SizedBox(height: 20),
-              Text("username",
-                  style: Theme.of(context).textTheme.headlineSmall),
-              Text("email", style: Theme.of(context).textTheme.bodyLarge),
+              Container (
+                child: FutureBuilder(
+                  future: controller.getUserData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        UserModel user = snapshot.data as UserModel;
+                        return Column(
+                          children: [
+                            Text(user.fullName,style: Theme.of(context).textTheme.headlineSmall),
+                            Text(user.email, style: Theme.of(context).textTheme.bodyLarge),],
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text(snapshot.error.toString()));
+                      } else {
+                        return const Center(child: Text("Something went wrong"));
+                      }
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }
+                ),
+              ),
               const SizedBox(height: 20),
               SizedBox(
                   width: 200,
@@ -81,11 +108,11 @@ class ProfileScreen extends StatelessWidget {
                   AuthenticationRepository.instance.logout();
                 },
                 leading: Container(
-                  width: 40,
-                  height: 40,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withOpacity(0.3),
                   ),
                   child: Icon(LineAwesomeIcons.alternate_sign_out,
                       color: iconColor),
@@ -93,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
                 title: Text(logout,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge
+                        .titleMedium
                         ?.apply(color: Colors.red)),
               )
             ],
