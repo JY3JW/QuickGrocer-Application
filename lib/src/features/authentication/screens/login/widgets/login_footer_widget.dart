@@ -24,7 +24,7 @@ class LoginFooterWidget extends StatelessWidget {
               icon: const Image(image: AssetImage(googleLogoImage), width: 20.0,),
               onPressed: () {
                 LoginController.instance.googleSignIn();
-              }, 
+              },
               label: const Text(signInWithGoogle),
             ),
         ),

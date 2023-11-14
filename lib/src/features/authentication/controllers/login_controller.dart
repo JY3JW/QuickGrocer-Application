@@ -10,39 +10,24 @@ class LoginController extends GetxController {
   final showPassword = false.obs;
   final email = TextEditingController();
   final password = TextEditingController();
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  var isPasswordHidden = true.obs;
-
-  // Loader
-  final isGoogleLoading = false.obs;
-  final isLoading = false.obs;
 
   // Email and Password Login
   Future<void> loginUser(String email, String password) async {
     try {
-      isLoading.value = true;
-      if (!loginFormKey.currentState!.validate()) {
-        isLoading.value = false;
-        return;
-      }
       final auth = AuthenticationRepository.instance;
       await auth.loginWithEmailAndPassword(email, password);
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      isLoading.value = false;
       Get.snackbar(ohSnap, e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 
   Future<void> googleSignIn() async {
     try {
-      isGoogleLoading.value = true;
       final auth = AuthenticationRepository.instance;
       await auth.signInWithGoogle();
-      isGoogleLoading.value = false;
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      isGoogleLoading.value = false;
       Get.showSnackbar(GetSnackBar(message: e.toString()));
     }
   }

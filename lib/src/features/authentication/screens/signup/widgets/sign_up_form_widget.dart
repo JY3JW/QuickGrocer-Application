@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/signup_controller.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 
 class SignUpFormWidget extends StatelessWidget {
- const SignUpFormWidget({super.key});
+  const SignUpFormWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +52,13 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.password,
-              obscureText: controller.isPasswordHidden.value,
+              obscureText: true,
               decoration: InputDecoration(
                   label: Text(password),
                   prefixIcon: Icon(
                     Icons.fingerprint,
                   ),
-                  suffixIcon: IconButton(
-                      icon: Icon (controller.isPasswordHidden.value
-                              ? LineAwesomeIcons.eye
-                              : LineAwesomeIcons.eye_slash
-                          ),
-                      onPressed: () {
-                          controller.isPasswordHidden.value = !controller.isPasswordHidden.value;
-                      })),
+              ),
             ),
             const SizedBox(height: formHeight - 10.0),
             SizedBox(

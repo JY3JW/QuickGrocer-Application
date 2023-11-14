@@ -8,21 +8,8 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
 
-class _UpdateProfileScreen extends StatefulWidget {
-  const _UpdateProfileScreen({super.key});
-
-  @override
-  State<_UpdateProfileScreen> createState() => UpdateProfileScreen();
-}
-
-class UpdateProfileScreen extends State<_UpdateProfileScreen> {
-  bool passwordVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-    passwordVisible = true;
-  }
+class UpdateProfileScreen extends StatelessWidget {
+  const UpdateProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +107,12 @@ class UpdateProfileScreen extends State<_UpdateProfileScreen> {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: _password,
-                                obscureText: passwordVisible,
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   label: Text(password),
-                                  prefixIcon: IconButton(
-                                    icon: Icon (passwordVisible
-                                            ? LineAwesomeIcons.eye
-                                            : LineAwesomeIcons.eye_slash
-                                        ),
-                                    onPressed: () {
-                                        setState(() {
-                                          passwordVisible = !passwordVisible;
-                                        });
-                                    }),
+                                  prefixIcon: Icon(
+                                    Icons.fingerprint,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: formHeight),

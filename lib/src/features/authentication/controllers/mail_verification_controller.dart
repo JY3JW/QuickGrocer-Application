@@ -30,7 +30,7 @@ class MailVerificationController extends GetxController {
     _timer = Timer.periodic(Duration(seconds: 3), (timer) {
       FirebaseAuth.instance.currentUser?.reload();
       final user = FirebaseAuth.instance.currentUser;
-      if (user!.emailVerified) {
+      if (user?.emailVerified ?? true) {
         timer.cancel();
         AuthenticationRepository.instance.setInitialScreen(user);
       }

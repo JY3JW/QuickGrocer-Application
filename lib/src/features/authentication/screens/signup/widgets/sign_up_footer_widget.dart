@@ -43,7 +43,7 @@ class SignUpFooterWidget extends StatelessWidget {
                   text: alreadyHaveAnAccount, style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 TextSpan(
-                  text: login.toUpperCase(), 
+                  text: login.toUpperCase(),
                   style: const TextStyle(color: AppColors.subDarkerLimeColor)
                 ),
               ]

@@ -12,51 +12,51 @@ class MailVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MailVerificationController());
-    return Scaffold(
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                    top: defaultSize,
-                    right: defaultSize,
-                    bottom: defaultSize * 2),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(LineAwesomeIcons.envelope_open, size: 100),
-                    const SizedBox(height: defaultSize * 2),
-                    Text(emailVerificationTitle,
-                        style: Theme.of(context).textTheme.headlineMedium),
-                    const SizedBox(height: defaultSize),
-                    Text(
-                      emailVerificationSubtitle,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: defaultSize * 2),
-                    SizedBox(
-                      width: 200,
-                      child: OutlinedButton(
-                          child: Text(continueEmailVerification),
-                          onPressed: () => controller
-                              .manuallyCheckEmailVerificationStatus()),
-                    ),
-                    const SizedBox(height: defaultSize),
-                    TextButton(
-                      onPressed: () => controller.sendVerificationEmail(),
-                      child: Text(resendEmailLink),
-                    ),
-                    TextButton(
-                      onPressed: () => AuthenticationRepository.instance.logout(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(LineAwesomeIcons.alternate_long_arrow_left),
-                          const SizedBox(width: 5),
-                          Text(backToLogin.toLowerCase()),
-                        ],
+    return SafeArea(
+      child: Scaffold(
+          body: SingleChildScrollView(
+              child: Padding(
+                  padding: const EdgeInsets.all(defaultSize),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(LineAwesomeIcons.envelope_open, size: 100),
+                      const SizedBox(height: defaultSize * 2),
+                      Text(emailVerificationTitle,
+                          style: Theme.of(context).textTheme.headlineMedium),
+                      const SizedBox(height: defaultSize),
+                      Text(
+                        emailVerificationSubtitle,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: defaultSize * 2),
+                      SizedBox(
+                        width: 200,
+                        child: OutlinedButton(
+                            child: Text(continueEmailVerification),
+                            onPressed: () => controller
+                                .manuallyCheckEmailVerificationStatus()),
+                      ),
+                      const SizedBox(height: defaultSize),
+                      TextButton(
+                        onPressed: () => controller.sendVerificationEmail(),
+                        child: Text(resendEmailLink),
+                      ),
+                      TextButton(
+                        onPressed: () => AuthenticationRepository.instance.logout(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(LineAwesomeIcons.alternate_long_arrow_left),
+                            const SizedBox(width: 5),
+                            Text(backToLogin.toLowerCase()),
+                          ],
+                        )
                       )
-                    )
-                  ],
-                ))));
+                    ],
+                  )))),
+    );
   }
 }
