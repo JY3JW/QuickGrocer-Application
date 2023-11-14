@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/controllers/login_controller.dart';
 import '../../forget_password/forget_password_options/forget_password_model_bottom_sheet.dart';
 
 class LoginForm extends StatelessWidget {
@@ -8,28 +11,39 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+    final _formKey = GlobalKey<FormState>();
+
     return Form(
+      key: _formKey,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: formHeight - 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
+              controller: controller.email,
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: email,
-                  hintText: email,
-                  border: OutlineInputBorder()),
+                  hintText: email,),
             ),
             const SizedBox(height: formHeight),
             TextFormField(
-              decoration: const InputDecoration(
+              controller: controller.password,
+              obscureText: controller.isPasswordHidden.value,
+              decoration: InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),
                   labelText: password,
                   hintText: password,
-                  border: OutlineInputBorder(),
                   suffixIcon: IconButton(
-                      onPressed: null, icon: Icon(Icons.remove_red_eye_sharp))),
+                      icon: Icon (controller.isPasswordHidden.value
+                              ? LineAwesomeIcons.eye
+                              : LineAwesomeIcons.eye_slash
+                          ),
+                      onPressed: () {
+                          controller.isPasswordHidden.value = !controller.isPasswordHidden.value;
+                      })),
             ),
             const SizedBox(height: formHeight - 10.0),
 
@@ -49,7 +63,11 @@ class LoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    LoginController.instance.loginUser(controller.email.text.trim(), controller.password.text.trim());
+                  }
+                },
                 child: Text(login.toUpperCase()),
               ),
             )
@@ -59,4 +77,3 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
-

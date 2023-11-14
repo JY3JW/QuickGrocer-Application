@@ -5,21 +5,23 @@ class TextFormFieldTheme {
   TextFormFieldTheme._();
 
   static InputDecorationTheme lightInputDecorationTheme =
-      const InputDecorationTheme(
-        border: OutlineInputBorder(),
+      InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
         prefixIconColor: AppColors.mainPineColor,
         floatingLabelStyle: TextStyle(color: AppColors.mainPineColor),
         focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
           borderSide: BorderSide(width: 2, color: AppColors.mainPineColor),
         ),
       );
 
   static InputDecorationTheme darkInputDecorationTheme =
-      const InputDecorationTheme(
-        border: OutlineInputBorder(),
+      InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
         prefixIconColor: AppColors.subPistachioColor,
         floatingLabelStyle: TextStyle(color: AppColors.subPistachioColor),
         focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
           borderSide: BorderSide(width: 2, color: AppColors.subPistachioColor),
         ),
       );

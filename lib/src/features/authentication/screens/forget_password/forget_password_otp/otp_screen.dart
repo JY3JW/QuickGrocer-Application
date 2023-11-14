@@ -1,14 +1,21 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/controllers/otp_controller.dart';
+import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 
 class OTPScreen extends StatelessWidget {
   const OTPScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var otp;
+    var otpController = Get.put(OTPController());
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(defaultSize),
@@ -35,17 +42,18 @@ class OTPScreen extends StatelessWidget {
               // keyboardType: TextInputType.???
               // choose specific keyboard
               onSubmit: (code) {
-                print("OTP is => $code");
+                otp = code;
+                OTPController.instance.verifyOTP(otp);
               },
             ),
             const SizedBox(height: 20.0),
             SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {}, 
-                  child: Text(next)
-                )
-            ),
+                    onPressed: () {
+                      OTPController.instance.verifyOTP(otp);
+                    },
+                    child: Text(next))),
           ],
         ),
       ),
