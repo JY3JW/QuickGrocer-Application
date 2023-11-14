@@ -48,4 +48,5 @@ const String logout = "Logout";
 
 // Manage User Text
 const String manageUser = "Manage User";
+const String userList = "User List";
 const String addNewUser = "+ Add new user";

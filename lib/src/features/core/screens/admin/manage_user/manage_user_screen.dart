@@ -36,6 +36,10 @@ class ManageUserScreen extends StatelessWidget {
       ),
       body: Row(
         children: [
+          Text(
+            userList,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
           SizedBox(
           width: 150,
           child: ElevatedButton(
