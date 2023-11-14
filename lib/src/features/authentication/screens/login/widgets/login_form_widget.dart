@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/login_controller.dart';
@@ -30,13 +31,19 @@ class LoginForm extends StatelessWidget {
             const SizedBox(height: formHeight),
             TextFormField(
               controller: controller.password,
-              obscureText: true,
-              decoration: const InputDecoration(
+              obscureText: controller.isPasswordHidden.value,
+              decoration: InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),
                   labelText: password,
                   hintText: password,
                   suffixIcon: IconButton(
-                      onPressed: null, icon: Icon(Icons.remove_red_eye_sharp))),
+                      icon: Icon (controller.isPasswordHidden.value
+                              ? LineAwesomeIcons.eye
+                              : LineAwesomeIcons.eye_slash
+                          ),
+                      onPressed: () {
+                          controller.isPasswordHidden.value = !controller.isPasswordHidden.value;
+                      })),
             ),
             const SizedBox(height: formHeight - 10.0),
 

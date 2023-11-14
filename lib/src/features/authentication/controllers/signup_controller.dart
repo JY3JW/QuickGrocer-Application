@@ -12,8 +12,13 @@ class SignUpController extends GetxController {
   final password = TextEditingController();
   final name = TextEditingController();
   final phone = TextEditingController();
+  GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  var isPasswordHidden = true.obs;
 
   final userRepo = Get.put(UserRepository());
+
+  // Loader
+  final isLoading = false.obs;
 
   //Call this Function from Design and it will do the rest
   Future<String?> registerUser(String email, String password) {
@@ -27,7 +32,19 @@ class SignUpController extends GetxController {
   }
 
   Future<void> createUser(UserModel user) async {
-    String? userID = await registerUser(user.email, user.password);
-    await userRepo.createUser(user, userID);
+    try {
+      isLoading.value = true;
+      if (!signUpFormKey.currentState!.validate()) {
+        isLoading.value = false;
+        return;
+      }
+      String? userID = await registerUser(user.email, user.password);
+      await userRepo.createUser(user, userID);
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
   }
 }

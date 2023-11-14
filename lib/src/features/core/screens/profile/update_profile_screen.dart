@@ -8,8 +8,21 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
 
-class UpdateProfileScreen extends StatelessWidget {
-  const UpdateProfileScreen({super.key});
+class _UpdateProfileScreen extends StatefulWidget {
+  const _UpdateProfileScreen({super.key});
+
+  @override
+  State<_UpdateProfileScreen> createState() => UpdateProfileScreen();
+}
+
+class UpdateProfileScreen extends State<_UpdateProfileScreen> {
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,14 +120,19 @@ class UpdateProfileScreen extends StatelessWidget {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: _password,
-                                obscureText: true,
-                                decoration: const InputDecoration(
+                                obscureText: passwordVisible,
+                                decoration: InputDecoration(
                                   label: Text(password),
-                                  prefixIcon: Icon(
-                                    Icons.fingerprint,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: null, icon: Icon(Icons.remove_red_eye_sharp)),
+                                  prefixIcon: IconButton(
+                                    icon: Icon (passwordVisible
+                                            ? LineAwesomeIcons.eye
+                                            : LineAwesomeIcons.eye_slash
+                                        ),
+                                    onPressed: () {
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                        });
+                                    }),
                                 ),
                               ),
                               const SizedBox(height: formHeight),

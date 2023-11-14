@@ -45,3 +45,17 @@ const String otpMessage = "Enter the verification code sent at";
 const String profile = "Profile";
 const String editProfile = "Edit Profile";
 const String logout = "Logout";
+
+// Snack Bar
+const String Alert = "Alert";
+const String ohSnap = "Oh Snap";
+const String emailSent = "Email is on its way...";
+const String congratulations = "Email Link to Reset Password";
+const String accountCreateVerifyEmail = "Account Create Verify Email";
+
+// Email Verification Screen
+const String emailVerificationTitle = "Verify your email address";
+const String emailVerificationSubtitle = "We have just sent an email verification link on your email. Please check email and click on the link to verify your Email address.\n\nIf not auto redirected after verification, click on the Continue button.";
+const String continueEmailVerification = "Continue";
+const String resendEmailLink = "Resent E-Mail Link";
+const String backToLogin = "Back to Login";
