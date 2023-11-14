@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/welcome/welcome_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';

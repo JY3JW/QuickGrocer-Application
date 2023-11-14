@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
-import 'package:quickgrocer_application/src/features/authentication/controllers/login_controller.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/login/login_screen.dart';
 
 class SignUpFooterWidget extends StatelessWidget {
@@ -14,7 +12,6 @@ class SignUpFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
     return Column(
       children: [
         const Text("OR"),
@@ -22,12 +19,9 @@ class SignUpFooterWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
-            onPressed: () {
-              LoginController.instance.googleSignIn();
-            },
+            onPressed: () {}, 
             icon: const Image(image: AssetImage(googleLogoImage), width: 20.0,),
             label: const Text(signInWithGoogle),
-
           ),
         ),
         TextButton(

@@ -35,7 +35,6 @@ dependencies:
   # firebase package
   firebase_core: ^2.21.0
   firebase_auth: ^4.12.1
-  google_sign_in: ^6.1.6
 
   # OTP text field package
   flutter_otp_text_field: ^1.1.1
@@ -51,7 +50,6 @@ dependencies:
   intl: ^0.18.1
   google_fonts: ^6.1.0
   flutter_native_splash: ^2.3.5
-  flutter_helper_utils: ^1.5.7
 
 dev_dependencies:
   flutter_test:

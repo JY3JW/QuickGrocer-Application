@@ -94,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => UpdateProfileScreen()),
+                    onPressed: () => Get.to(() => const UpdateProfileScreen()),
                     style: ElevatedButton.styleFrom(
                       shape: StadiumBorder(),
                     ),
@@ -105,23 +105,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 10),
               ListTile(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Logout'),
-                      content: Text('Confirm to log out of your account?'),
-                      actions: [
-                        ElevatedButton(
-                          child: Text('NO'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        ElevatedButton(
-                          child: Text('YES'),
-                          onPressed: () => AuthenticationRepository.instance.logout(),
-                        ),
-                      ]
-                    )
-                  );
+                  AuthenticationRepository.instance.logout();
                 },
                 leading: Container(
                   width: 50,
