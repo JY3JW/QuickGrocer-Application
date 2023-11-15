@@ -9,6 +9,7 @@ import 'package:quickgrocer_application/src/features/authentication/models/user_
 import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -17,10 +18,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor =
-        isDark ? AppColors.subPistachioColor : AppColors.mainPineColor;
-    var iconLineColor = isDark ? Colors.white : Colors.black;
+        Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
+    var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
+    var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,8 +33,10 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
+              onPressed: () {
+                Get.isDarkMode ? Get.changeTheme(AppTheme.lightTheme) : Get.changeTheme(AppTheme.darkTheme);
+              },
+              icon: Icon(Get.isDarkMode ? LineAwesomeIcons.sun : LineAwesomeIcons.moon, color: iconColorWithoutBackground,))
         ],
       ),
       body: SingleChildScrollView(
@@ -67,28 +70,33 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Container (
+              Container(
                 child: FutureBuilder(
-                  future: controller.getUserData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        UserModel user = snapshot.data as UserModel;
-                        return Column(
-                          children: [
-                            Text(user.fullName,style: Theme.of(context).textTheme.headlineSmall),
-                            Text(user.email, style: Theme.of(context).textTheme.bodyLarge),],
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+                    future: controller.getUserData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          UserModel user = snapshot.data as UserModel;
+                          return Column(
+                            children: [
+                              Text(user.fullName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              Text(user.email,
+                                  style: Theme.of(context).textTheme.bodyLarge),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }
-                ),
+                    }),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -106,22 +114,23 @@ class ProfileScreen extends StatelessWidget {
               ListTile(
                 onTap: () {
                   showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Logout'),
-                      content: Text('Confirm to log out of your account?'),
-                      actions: [
-                        ElevatedButton(
-                          child: Text('NO'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        ElevatedButton(
-                          child: Text('YES'),
-                          onPressed: () => AuthenticationRepository.instance.logout(),
-                        ),
-                      ]
-                    )
-                  );
+                      context: context,
+                      builder: (context) => AlertDialog(
+                              title: Text('Logout'),
+                              content:
+                                  Text('Confirm to log out of your account?'),
+                              actions: [
+                                ElevatedButton(
+                                  child: Text('NO'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                ElevatedButton(
+                                  child: Text('YES'),
+                                  onPressed: () => AuthenticationRepository
+                                      .instance
+                                      .logout(),
+                                ),
+                              ]));
                 },
                 leading: Container(
                   width: 50,
