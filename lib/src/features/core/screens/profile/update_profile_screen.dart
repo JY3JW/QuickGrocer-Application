@@ -87,6 +87,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: _email,
+                                enabled: false,
                                 decoration: const InputDecoration(
                                   label: Text(email),
                                   prefixIcon: Icon(

@@ -120,6 +120,21 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
+  // Email Authentication - verification
+  Future<void> resetPasswordEmail(String email) async {
+    try {
+      _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      final ex = TExceptions.fromCode(e.code);
+      print('FIREBASE AUTH EXCEPTION - ${ex.message}');
+      throw ex;
+    } catch (_) {
+      const ex = TExceptions();
+      print('FIREBASE AUTH EXCEPTION - ${ex.message}');
+      throw ex;
+    }
+  }
+
   // Google Authentication
   Future<UserCredential?> signInWithGoogle() async {
     try {

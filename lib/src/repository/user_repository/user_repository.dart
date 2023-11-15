@@ -10,7 +10,8 @@ class UserRepository extends GetxController {
 
   createUser(UserModel user, String? uid) async {
     await _db
-        .collection("users").doc(uid)
+        .collection("users")
+        .doc(uid)
         .set(user.toJson())
         .whenComplete(
           () => Get.snackbar("Success", "Your account has been created.",
@@ -38,9 +39,9 @@ class UserRepository extends GetxController {
 
   // Fetch all user details
   Future<List<UserModel>> allUsers() async {
-    final snapshot =
-        await _db.collection("users").get();
-    final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+    final snapshot = await _db.collection("users").get();
+    final userData =
+        snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
     return userData;
   }
 

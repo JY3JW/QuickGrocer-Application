@@ -22,6 +22,17 @@ class LoginController extends GetxController {
     }
   }
 
+  // Reset Password
+  Future<void> resetPassword(String email) async {
+    try {
+      final auth = AuthenticationRepository.instance;
+      await auth.resetPasswordEmail(email);
+      auth.setInitialScreen(auth.firebaseUser.value);
+    } catch (e) {
+      Get.snackbar(ohSnap, e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+    }
+  }
+
   Future<void> googleSignIn() async {
     try {
       final auth = AuthenticationRepository.instance;

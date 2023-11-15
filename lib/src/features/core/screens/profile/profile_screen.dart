@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
 
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor =
-        isDark ? AppColors.mainPineColor : AppColors.subPistachioColor;
+        isDark ? AppColors.subPistachioColor : AppColors.mainPineColor;
     var iconLineColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
