@@ -24,7 +24,8 @@ class MailVerificationScreen extends StatelessWidget {
                       const Icon(LineAwesomeIcons.envelope_open, size: 100),
                       const SizedBox(height: defaultSize * 2),
                       Text(emailVerificationTitle,
-                          style: Theme.of(context).textTheme.headlineMedium),
+                          style: Theme.of(context).textTheme.headlineMedium,
+                          textAlign: TextAlign.center,),
                       const SizedBox(height: defaultSize),
                       Text(
                         emailVerificationSubtitle,

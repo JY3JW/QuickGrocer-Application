@@ -30,6 +30,7 @@ class SignUpController extends GetxController {
     try {
       String? userID = await registerUser(user.email, user.password);
       await userRepo.createUser(user, userID);
+      AuthenticationRepository.instance.setInitialScreen(AuthenticationRepository.instance.firebaseUser.value);
     } catch (e) {
       Get.snackbar("Error", e.toString(),
           snackPosition: SnackPosition.BOTTOM,

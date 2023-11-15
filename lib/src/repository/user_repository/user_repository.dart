@@ -16,7 +16,8 @@ class UserRepository extends GetxController {
           () => Get.snackbar("Success", "Your account has been created.",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.green.withOpacity(0.1),
-              colorText: Colors.green),
+              colorText: Colors.green,
+              duration: const Duration(seconds: 5)),
         )
         .catchError((error, stackTrace) {
       Get.snackbar("Error", "Something went wrong. Try again",
