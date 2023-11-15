@@ -20,6 +20,10 @@
             "package_name": "com.example.quickgrocer_application",
             "certificate_hash": "4c428aaf7b6eda330cac5890e81689be14b1001d"
           }
+        },
+        {
+          "client_id": "644386846756-k129hd7un80malprn1l3h7rehd06n0ka.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -29,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644386846756-k129hd7un80malprn1l3h7rehd06n0ka.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "644386846756-2hmo64n2liriftl12mccujo7kitu6c1u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.quickgrocerApplication.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

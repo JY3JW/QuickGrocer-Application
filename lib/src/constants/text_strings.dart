@@ -32,10 +32,37 @@ const String forgetPasswordSubtitle =
 const String resetViaEmail = "Reset via E-mail Verification";
 const String resetViaPhoneNum = "Reset via Phone Verification";
 const String emailVerification = "Enter your registered E-mail to receive OTP";
-const String phoneVerification = "Enter your registered Phone Number to receive OTP";
+const String phoneVerification =
+    "Enter your registered Phone Number to receive OTP";
 const String next = "Next";
+const String sendRequest = "Send Request";
 
 // OTP Screen Text
 const String otpTitle = "CO\nDE";
 const String otpSubtitle = "verification";
 const String otpMessage = "Enter the verification code sent at";
+
+// Profile Screen Text
+const String profile = "Profile";
+const String editProfile = "Edit Profile";
+const String logout = "Logout";
+
+// Manage User Text
+const String manageUser = "Manage User";
+const String userList = "User List";
+const String addNewUser = "+ Add new user";
+
+// Snack Bar
+const String Alert = "Alert";
+const String ohSnap = "Oh Snap";
+const String emailSent = "Email is on its way...";
+const String congratulations = "Email Link to Reset Password";
+const String accountCreateVerifyEmail = "Account Create Verify Email";
+
+// Email Verification Screen
+const String emailVerificationTitle = "Verify your email address";
+const String emailVerificationSubtitle =
+    "We have just sent an email verification link on your email. Please check email and click on the link to verify your Email address.\n\nIf not auto redirected after verification, click on the Continue button.";
+const String continueEmailVerification = "Continue";
+const String resendEmailLink = "Resent E-Mail Link";
+const String backToLogin = "Back to Login";

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quickgrocer_application/previous_trying_sample_screen/otp_screen.dart';
 import 'package:quickgrocer_application/src/common_widgets/form/form_header_widget.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
-import 'package:quickgrocer_application/src/features/authentication/screens/forget_password/forget_password_otp/otp_screen.dart';
 
 class ForgetPasswordPhoneScreen extends StatelessWidget {
   const ForgetPasswordPhoneScreen({super.key});

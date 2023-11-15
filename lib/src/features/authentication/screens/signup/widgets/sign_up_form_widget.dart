@@ -3,11 +3,10 @@ import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/signup_controller.dart';
+import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 
 class SignUpFormWidget extends StatelessWidget {
-  const SignUpFormWidget({
-    super.key,
-  });
+  const SignUpFormWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +14,9 @@ class SignUpFormWidget extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
 
     return Container(
-      key: _formKey,
       padding: const EdgeInsets.symmetric(vertical: formHeight - 10.0),
       child: Form(
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -53,11 +52,12 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.password,
-              decoration: const InputDecoration(
-                label: Text(password),
-                prefixIcon: Icon(
-                  Icons.fingerprint,
-                ),
+              obscureText: true,
+              decoration: InputDecoration(
+                  label: Text(password),
+                  prefixIcon: Icon(
+                    Icons.fingerprint,
+                  ),
               ),
             ),
             const SizedBox(height: formHeight - 10.0),
@@ -65,9 +65,23 @@ class SignUpFormWidget extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  //if (_formKey.currentState!.validate()) {
-                    SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
-                  //}
+                  if (_formKey.currentState!.validate()) {
+                    //Email & password Authentication
+                    //SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+
+                    //Phone Authentication
+                    //SignUpController.instance.phoneAuthentication(controller.phone.text.trim());
+                    //Get.to(() => const OTPScreen());
+
+                    // Get user and pass it to controller
+                    final user = UserModel(
+                      email: controller.email.text.trim(),
+                      password: controller.password.text.trim(),
+                      fullName: controller.name.text.trim(),
+                      phoneNo: controller.phone.text.trim(),
+                    );
+                    SignUpController.instance.createUser(user);
+                  }
                 },
                 child: Text(signup.toUpperCase()),
               ),
