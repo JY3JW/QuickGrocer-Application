@@ -13,6 +13,7 @@ class LoginFooterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
