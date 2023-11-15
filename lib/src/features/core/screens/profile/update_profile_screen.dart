@@ -15,11 +15,16 @@ class UpdateProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
+    var iconColor =
+        Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
+    var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
+    var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
               onPressed: () => Get.back(),
-              icon: Icon(LineAwesomeIcons.angle_left, color: Colors.black)),
+              icon: Icon(LineAwesomeIcons.angle_left, color: iconColorWithoutBackground)),
           title: Text(
             profile,
             style: Theme.of(context).textTheme.headlineSmall,
@@ -62,10 +67,10 @@ class UpdateProfileScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        color: AppColors.mainPineColor),
+                                        color: iconColor),
                                     child: Icon(
                                       LineAwesomeIcons.camera,
-                                      color: Colors.white,
+                                      color: iconLineColor,
                                       size: 20,
                                     )))
                           ],
