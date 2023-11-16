@@ -66,3 +66,16 @@ const String emailVerificationSubtitle =
 const String continueEmailVerification = "Continue";
 const String resendEmailLink = "Resent E-Mail Link";
 const String backToLogin = "Back to Login";
+
+
+// Manage Grocery Screen
+const String manageGrocery = "Manage Grocery";
+const String groceriesCategory = "Groceries Category";
+/*
+const String groceriesCat1 = "All Groceries";
+const String groceriesCat2 = "Food & Drinks";
+const String groceriesCat3 = "Study Necessities";
+const String groceriesCat4 = "Beauty & Personal Care";
+const String groceriesCat5 = "Cleaning & Laundry";
+const String groceriesCat6 = "Others";
+*/

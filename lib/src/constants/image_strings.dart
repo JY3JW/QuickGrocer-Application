@@ -16,3 +16,13 @@ const String resetPasswordImage =
 // Profile Image
 const String profileImage =
     "assets/images/profile_images/profile_logo.png";
+
+/*
+// Groceries Category Images
+const String groceriesCat1Image = "assets/images/groceries_category_images/all_groceries.png";
+const String groceriesCat2Image = "assets/images/groceries_category_images/food_and_drinks.png";
+const String groceriesCat3Image = "assets/images/groceries_category_images/study_necessities.png";
+const String groceriesCat4Image = "assets/images/groceries_category_images/beauty_and_personal_care.png";
+const String groceriesCat5Image = "assets/images/groceries_category_images/cleaning_and_laundry.png";
+const String groceriesCat6Image = "assets/images/groceries_category_images/others.png";
+*/
