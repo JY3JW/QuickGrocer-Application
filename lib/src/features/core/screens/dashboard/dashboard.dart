@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/manage_user_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/profile_screen.dart';
 
 class Dashboard extends StatefulWidget {
@@ -28,10 +29,8 @@ class _DashboardState extends State<Dashboard> {
       ),
     ),
     SafeArea(
-      child: Text(
-        'Index 2: User',
-        style: optionStyle,
-      ),
+      child:ManageUserScreen()
+      
     ),
     SafeArea(
       child: ProfileScreen(),
