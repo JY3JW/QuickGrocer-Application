@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
 import 'package:quickgrocer_application/src/repository/grocery_repository/grocery_repository.dart';
 
 class GroceryCard extends StatefulWidget {
@@ -37,43 +38,55 @@ class _GroceryCardState extends State<GroceryCard> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             Text(
-              '\RM' '${widget.grocery.price}',
+              '\RM' '${widget.grocery.price.toStringAsFixed(2)}',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                    icon: Icon(Icons.edit_square, color: Colors.black),
-                    onPressed: () {} //=> Get.to(() => UpdateGroceryScreen()),
-                    ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.mainPineColor,
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: IconButton(
+                      icon: Icon(Icons.edit_square, color: Colors.white),
+                      onPressed: () => Get.to(() => UpdateGroceryScreen(grocery: widget.grocery)),
+                      ),
+                ),
                 const SizedBox(width: 5),
-                IconButton(
-                  icon: Icon(Icons.delete_forever_rounded, color: Colors.red),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                                title: Text('Delete Grocery'),
-                                content:
-                                    Text('Confirm to delete this grocery?'),
-                                actions: [
-                                  ElevatedButton(
-                                    child: Text('NO'),
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                  ElevatedButton(
-                                    child: Text('YES'),
-                                    onPressed: () => {
-                                      setState(() {
-                                        GroceryRepository.instance.deleteGroceryRecord(widget.grocery);
-                                      }),
-                                      Navigator.pop(context),
-                                    },
-                                  ),
-                                ]));
-                  },
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.delete_forever_rounded, color: Colors.white),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  title: Text('Delete Grocery'),
+                                  content:
+                                      Text('Confirm to delete this grocery?'),
+                                  actions: [
+                                    ElevatedButton(
+                                      child: Text('NO'),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    ElevatedButton(
+                                      child: Text('YES'),
+                                      onPressed: () => {
+                                        setState(() {
+                                          GroceryRepository.instance.deleteGroceryRecord(widget.grocery);
+                                        }),
+                                        Navigator.pop(context),
+                                      },
+                                    ),
+                                  ]));
+                    },
+                  ),
                 ),
               ],
             ),

@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/features/core/controllers/grocery_co
 import 'package:quickgrocer_application/src/features/core/models/category_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
@@ -62,7 +63,8 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                         return SizedBox(
                           height: 120,
                           child: GridView.count(
-                            crossAxisCount: 3,
+                            crossAxisCount: 1,
+                            scrollDirection: Axis.horizontal,
                             children: List.generate(category.length, (index) {
                               return _buildProductCategory(
                                   index: index,
@@ -85,20 +87,22 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
             const SizedBox(height: 20),
             Expanded(
               child: FutureBuilder(
-                  future: isSelected == 0? grocController.getAllGroceries() : grocController.getGroceriesByCategory(category[isSelected].name),
+                  future: isSelected == 0
+                      ? grocController.getAllGroceries()
+                      : grocController
+                          .getGroceriesByCategory(category[isSelected].name),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
                         List<GroceryModel> grocery =
                             snapshot.data as List<GroceryModel>;
                         return SizedBox(
-                          height: 500,
-                          child: _buildAllGroceries(grocery)
-                        );
+                            height: 500, child: _buildAllGroceries(grocery));
                       } else if (snapshot.hasError) {
                         return Center(child: Text(snapshot.error.toString()));
                       } else {
-                        return const Center(child: Text("Something went wrong"));
+                        return const Center(
+                            child: Text("Something went wrong"));
                       }
                     } else {
                       return Center(child: CircularProgressIndicator());
@@ -158,6 +162,9 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
       scrollDirection: Axis.vertical,
       itemCount: grocery.length,
       itemBuilder: (context, index) {
-        return GroceryCard(grocery: grocery[index]);
+        return GestureDetector(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateGroceryScreen(grocery: grocery[index]))),
+          child: GroceryCard(grocery: grocery[index]),
+        );
       });
 }

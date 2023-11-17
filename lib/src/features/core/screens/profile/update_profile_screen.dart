@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
@@ -14,6 +15,7 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+    final _formKey = GlobalKey<FormState>();
 
     var iconColor =
         Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
@@ -77,11 +79,18 @@ class UpdateProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 50),
                         Form(
+                          key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TextFormField(
                                 controller: name,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter the name';
+                                  }
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   label: Text(fullName),
                                   prefixIcon: Icon(
@@ -103,6 +112,15 @@ class UpdateProfileScreen extends StatelessWidget {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: phone,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+                                ],
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter the phone number';
+                                  }
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   label: Text(phoneNum),
                                   prefixIcon: Icon(
@@ -113,7 +131,16 @@ class UpdateProfileScreen extends StatelessWidget {
                               const SizedBox(height: formHeight - 20.0),
                               TextFormField(
                                 controller: _password,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                                ],
                                 obscureText: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter the password';
+                                  }
+                                  return null;
+                                },
                                 decoration: InputDecoration(
                                   label: Text(password),
                                   prefixIcon: Icon(
@@ -126,14 +153,16 @@ class UpdateProfileScreen extends StatelessWidget {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      final userData = UserModel(
-                                        email: _email.text.trim(),
-                                        password: _password.text.trim(),
-                                        phoneNo: phone.text.trim(),
-                                        fullName: name.text.trim(),
-                                      );
-
-                                      await controller.updateRecord(userData, user.id);
+                                      if (_formKey.currentState!.validate()) {
+                                        final userData = UserModel(
+                                          email: _email.text.trim(),
+                                          password: _password.text.trim(),
+                                          phoneNo: phone.text.trim(),
+                                          fullName: name.text.trim(),
+                                        );
+                                        
+                                        await controller.updateRecord(userData, user.id);
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),
