@@ -13,6 +13,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
+    var detailsBackground = Get.isDarkMode ? AppColors.greyColor4 : AppColors.greyColor1;
 
     return Scaffold(
         appBar: AppBar(
@@ -49,7 +50,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 400,
                 decoration: BoxDecoration(
-                  color: AppColors.greyColor1,
+                  color: detailsBackground,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
                 ),
                 child: Column(
@@ -59,16 +60,21 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width*2/3,
+                          width: MediaQuery.of(context).size.width*4/7,
                           child: Text(
-                          grocery.name.toUpperCase(),
-                          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                        ),),
-                        Text(
-                          '\RM' '${grocery.price.toStringAsFixed(2)}',
-                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                    ],),
+                            textAlign: TextAlign.left,
+                            grocery.name.toUpperCase(),
+                            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                          ),),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width*2/7,
+                            child: Text(
+                              '\RM' '${grocery.price.toStringAsFixed(2)}',
+                              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold,),
+                              textAlign: TextAlign.right
+                            ),
+                          ),
+                      ],),
                     const SizedBox(height: 14,),
                     Text(
                       grocery.description,

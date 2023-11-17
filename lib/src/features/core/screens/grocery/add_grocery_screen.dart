@@ -16,6 +16,15 @@ class AddGroceryScreen extends StatefulWidget {
 }
 
 class _AddGroceryScreenState extends State<AddGroceryScreen> {
+  String? selectedValue;
+  List<String> categories = [
+    'Food & Drinks',
+    'Cleaning & Laundry',
+    'Beauty & Personal Care',
+    'Study & Necessities',
+    'Others'
+  ];
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
@@ -119,29 +128,25 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                       ),
                     ),
                     const SizedBox(height: formHeight - 20.0),
-                    TextFormField(
-                      controller: controller.category,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the category';
-                        } else if (value != 'Food & Drinks' &&
-                            value != 'Cleaning & Laundry' &&
-                            value != 'Beauty & Personal Care' &&
-                            value != 'Study & Necessities' &&
-                            value != 'Others') {
-                          return "Please enter either 'Food & Drinks' / 'Cleaning & Laundry' / 'Beauty & Personal Care' / 'Study & Necessities' / 'Others' only";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        label: Text(groceryCategory),
-                        hintText:
-                            "'Food & Drinks' / 'Cleaning & Laundry' / 'Beauty & Personal Care' / 'Study & Necessities' / 'Others'",
-                        hintMaxLines: 10,
-                        prefixIcon: Icon(
-                          Icons.category_rounded,
-                        ),
-                      ),
+                    DropdownButtonFormField<String>(
+                          hint: const Text('🛍️   ' + groceryCategory),
+                          value: selectedValue,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a category';
+                            }
+                            return null;
+                          },
+                          isExpanded: true,
+                          borderRadius: BorderRadius.circular(16),
+                          items: categories.
+                          map((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value, child: Text(value));
+                          }).toList(),
+                          onChanged: (value) async {
+                            setState(() {selectedValue = value!;});
+                          },
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
@@ -194,7 +199,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                               name: controller.name.text.trim(),
                               description: controller.description.text.trim(),
                               imageUrl: controller.imageUrl.text.trim(),
-                              category: controller.category.text.trim(),
+                              category: selectedValue!,
                               price: toDouble(controller.price.text.trim()),
                               quantity: toInt(controller.quantity.text.trim()),
                             );

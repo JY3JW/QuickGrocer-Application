@@ -91,3 +91,6 @@ const String groceryQuantity = "Quantity";
 const String addGroceryTitle = "Add New Grocery";
 const String addGroceryButton = "Create Grocery";
 const String groceryId = "Grocery ID";
+
+// Browse Grocery Screen
+const String browseGroceryTitle = "Home";
