@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
@@ -22,6 +23,15 @@ class LoginForm extends StatelessWidget {
           children: [
             TextFormField(
               controller: controller.email,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9a-zA-Z@.]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: email,
@@ -30,6 +40,15 @@ class LoginForm extends StatelessWidget {
             const SizedBox(height: formHeight),
             TextFormField(
               controller: controller.password,
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp('[ ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
               obscureText: true,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),

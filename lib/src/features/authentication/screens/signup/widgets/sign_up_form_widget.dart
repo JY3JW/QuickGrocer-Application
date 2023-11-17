@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
@@ -22,6 +23,12 @@ class SignUpFormWidget extends StatelessWidget {
           children: [
             TextFormField(
               controller: controller.name,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 label: Text(fullName),
                 prefixIcon: Icon(
@@ -32,6 +39,15 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.email,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9a-zA-Z@.]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 label: Text(email),
                 prefixIcon: Icon(
@@ -42,6 +58,15 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your phone number';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 label: Text(phoneNum),
                 prefixIcon: Icon(
@@ -52,6 +77,15 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: formHeight - 20.0),
             TextFormField(
               controller: controller.password,
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp('[ ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
               obscureText: true,
               decoration: InputDecoration(
                   label: Text(password),
