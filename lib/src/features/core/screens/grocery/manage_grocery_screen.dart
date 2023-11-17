@@ -6,9 +6,9 @@ import 'package:quickgrocer_application/src/features/core/controllers/category_c
 import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/category_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
-import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
   const ManageGroceryScreen({super.key});
@@ -38,11 +38,7 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {
-                Get.isDarkMode
-                    ? Get.changeTheme(AppTheme.lightTheme)
-                    : Get.changeTheme(AppTheme.darkTheme);
-              },
+              onPressed: () => Get.to(() => AddGroceryScreen()),
               icon: Icon(
                 Icons.add_box,
                 color: iconColorWithoutBackground,

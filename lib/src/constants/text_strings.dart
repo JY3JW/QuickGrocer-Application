@@ -86,3 +86,8 @@ const String groceryImageUrl = "Image URL";
 const String groceryCategory = "Category";
 const String groceryPrice = "Price";
 const String groceryQuantity = "Quantity";
+
+// Add Grocery Details Screen
+const String addGroceryTitle = "Add New Grocery";
+const String addGroceryButton = "Create Grocery";
+const String groceryId = "Grocery ID";

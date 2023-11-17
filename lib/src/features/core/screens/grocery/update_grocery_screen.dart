@@ -103,6 +103,7 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                       },
                       decoration: const InputDecoration(
                         label: Text(groceryDescription),
+                        hintMaxLines: 10,
                         prefixIcon: Icon(
                           Icons.details_rounded,
                         ),
@@ -130,17 +131,21 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the category';
+                        } else if(value != 'Food & Drinks' && value != 'Cleaning & Laundry' && value != 'Beauty & Personal Care' && value != 'Study & Necessities' && value != 'Others') {
+                          return "Please enter either 'Food & Drinks' / 'Cleaning & Laundry'\n / 'Beauty & Personal Care' / 'Study & Necessities'\n / 'Others' only";
                         }
                         return null;
                       },
                       decoration: InputDecoration(
                         label: Text(groceryCategory),
+                        hintText: "'Food & Drinks' / 'Cleaning & Laundry' / 'Beauty & Personal Care' / 'Study & Necessities' / 'Others'",
+                        hintMaxLines: 10,
                         prefixIcon: Icon(
                           Icons.category_rounded,
                         ),
                       ),
                     ),
-                    const SizedBox(height: formHeight - 20.0),
+                    const SizedBox(height: formHeight-20.0),
                     TextFormField(
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp('[a-zA-Z]')),
@@ -197,6 +202,7 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                               );
                               
                               await controller.updateGrocery(groceryData);
+                              Navigator.pop(context);
                             }
                           },
                         child: const Text(updateGroceryButton),
