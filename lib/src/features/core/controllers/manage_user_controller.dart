@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
@@ -10,6 +11,23 @@ class ManageUserController extends GetxController {
 
   final _authRepo = Get.put(AuthenticationRepository());
   final _userRepo = Get.put(UserRepository());
+
+  //TextField Controllers to get data from TextFields
+  final fullName = TextEditingController();
+  final email = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final password = TextEditingController();
+
+  //create new user
+  createNewuser(UserModel user, String? userId) async {
+    try {
+      await _userRepo.createUser(user, userId);
+    } catch (e) {
+      Get.snackbar(ohSnap, e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
+  }
 
   getUserData() {
     final email = _authRepo.firebaseUser.value?.email;
@@ -38,9 +56,8 @@ class ManageUserController extends GetxController {
       await _userRepo.deleteUserRecord(user);
     } catch (e) {
       Get.snackbar(ohSnap, e.toString(),
-      snackPosition: SnackPosition.BOTTOM,
-      duration: const Duration(seconds: 5)
-      );
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 }

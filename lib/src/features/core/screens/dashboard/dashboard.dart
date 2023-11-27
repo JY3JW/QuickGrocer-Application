@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/add_user_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/add_user_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/manage_user_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/browse_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/manage_grocery_screen.dart';
@@ -25,11 +27,11 @@ class _DashboardState extends State<Dashboard> {
       child: ManageGroceryScreen(),
     ),
     SafeArea(
-      //child: ManageUserScreen(),
-      child: Text(
-        'Index 2: xx',
-        style: optionStyle,
-      ),
+      child: AddUserScreen(),
+      //child: Text(
+      //'Index 2: xx',
+      //style: optionStyle,
+      //),
     ),
     SafeArea(
       child: ProfileScreen(),

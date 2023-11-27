@@ -52,6 +52,9 @@ const String manageUser = "Manage User";
 const String userList = "User List";
 const String addNewUser = "+ Add new user";
 
+//Add User Text
+const String addUser = "Add New User";
+
 // Snack Bar
 const String Alert = "Alert";
 const String ohSnap = "Oh Snap";
