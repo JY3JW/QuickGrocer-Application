@@ -159,7 +159,11 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
       itemCount: grocery.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateGroceryScreen(grocery: grocery[index]))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UpdateGroceryScreen(grocery: grocery[index]))),
           child: GroceryCard(grocery: grocery[index]),
         );
       });

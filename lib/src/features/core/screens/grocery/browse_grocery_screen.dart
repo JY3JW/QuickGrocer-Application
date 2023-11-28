@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/features/core/controllers/grocery_co
 import 'package:quickgrocer_application/src/features/core/models/category_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card_buyer.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/search_bar.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
 
 class BrowseGroceryScreen extends StatefulWidget {
@@ -24,6 +25,8 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
   Widget build(BuildContext context) {
     final catController = Get.put(CategoryController());
     final grocController = Get.put(GroceryController());
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
@@ -33,6 +36,14 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () => Get.to(() => SearchBarApp()),
+              icon: Icon(
+                Icons.search,
+                color: iconColorWithoutBackground,
+              ))
+        ],
       ),
       body: Container(
         margin: const EdgeInsets.all(10),
@@ -148,7 +159,11 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
       itemCount: grocery.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ViewGroceryDetailsScreen(grocery: grocery[index]))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ViewGroceryDetailsScreen(grocery: grocery[index]))),
           child: GroceryCardBuyer(grocery: grocery[index]),
         );
       });

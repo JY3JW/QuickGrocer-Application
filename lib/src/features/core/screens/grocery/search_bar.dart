@@ -14,7 +14,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
   List<String> items = [
     'Bleu Mineral Water',
     'Dove Shampoo',
-    'Full Cream Milk(DutchLady)',
+    'Full Cream Milk(Dutch Lady)',
     'Maggi Curry',
   ];
 
