@@ -8,6 +8,7 @@ import 'package:quickgrocer_application/src/features/core/models/category_model.
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/search_bar.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
@@ -41,6 +42,12 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
               onPressed: () => Get.to(() => AddGroceryScreen()),
               icon: Icon(
                 Icons.add_box,
+                color: iconColorWithoutBackground,
+              )),
+          IconButton(
+              onPressed: () => Get.to(() => SearchBarApp()),
+              icon: Icon(
+                Icons.search,
                 color: iconColorWithoutBackground,
               ))
         ],
