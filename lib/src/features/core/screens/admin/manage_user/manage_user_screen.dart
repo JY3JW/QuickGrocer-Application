@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/manage_user_controller.dart';
+import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/add_user_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/repository/user_repository/user_repository.dart';
 
@@ -18,8 +19,6 @@ class ManageUserScreen extends StatefulWidget {
 }
 
 class _ManageUserScreenState extends State<ManageUserScreen> {
-  int isSelected = 0;
-  int index = 0; //index = []
   late List<UserModel> user;
 
   @override
@@ -76,7 +75,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
 
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () => Get.to(() => const []),
+                                onPressed: () => Get.to(() => AddUserScreen()),
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
                                 ),
@@ -84,16 +83,19 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                               ))
                         ]),
                         const SizedBox(height: 10),
-                          ListTile(
-                          leading: Container(
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(profileImage)
-                            ),
-                          ),
-                          title: Text(user[index].fullName),
-                          subtitle: Text(user[index].email),
-                          //trailing: _manageUserIcon()
-                          )
+                        ListView.builder(
+                          itemCount: user.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(profileImage)
+                              ),
+                              title: Text(user[index].fullName),
+                              subtitle: Text(user[index].email),
+                              trailing: _manageUserIcon()
+                            );
+                          }
+                        )
                       ]);
                   } else if (snapshot.hasError) {
                     return Center(child: Text(snapshot.error.toString()));

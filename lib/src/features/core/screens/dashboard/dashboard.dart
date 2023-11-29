@@ -27,11 +27,7 @@ class _DashboardState extends State<Dashboard> {
       child: ManageGroceryScreen(),
     ),
     SafeArea(
-      //child: AddUserScreen(),
-      child: Text(
-      'Index 2: xx',
-      style: optionStyle,
-      ),
+      child: ManageUserScreen(),
     ),
     SafeArea(
       child: ProfileScreen(),
