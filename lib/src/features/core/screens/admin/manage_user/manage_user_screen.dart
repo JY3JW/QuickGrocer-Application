@@ -53,11 +53,10 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                 builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
-                    List<UserModel> user = snapshot.data as List<UserModel>;
+                    user = snapshot.data as List<UserModel>;
                       // Controllers
                       //final _email = TextEditingController(text: user.email);
                       //final name = TextEditingController(text: user.fullName);
-                    
                     return Column(
                       children: [
                         Row(
@@ -72,7 +71,6 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                             ),
 
                             const SizedBox(width: 120.0),
-
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () => Get.to(() => AddUserScreen()),
@@ -82,6 +80,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                 child: const Text(addNewUser),
                               ))
                         ]),
+
                         const SizedBox(height: 10),
                         ListView.builder(
                           itemCount: user.length,
