@@ -46,6 +46,7 @@ const String otpMessage = "Enter the verification code sent at";
 const String profile = "Profile";
 const String editProfile = "Edit Profile";
 const String logout = "Logout";
+const String deleteAccount = "Delete Account";
 
 // Manage User Text
 const String manageUser = "Manage User";

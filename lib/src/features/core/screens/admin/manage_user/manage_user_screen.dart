@@ -95,8 +95,8 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                     child: Text('YES'),
                                     onPressed: () => {
                                       setState(() {
-                                        UserRepository.instance
-                                            .deleteUserRecord(users[index]);
+                                        //UserRepository.instance
+                                        //    .deleteUserRecord(users[index]);
                                       }),
                                       Navigator.pop(context),
                                     },

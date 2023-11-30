@@ -7,15 +7,8 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/manage_user_controller.dart';
 
-class AddUserScreen extends StatefulWidget {
+class AddUserScreen extends StatelessWidget {
   const AddUserScreen({super.key});
-
-  @override
-  State<AddUserScreen> createState() => _AddUserScreenState();
-}
-
-class _AddUserScreenState extends State<AddUserScreen> {
-  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +101,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password should be longer than 6 characters';
                         }
                         return null;
                       },

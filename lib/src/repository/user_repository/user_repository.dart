@@ -49,7 +49,7 @@ class UserRepository extends GetxController {
     await _db.collection("users").doc(userId).update(user.toJson());
   }
 
-  Future<void> deleteUserRecord(UserModel user) async {
-    await _db.collection("users").doc(user.id).delete();
+  Future<void> deleteUserRecord(String? uid) async {
+    await _db.collection("users").doc(uid).delete();
   }
 }

@@ -124,6 +124,9 @@ class UpdateProfileScreen extends StatelessWidget {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter the phone number';
                                   }
+                                  if (value.length < 6) {
+                                    return 'Password should be longer than 6 characters';
+                                  }
                                   return null;
                                 },
                                 decoration: const InputDecoration(

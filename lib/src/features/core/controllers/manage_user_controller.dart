@@ -18,6 +18,8 @@ class ManageUserController extends GetxController {
 
   //create new user
   Future<String?> registerNewUser(String email, String password) {
+    // lead to auto login to newly created user
+    // decided to delete admin functions
     return AuthenticationRepository.instance
         .createUserWithEmailAndPassword(email, password);
   }
@@ -26,6 +28,7 @@ class ManageUserController extends GetxController {
     try {
       String? userID = await registerNewUser(user.email, user.password);
       await _userRepo.createUser(user, userID);
+
     } catch (e) {
       Get.snackbar("Error", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
@@ -48,7 +51,7 @@ class ManageUserController extends GetxController {
 
   deleteUserRecord(UserModel user) async {
     try {
-      await _userRepo.deleteUserRecord(user);
+      //await _userRepo.deleteUserRecord(user);
     } catch (e) {
       Get.snackbar(ohSnap, e.toString(),
           snackPosition: SnackPosition.BOTTOM,

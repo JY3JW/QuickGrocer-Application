@@ -29,7 +29,9 @@ class ProfileController extends GetxController {
       await FirebaseAuth.instance.currentUser?.updatePassword(user.password);
       await _userRepo.updateUserRecord(user, userId);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar(ohSnap, e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 }
