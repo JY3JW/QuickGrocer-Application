@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
-import 'package:quickgrocer_application/src/features/core/controllers/manage_user_controller.dart';
-import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/add_user_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/admin/manage_user/update_user_screen.dart';
+import 'package:quickgrocer_application/previous_trying_sample_screen/manage_user_controller.dart';
+import 'package:quickgrocer_application/previous_trying_sample_screen/manage_user/add_user_screen.dart';
+import 'package:quickgrocer_application/previous_trying_sample_screen/manage_user/update_user_screen.dart';
 import 'package:quickgrocer_application/src/repository/user_repository/user_repository.dart';
 
 class ManageUserScreen extends StatefulWidget {

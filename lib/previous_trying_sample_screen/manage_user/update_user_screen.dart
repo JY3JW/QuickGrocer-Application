@@ -5,7 +5,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
-import 'package:quickgrocer_application/src/features/core/controllers/manage_user_controller.dart';
+import 'package:quickgrocer_application/previous_trying_sample_screen/manage_user_controller.dart';
 
 class UpdateUserScreen extends StatefulWidget {
   const UpdateUserScreen({super.key, required this.user});
