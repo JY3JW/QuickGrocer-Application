@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/login/admin_login_screen.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/login/login_screen.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/signup/signup_screen.dart';
@@ -25,11 +26,13 @@ class WelcomeScreen extends StatelessWidget {
               Hero(
                 tag: 'quickgrocer_logo_tag',
                 child: Image(
-                  image: const AssetImage(welcomeScreenImage),
-                  height: height * 0.6),),
+                    image: const AssetImage(welcomeScreenImage),
+                    height: height * 0.6),
+              ),
               Column(
                 children: [
-                  Text(welcomeTitle, style: Theme.of(context).textTheme.displaySmall),
+                  Text(welcomeTitle,
+                      style: Theme.of(context).textTheme.displaySmall),
                   Text(welcomeSubtitle,
                       style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center),
@@ -42,10 +45,13 @@ class WelcomeScreen extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
                         );
                       },
-                      child: Text(login.toUpperCase(),),
+                      child: Text(
+                        login.toUpperCase(),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10.0),
@@ -53,7 +59,20 @@ class WelcomeScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpScreen()),
+                        );
+                      },
+                      child: Text(signup.toUpperCase()),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const AdminLoginScreen()),
                         );
                       },
                       child: Text(signup.toUpperCase()),

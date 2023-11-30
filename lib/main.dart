@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickgrocer_application/src/features/authentication/screens/login/admin_login_screen.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const WelcomeScreen(),
+      home: const AdminLoginScreen(),
     );
   }
 }

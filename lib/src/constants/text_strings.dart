@@ -13,6 +13,7 @@ const String forgetPassword = "Forget Password?";
 const String signInWithGoogle = "Sign-In With Google";
 const String login = "Login";
 const String signup = "Signup";
+const String adminLogin = "Admin Login";
 const String email = "E-mail";
 const String password = "Password";
 
