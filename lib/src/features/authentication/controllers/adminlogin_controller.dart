@@ -36,14 +36,4 @@ class AdminLoginController extends GetxController {
           duration: const Duration(seconds: 5));
     }
   }
-
-  Future<void> googleSignIn() async {
-    try {
-      final auth = AuthenticationRepository.instance;
-      await auth.signInWithGoogle();
-      auth.setInitialScreen(auth.firebaseUser.value);
-    } catch (e) {
-      Get.showSnackbar(GetSnackBar(message: e.toString()));
-    }
-  }
 }

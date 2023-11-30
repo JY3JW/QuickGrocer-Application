@@ -20,7 +20,7 @@ class AdminLoginScreen extends StatelessWidget {
               children: [
                 FormHeaderWidget(
                   image: welcomeScreenImage,
-                  title: loginTitle,
+                  title: adminLogin,
                   subTitle: loginSubtitle,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   heightBetween: 30.0,

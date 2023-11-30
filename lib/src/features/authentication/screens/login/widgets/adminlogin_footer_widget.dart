@@ -5,7 +5,6 @@ import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/adminlogin_controller.dart';
-import 'package:quickgrocer_application/src/features/authentication/controllers/login_controller.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/signup/signup_screen.dart';
 
 class AdminLoginFooterWidget extends StatelessWidget {
@@ -22,22 +21,6 @@ class AdminLoginFooterWidget extends StatelessWidget {
         const SizedBox(
           height: formHeight - 20.0,
         ),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            icon: const Image(
-              image: AssetImage(googleLogoImage),
-              width: 20.0,
-            ),
-            onPressed: () {
-              LoginController.instance.googleSignIn();
-            },
-            label: const Text(signInWithGoogle),
-          ),
-        ),
-        const SizedBox(
-          height: formHeight - 20.0,
-        ),
         TextButton(
           onPressed: () {
             Navigator.of(context).push(
@@ -50,8 +33,8 @@ class AdminLoginFooterWidget extends StatelessWidget {
               children: [
                 TextSpan(
                     text: signup.toUpperCase(),
-                    style:
-                        const TextStyle(color: AppColors.subDarkerLimeColor)),
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 79, 68, 179))),
               ])),
         ),
       ],

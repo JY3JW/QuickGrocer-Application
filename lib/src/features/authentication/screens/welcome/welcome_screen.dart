@@ -75,7 +75,7 @@ class WelcomeScreen extends StatelessWidget {
                               builder: (context) => const AdminLoginScreen()),
                         );
                       },
-                      child: Text(signup.toUpperCase()),
+                      child: Text(adminLogin.toUpperCase()),
                     ),
                   ),
                 ],
