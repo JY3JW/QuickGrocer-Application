@@ -7,14 +7,16 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/manage_user_controller.dart';
 
-class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({super.key});
+class UpdateUserScreen extends StatefulWidget {
+  const UpdateUserScreen({super.key, required this.user});
+
+  final UserModel user;
 
   @override
-  State<AddUserScreen> createState() => _AddUserScreenState();
+  State<UpdateUserScreen> createState() => _UpdateUserScreenState();
 }
 
-class _AddUserScreenState extends State<AddUserScreen> {
+class _UpdateUserScreenState extends State<UpdateUserScreen> {
   String? selectedValue;
 
   @override
@@ -24,6 +26,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
     final controller = Get.put(ManageUserController());
     final _formKey = GlobalKey<FormState>();
 
+    final id = widget.user.id;
+    final name = TextEditingController(text: widget.user.fullName);
+    final _email = TextEditingController(text: widget.user.email);
+    final phone = TextEditingController(text: widget.user.phoneNo);
+    final _password = TextEditingController(text: widget.user.password);
+
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -32,7 +40,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
             icon: Icon(LineAwesomeIcons.angle_left,
                 color: iconColorWithoutBackground)),
         title: Text(
-          addUser,
+          updateUser,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         backgroundColor: Colors.transparent,
@@ -50,7 +58,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   children: [
                     //fullname
                     TextFormField(
-                      controller: controller.fullName,
+                      controller: name,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter the user full name";
@@ -65,7 +73,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     //email
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: controller.email,
+                      controller: _email,
+                      enabled: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9a-zA-Z@.]')),
                       ],
@@ -83,7 +92,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     //phone number
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: controller.phoneNumber,
+                      controller: phone,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
                       ],
@@ -101,7 +110,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     const SizedBox(height: formHeight - 20.0),
                     //password
                     TextFormField(
-                      controller: controller.password,
+                      controller: _password,
+                      enabled: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp('[ ]')),
                       ],
@@ -125,17 +135,17 @@ class _AddUserScreenState extends State<AddUserScreen> {
                         Expanded(child: ElevatedButton(onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final newUser = UserModel(
-                              fullName: controller.fullName.text.trim(),
-                              email: controller.email.text.trim(),
-                              phoneNo: controller.phoneNumber.text.trim(),
-                              password: controller.password.text.trim(),
+                              fullName: name.text.trim(),
+                              email: _email.text.trim(),
+                              phoneNo: phone.text.trim(),
+                              password: _password.text.trim(),
                             );
-                            controller.createNewUser(newUser);
+                            controller.updateUserRecord(newUser, id);
 
                             Navigator.pop(context);
                           }
                         },
-                        child: const Text(addNewUser),
+                        child: const Text(saveUserDetails),
                         ))
                       ],
                     )
