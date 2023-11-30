@@ -20,18 +20,21 @@ class UpdateProfileScreen extends StatelessWidget {
     var iconColor =
         Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
     var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
-    var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
               onPressed: () => Get.back(),
-              icon: Icon(LineAwesomeIcons.angle_left, color: iconColorWithoutBackground)),
+              icon: Icon(LineAwesomeIcons.angle_left,
+                  color: iconColorWithoutBackground)),
           title: Text(
             profile,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          backgroundColor: Colors.transparent, elevation: 0,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -42,11 +45,12 @@ class UpdateProfileScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
                     UserModel user = snapshot.data as UserModel;
-                      // Controllers
-                      final _email = TextEditingController(text: user.email);
-                      final _password = TextEditingController(text: user.password);
-                      final name = TextEditingController(text: user.fullName);
-                      final phone = TextEditingController(text: user.phoneNo);
+                    // Controllers
+                    final _email = TextEditingController(text: user.email);
+                    final _password =
+                        TextEditingController(text: user.password);
+                    final name = TextEditingController(text: user.fullName);
+                    final phone = TextEditingController(text: user.phoneNo);
 
                     return Column(
                       children: [
@@ -113,7 +117,8 @@ class UpdateProfileScreen extends StatelessWidget {
                               TextFormField(
                                 controller: phone,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9+]')),
                                 ],
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -132,7 +137,8 @@ class UpdateProfileScreen extends StatelessWidget {
                               TextFormField(
                                 controller: _password,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                                  FilteringTextInputFormatter.deny(
+                                      RegExp('[ ]')),
                                 ],
                                 obscureText: true,
                                 validator: (value) {
@@ -160,9 +166,11 @@ class UpdateProfileScreen extends StatelessWidget {
                                           phoneNo: phone.text.trim(),
                                           fullName: name.text.trim(),
                                         );
-                                        
-                                        await controller.updateRecord(userData, user.id);
+
+                                        await controller.updateRecord(
+                                            userData, user.id);
                                       }
+                                      Navigator.pop(context);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),
