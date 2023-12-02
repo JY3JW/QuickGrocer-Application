@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
-import 'package:quickgrocer_application/previous_trying_sample_screen/manage_user/manage_user_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/browse_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/manage_grocery_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/profile/profile_screen.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class SellerDashboard extends StatefulWidget {
+  const SellerDashboard({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<SellerDashboard> createState() => _SellerDashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _SellerDashboardState extends State<SellerDashboard> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
     SafeArea(
-      child: BrowseGroceryScreen(),
+      child: ManageGroceryScreen(),
     ),
     SafeArea(
-      child: ManageGroceryScreen(), // cart screen
+      child: Text('ManageOrderScreen'),
     ),
     SafeArea(
-      child: ManageUserScreen(), // order history screen
-    ),
-    SafeArea(
-      child: ProfileScreen(),
+      child: Text('ViewSalesReportScreen'),
     ),
   ];
 
@@ -45,15 +39,9 @@ class _DashboardState extends State<Dashboard> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-            backgroundColor: AppColors.mainPineColor,
-          ),
-          BottomNavigationBarItem(
             activeIcon: Icon(Icons.local_grocery_store),
             icon: Icon(Icons.local_grocery_store_outlined),
-            label: 'Cart',
+            label: 'Grocery',
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(
@@ -63,9 +51,9 @@ class _DashboardState extends State<Dashboard> {
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.account_circle),
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Profile',
+            activeIcon: Icon(Icons.file_copy),
+            icon: Icon(Icons.file_copy_outlined),
+            label: 'Report',
             backgroundColor: AppColors.mainPineColor,
           ),
         ],

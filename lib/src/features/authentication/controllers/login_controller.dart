@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 
 class LoginController extends GetxController {
@@ -18,7 +17,7 @@ class LoginController extends GetxController {
       await auth.loginWithEmailAndPassword(email, password);
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Login Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 
@@ -29,7 +28,7 @@ class LoginController extends GetxController {
       await auth.resetPasswordEmail(email);
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Password Reset Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 
@@ -39,7 +38,7 @@ class LoginController extends GetxController {
       await auth.signInWithGoogle();
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.showSnackbar(GetSnackBar(message: e.toString()));
+      Get.snackbar("Google Sign In Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 }

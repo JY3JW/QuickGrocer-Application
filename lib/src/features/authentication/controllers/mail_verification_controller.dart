@@ -19,9 +19,7 @@ class MailVerificationController extends GetxController {
     try {
       await AuthenticationRepository.instance.sendEmailVerification();
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 5));
+      Get.snackbar("Invalid E-mail", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 

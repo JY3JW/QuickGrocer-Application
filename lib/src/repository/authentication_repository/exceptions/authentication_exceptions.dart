@@ -2,17 +2,23 @@ class TExceptions implements Exception {
   // the associated error message
   final String message;
 
+  @override
+  String toString() {
+    // TODO: implement toString
+    return message;
+  }
+
   const TExceptions(
-      [this.message = "An unknown error occured."]);
+      [this.message = 'An unknown error occured.']);
 
   factory TExceptions.fromCode(String code) {
     switch (code) {
       case 'email-already-in-use':
-        return  TExceptions('An account already exists for that email.');
+        return const TExceptions('An account already exists for that email.');
       case 'invalid-email':
-        return   TExceptions('Email is not valid or badly formatted.');
+        return const TExceptions('Email is not valid or badly formatted.');
       case 'weak-password':
-        return  TExceptions('Please enter a stronger password.');
+        return const TExceptions('Please enter a stronger password.');
       case 'user-disabled':
         return const TExceptions('This user has been disabled. Please contact support for help.');
       case 'user-not-found':
