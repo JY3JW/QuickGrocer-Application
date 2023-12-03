@@ -107,15 +107,6 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
             child: Column(children: [
-              SizedBox(
-                width: 150,
-                height: 150,
-                child: OutlinedButton(
-                    onPressed: scanBarcodeNormal,
-                    child: Image.network(
-                        'https://static.vecteezy.com/system/resources/previews/014/720/616/original/scan-bar-code-label-icon-barcode-tag-scanner-pictogram-product-information-identification-sign-digital-scanning-technology-isolated-illustration-vector.jpg')),
-              ),
-              SizedBox(height: 20),
               Form(
                 key: _formKey,
                 child: Column(
@@ -129,12 +120,15 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
-                        label: Text(groceryId),
-                        prefixIcon: Icon(
-                          Icons.code_rounded,
-                        ),
-                      ),
+                      decoration: InputDecoration(
+                          label: Text(groceryId),
+                          prefixIcon: Icon(
+                            Icons.code_rounded,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.qr_code_scanner_rounded),
+                            onPressed: scanBarcodeNormal,
+                          )),
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
