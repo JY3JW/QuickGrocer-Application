@@ -21,7 +21,7 @@ class _SellerDashboardState extends State<SellerDashboard> {
       child: Text('ManageOrderScreen'),
     ),
     SafeArea(
-      child: Text('ViewSalesReportScreen'),
+      child: Text('ViewSalesReportScreen & ViewFeedback'),
     ),
     SafeArea(
       child: SellerProfileScreen(),
@@ -55,9 +55,9 @@ class _SellerDashboardState extends State<SellerDashboard> {
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.file_copy),
-            icon: Icon(Icons.file_copy_outlined),
-            label: 'Report',
+            activeIcon: Icon(Icons.grade),
+            icon: Icon(Icons.grade_outlined),
+            label: 'Performance',
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(
