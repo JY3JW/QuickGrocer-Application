@@ -22,6 +22,7 @@ class GroceryModel {
 
   toJson() {
     return {
+      "id": id,
       "name": name,
       "category": category,
       "imageUrl": imageUrl,

@@ -7,9 +7,9 @@ import 'package:quickgrocer_application/src/features/core/controllers/grocery_co
 import 'package:quickgrocer_application/src/features/core/models/category_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/barcode_scanning_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_stock_screen.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
   const ManageGroceryScreen({super.key});
@@ -45,7 +45,7 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                 color: iconColorWithoutBackground,
               )),
           IconButton(
-              onPressed: () => Get.to(() => UpdateGroceyStockScreen()),
+              onPressed: () => Get.to(() => BarcodeScanningScreen()),
               icon: Icon(
                 Icons.qr_code_scanner_rounded,
                 color: iconColorWithoutBackground,

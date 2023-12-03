@@ -32,7 +32,7 @@ class GroceryRepository extends GetxController {
   // Fetch single grocery details
   Future<GroceryModel> getGroceryDetails(String id) async {
     final snapshot =
-        await _db.collection("users").where("id", isEqualTo: id).get();
+        await _db.collection("groceries").where("id", isEqualTo: id).get();
     final groceryData =
         snapshot.docs.map((e) => GroceryModel.fromSnapshot(e)).single;
     return groceryData;
