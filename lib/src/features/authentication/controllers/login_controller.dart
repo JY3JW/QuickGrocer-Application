@@ -6,7 +6,6 @@ class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
   // TextField Controllers to get data from TextFields
-  final showPassword = false.obs;
   final email = TextEditingController();
   final password = TextEditingController();
 
@@ -26,7 +25,6 @@ class LoginController extends GetxController {
     try {
       final auth = AuthenticationRepository.instance;
       await auth.resetPasswordEmail(email);
-      auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
       Get.snackbar("Password Reset Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }

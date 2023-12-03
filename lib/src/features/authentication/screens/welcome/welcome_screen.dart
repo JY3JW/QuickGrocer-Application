@@ -25,11 +25,14 @@ class WelcomeScreen extends StatelessWidget {
               Hero(
                 tag: 'quickgrocer_logo_tag',
                 child: Image(
-                  image: const AssetImage(welcomeScreenImage),
-                  height: height * 0.6),),
+                    image: const AssetImage(welcomeScreenImage),
+                    height: height * 0.6),
+              ),
               Column(
                 children: [
-                  Text(welcomeTitle, style: Theme.of(context).textTheme.displaySmall),
+                  Text(welcomeTitle,
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center),
                   Text(welcomeSubtitle,
                       style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center),
@@ -42,10 +45,13 @@ class WelcomeScreen extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
                         );
                       },
-                      child: Text(login.toUpperCase(),),
+                      child: Text(
+                        login.toUpperCase(),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10.0),
@@ -53,7 +59,8 @@ class WelcomeScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpScreen()),
                         );
                       },
                       child: Text(signup.toUpperCase()),

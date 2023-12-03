@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/common_widgets/form/form_header_widget.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/controllers/login_controller.dart';
-import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   @override
@@ -15,6 +15,7 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final controller = Get.put(LoginController());
+  final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
   @override
@@ -37,9 +38,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 SizedBox(height: formHeight),
                 Form(
+                  key: _formKey,
                   child: Column(children: [
                     TextFormField(
                       controller: controller.email,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
                         label: Text(email),
                         hintText: email,
@@ -50,11 +58,29 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          AuthenticationRepository.instance.resetPasswordEmail(controller.email.text.trim());
-                          Navigator.of(context).pop();
+                          if (_formKey.currentState!.validate()) {
+                            controller.resetPassword(controller.email.text.trim());
+                          }
                         },
                         child: const Text(sendRequest),
                       ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                  LineAwesomeIcons.alternate_long_arrow_left),
+                              const SizedBox(width: 5),
+                              Text(backToLogin.toLowerCase()),
+                            ],
+                          )),
                     ),
                   ]),
                 ),
