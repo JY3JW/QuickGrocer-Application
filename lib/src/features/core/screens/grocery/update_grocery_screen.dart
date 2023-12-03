@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
@@ -21,6 +25,7 @@ class UpdateGroceryScreen extends StatefulWidget {
 
 class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
   String? selectedValue;
+  String image = "";
   List<String> categories = [
     'Food & Drinks',
     'Cleaning & Laundry',
@@ -29,6 +34,39 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
     'Others'
   ];
 
+  Future<void> getImageFromGallery() async {
+    //1. pick image
+    XFile? pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedImage == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //2. upload to firebase storage
+    // get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('profile_images');
+    // create a reference for the image to be stored
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+    // !!! very important, need to set the metadata for putFile function. else, the file will not have data type
+    final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': pickedImage.path});
+
+    // handle errors/success
+    try {
+      // store the file
+      await referenceImageToUpload.putFile(File(pickedImage.path), metadata);
+      // success: get the download url
+      image = await referenceImageToUpload.getDownloadURL();
+    } catch (error) {
+      // error occured
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
@@ -36,10 +74,10 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
     final controller = Get.put(GroceryController());
 
     final _formKey = GlobalKey<FormState>();
-
     final id = widget.grocery.id;
     final name = TextEditingController(text: widget.grocery.name);
     final imageUrl = TextEditingController(text: widget.grocery.imageUrl);
+    final url = TextEditingController(text: image);
     final description = TextEditingController(text: widget.grocery.description);
     final category = TextEditingController(text: widget.grocery.category);
     final price =
@@ -120,24 +158,32 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: imageUrl,
+                      controller: image == '' ? imageUrl : url,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the image URL';
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         label: Text(groceryImageUrl),
                         prefixIcon: Icon(
                           Icons.link_rounded,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: getImageFromGallery,
+                          icon: Icon(
+                            LineAwesomeIcons.camera,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     DropdownButtonFormField<String>(
                       hint: const Text('🛍️   ' + groceryCategory),
-                      value: selectedValue.isNotNull ? selectedValue : category.text,
+                      value: selectedValue.isNotNull
+                          ? selectedValue
+                          : category.text,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please select a category';
@@ -146,16 +192,17 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                       },
                       isExpanded: true,
                       borderRadius: BorderRadius.circular(16),
-                      items: categories.
-                      map((String value) {
+                      items: categories.map((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList(),
                       onChanged: (value) async {
-                        setState(() {selectedValue = value!;});
+                        setState(() {
+                          selectedValue = value!;
+                        });
                       },
                     ),
-                    const SizedBox(height: formHeight-20.0),
+                    const SizedBox(height: formHeight - 20.0),
                     TextFormField(
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp('[a-zA-Z]')),
@@ -198,23 +245,25 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                     const SizedBox(height: formHeight),
                     Row(children: [
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              final groceryData = GroceryModel(
-                                id: id,
-                                name: name.text.trim(),
-                                description: description.text.trim(),
-                                imageUrl: imageUrl.text.trim(),
-                                category: selectedValue.isNotNull ? selectedValue! : category.text.trim(),
-                                price: toDouble(price.text.trim()),
-                                quantity: toInt(quantity.text.trim()),
-                              );
-                              
-                              await controller.updateGrocery(groceryData);
-                              Navigator.pop(context);
-                            }
-                          },
+                          child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final groceryData = GroceryModel(
+                              id: id,
+                              name: name.text.trim(),
+                              description: description.text.trim(),
+                              imageUrl: image == '' ? imageUrl.text.trim() : url.text.trim(),
+                              category: selectedValue.isNotNull
+                                  ? selectedValue!
+                                  : category.text.trim(),
+                              price: toDouble(price.text.trim()),
+                              quantity: toInt(quantity.text.trim()),
+                            );
+
+                            await controller.updateGrocery(groceryData);
+                          }
+                          Navigator.pop(context);
+                        },
                         child: const Text(updateGroceryButton),
                       )),
                       const SizedBox(width: formHeight),
@@ -236,11 +285,10 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                                         ElevatedButton(
                                           child: Text('YES'),
                                           onPressed: () => {
-                                            setState(() {
-                                              GroceryRepository.instance
-                                                  .deleteGroceryRecord(
-                                                      widget.grocery);
-                                            }),
+                                            GroceryRepository.instance
+                                                .deleteGroceryRecord(
+                                                    widget.grocery),
+                                            Navigator.pop(context),
                                             Navigator.pop(context),
                                           },
                                         ),

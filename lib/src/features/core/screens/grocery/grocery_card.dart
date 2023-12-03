@@ -78,10 +78,8 @@ class _GroceryCardState extends State<GroceryCard> {
                                     ElevatedButton(
                                       child: Text('YES'),
                                       onPressed: () => {
+                                        GroceryRepository.instance.deleteGroceryRecord(widget.grocery),
                                         Navigator.pop(context),
-                                        setState(() {
-                                          GroceryRepository.instance.deleteGroceryRecord(widget.grocery);
-                                        }),
                                       },
                                     ),
                                   ]));

@@ -20,7 +20,6 @@ class ProfileScreen extends StatelessWidget {
 
     var iconColor =
         Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
-    var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
 
@@ -50,32 +49,6 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(defaultSize),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage(profileImage))),
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: iconColor),
-                          child: Icon(
-                            LineAwesomeIcons.alternate_pencil,
-                            color: iconLineColor,
-                            size: 20,
-                          )))
-                ],
-              ),
-              const SizedBox(height: 20),
               Container(
                 child: FutureBuilder(
                     future: controller.getUserData(),
@@ -85,10 +58,25 @@ class ProfileScreen extends StatelessWidget {
                           UserModel user = snapshot.data as UserModel;
                           return Column(
                             children: [
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Image(
+                                            image: AssetImage(profileImage))),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
                               Text(user.fullName,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineSmall),
+                              const SizedBox(height: 10),
                               Text(user.email,
                                   style: Theme.of(context).textTheme.bodyLarge),
                             ],

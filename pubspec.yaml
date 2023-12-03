@@ -55,6 +55,10 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_native_splash: ^2.3.5
   flutter_helper_utils: ^1.5.7
+  image_picker: ^1.0.4
+  firebase_storage: ^11.5.3
+  firebase_app_check: ^0.2.1+6
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

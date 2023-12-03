@@ -37,10 +37,10 @@ class AuthenticationRepository extends GetxController {
     //check whether user already logged in, if logged in direct to dashboard page, else direct to welcome page
     user == null
         ? Get.offAll(() => const WelcomeScreen())
-        : user.email == 'admin@gmail.com' ? Get.offAll(() => const SellerDashboard())
+        : (user.email == 'admin@gmail.com' ? Get.offAll(() => const SellerDashboard())
         : user.emailVerified
             ? Get.offAll(() => const Dashboard())
-            : Get.offAll(() => const MailVerificationScreen());
+            : Get.offAll(() => const MailVerificationScreen()));
   }
 
   //! not used because cannot set UID of phone number

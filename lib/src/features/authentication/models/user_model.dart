@@ -34,6 +34,7 @@ class UserModel {
       password: data["password"],
       fullName: data["name"],
       phoneNo: data["phone"],
+
     );
   }
 }

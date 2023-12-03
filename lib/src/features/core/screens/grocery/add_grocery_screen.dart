@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
@@ -27,6 +31,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
   ];
 
   late String _scanBarcodeResult = "";
+  String imageUrl = "";
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
@@ -42,6 +47,39 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
     });
   }
 
+  Future<void> getImageFromGallery() async {
+    //1. pick image
+    XFile? pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedImage == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //2. upload to firebase storage
+    // get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('profile_images');
+    // create a reference for the image to be stored
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+    // !!! very important, need to set the metadata for putFile function. else, the file will not have data type
+    final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': pickedImage.path});
+
+    // handle errors/success
+    try {
+      // store the file
+      await referenceImageToUpload.putFile(File(pickedImage.path), metadata);
+      // success: get the download url
+      imageUrl = await referenceImageToUpload.getDownloadURL();
+    } catch (error) {
+      // error occured
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
@@ -49,6 +87,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
     final controller = Get.put(GroceryController());
     final _formKey = GlobalKey<FormState>();
     final id = TextEditingController(text: _scanBarcodeResult);
+    final url = TextEditingController(text: imageUrl);
 
     return SafeArea(
       child: Scaffold(
@@ -132,17 +171,23 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: controller.imageUrl,
+                      controller: url,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the image URL';
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         label: Text(groceryImageUrl),
                         prefixIcon: Icon(
                           Icons.link_rounded,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: getImageFromGallery,
+                          icon: Icon(
+                            LineAwesomeIcons.camera,
+                          ),
                         ),
                       ),
                     ),
@@ -218,7 +263,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                               id: id.text.trim(),
                               name: controller.name.text.trim(),
                               description: controller.description.text.trim(),
-                              imageUrl: controller.imageUrl.text.trim(),
+                              imageUrl: url.text.trim(),
                               category: selectedValue!,
                               price: toDouble(controller.price.text.trim()),
                               quantity: toInt(controller.quantity.text.trim()),
@@ -226,6 +271,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
 
                             await controller.createNewGrocery(groceryData);
                             Navigator.pop(context);
+                            setState(() {});
                           }
                         },
                         child: const Text(addGroceryButton),
