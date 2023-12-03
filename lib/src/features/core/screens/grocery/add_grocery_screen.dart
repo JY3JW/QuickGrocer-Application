@@ -59,7 +59,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
     //2. upload to firebase storage
     // get a reference to storage root
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profile_images');
+    Reference referenceDirImages = referenceRoot.child('images');
     // create a reference for the image to be stored
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
 
