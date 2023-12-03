@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/mail_verification/mail_verification.dart';
 import 'package:quickgrocer_application/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/exceptions/authentication_exceptions.dart';
+import 'package:quickgrocer_application/src/repository/user_repository/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -34,8 +36,9 @@ class AuthenticationRepository extends GetxController {
     //check whether user already logged in, if logged in direct to dashboard page, else direct to welcome page
     user == null
         ? Get.offAll(() => const WelcomeScreen())
-        : user.emailVerified? Get.offAll(() => const Dashboard())
-        : Get.offAll(() => const MailVerificationScreen());
+        : user.emailVerified
+            ? Get.offAll(() => const Dashboard())
+            : Get.offAll(() => const MailVerificationScreen());
   }
 
   //! maybe not used because cannot set UID of phone number
@@ -175,6 +178,48 @@ class AuthenticationRepository extends GetxController {
       throw e.message;
     } catch (e) {
       throw 'Unable to logout. Try again.';
+    }
+  }
+
+  Future<void> deleteUserAccount() async {
+    try {
+      String? uid = FirebaseAuth.instance.currentUser?.uid;
+      await FirebaseAuth.instance.currentUser?.delete();
+      UserRepository.instance
+          .deleteUserRecord(uid);
+      Get.offAll(() => const WelcomeScreen());
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar(ohSnap, e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+      if (e.code == 'requires-recent-login') {
+        await _reauthenticateAndDelete();
+      }
+    } catch (e) {
+      Get.snackbar(ohSnap, e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
+  }
+
+  Future<void> _reauthenticateAndDelete() async {
+    try {
+      final providerData =
+          FirebaseAuth.instance.currentUser?.providerData.first;
+
+      if (AppleAuthProvider().providerId == providerData!.providerId) {
+        await FirebaseAuth.instance.currentUser!
+            .reauthenticateWithProvider(AppleAuthProvider());
+      } else if (GoogleAuthProvider().providerId == providerData.providerId) {
+        await FirebaseAuth.instance.currentUser!
+            .reauthenticateWithProvider(GoogleAuthProvider());
+      }
+
+      await FirebaseAuth.instance.currentUser?.delete();
+    } catch (e) {
+      Get.snackbar(ohSnap, e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 }

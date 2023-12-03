@@ -84,6 +84,9 @@ class SignUpFormWidget extends StatelessWidget {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your password';
                 }
+                if (value.length < 6) {
+                  return 'Password should be longer than 6 characters';
+                }
                 return null;
               },
               obscureText: true,

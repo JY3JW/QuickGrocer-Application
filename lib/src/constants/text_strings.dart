@@ -46,11 +46,17 @@ const String otpMessage = "Enter the verification code sent at";
 const String profile = "Profile";
 const String editProfile = "Edit Profile";
 const String logout = "Logout";
+const String deleteAccount = "Delete Account";
 
 // Manage User Text
 const String manageUser = "Manage User";
+const String updateUser = "Update User";
+const String saveUserDetails = "Save Update";
 const String userList = "User List";
 const String addNewUser = "+ Add new user";
+
+//Add User Text
+const String addUser = "Add New User";
 
 // Snack Bar
 const String Alert = "Alert";

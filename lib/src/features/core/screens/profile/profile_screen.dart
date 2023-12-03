@@ -21,7 +21,8 @@ class ProfileScreen extends StatelessWidget {
     var iconColor =
         Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
     var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
-    var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
@@ -34,9 +35,14 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.isDarkMode ? Get.changeTheme(AppTheme.lightTheme) : Get.changeTheme(AppTheme.darkTheme);
+                Get.isDarkMode
+                    ? Get.changeTheme(AppTheme.lightTheme)
+                    : Get.changeTheme(AppTheme.darkTheme);
               },
-              icon: Icon(Get.isDarkMode ? LineAwesomeIcons.sun : LineAwesomeIcons.moon, color: iconColorWithoutBackground,))
+              icon: Icon(
+                Get.isDarkMode ? LineAwesomeIcons.sun : LineAwesomeIcons.moon,
+                color: iconColorWithoutBackground,
+              ))
         ],
       ),
       body: SingleChildScrollView(
@@ -147,7 +153,44 @@ class ProfileScreen extends StatelessWidget {
                         .textTheme
                         .titleMedium
                         ?.apply(color: Colors.red)),
-              )
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                              title: Text('Delete Account'),
+                              content: Text('Confirm to delete your account?'),
+                              actions: [
+                                ElevatedButton(
+                                  child: Text('NO'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                ElevatedButton(
+                                  child: Text('YES'),
+                                  onPressed: () => {
+                                    AuthenticationRepository.instance
+                                        .deleteUserAccount()
+                                  },
+                                ),
+                              ]));
+                },
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: iconColor.withOpacity(0.3),
+                  ),
+                  child: Icon(Icons.delete_forever_rounded, color: iconColor),
+                ),
+                title: Text(deleteAccount,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(color: Colors.red)),
+              ),
             ],
           ),
         ),

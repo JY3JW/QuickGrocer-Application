@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/repository/grocery_repository/grocery_repository.dart';
 
@@ -23,7 +22,7 @@ class GroceryController extends GetxController {
     try {
       await _grocRepo.createGrocery(grocery);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(),
+      Get.snackbar("Grocery Creation Failed", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5));
     }
@@ -46,7 +45,7 @@ class GroceryController extends GetxController {
     try {
       await _grocRepo.updateGroceryRecord(grocery);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(),
+      Get.snackbar("Grocery Update Failed", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5));
     }
@@ -56,7 +55,7 @@ class GroceryController extends GetxController {
     try {
       await _grocRepo.deleteGroceryRecord(grocery);
     } catch (e) {
-      Get.snackbar(ohSnap, e.toString(),
+      Get.snackbar("Grocery Deletion Failed", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5));
     }

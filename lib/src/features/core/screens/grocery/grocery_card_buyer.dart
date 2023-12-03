@@ -26,8 +26,8 @@ class _GroceryCardBuyerState extends State<GroceryCardBuyer> {
         child: Column(
           children: [
             SizedBox(
-              height: 130,
-              width: 130,
+              height: 120,
+              width: 120,
               child: Image.network(widget.grocery.imageUrl, fit: BoxFit.cover),
             ),
             Text(
