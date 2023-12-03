@@ -9,6 +9,7 @@ import 'package:quickgrocer_application/src/features/core/models/grocery_model.d
 import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_stock_screen.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
   const ManageGroceryScreen({super.key});
@@ -42,6 +43,12 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
               icon: Icon(
                 Icons.add_box,
                 color: iconColorWithoutBackground,
+              )),
+          IconButton(
+              onPressed: () => Get.to(() => UpdateGroceyStockScreen()),
+              icon: Icon(
+                Icons.qr_code_scanner_rounded,
+                color: iconColorWithoutBackground,
               ))
         ],
       ),
@@ -54,6 +61,7 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                   future: catController.getAllCategories(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
+                      
                       if (snapshot.hasData) {
                         category = snapshot.data as List<CategoryModel>;
                         return SizedBox(
@@ -159,7 +167,11 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
       itemCount: grocery.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateGroceryScreen(grocery: grocery[index]))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UpdateGroceryScreen(grocery: grocery[index]))),
           child: GroceryCard(grocery: grocery[index]),
         );
       });

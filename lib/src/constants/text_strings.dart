@@ -98,5 +98,11 @@ const String addGroceryTitle = "Add New Grocery";
 const String addGroceryButton = "Create Grocery";
 const String groceryId = "Grocery ID";
 
+// Update Grocery Stock Barcode Screen
+const String updateGroceryStockTitle = "Update Grocery Stock";
+const String stockInQuantity = "Stock In Quantity";
+const String stockOutQuantity = "Stock Out Quantity";
+const String updateGroceryStockButton = "Update Stock";
+
 // Browse Grocery Screen
 const String browseGroceryTitle = "Home";

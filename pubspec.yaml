@@ -48,6 +48,9 @@ dependencies:
   # State Management
   get: ^4.6.6
 
+  # Barcode Scanner
+  flutter_barcode_scanner: ^2.0.0
+
   intl: ^0.18.1
   google_fonts: ^6.1.0
   flutter_native_splash: ^2.3.5

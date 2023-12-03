@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -25,12 +26,29 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
     'Others'
   ];
 
+  late String _scanBarcodeResult = "";
+
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      debugPrint(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+    setState(() {
+      _scanBarcodeResult = barcodeScanRes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
     final controller = Get.put(GroceryController());
     final _formKey = GlobalKey<FormState>();
+    final id = TextEditingController(text: _scanBarcodeResult);
 
     return SafeArea(
       child: Scaffold(
@@ -45,29 +63,30 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          actions: [
-            IconButton(
-                onPressed: () {/*scan barcode*/},
-                icon: Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: iconColorWithoutBackground,
-                ))
-          ],
         ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
             child: Column(children: [
+              SizedBox(
+                width: 150,
+                height: 150,
+                child: OutlinedButton(
+                    onPressed: scanBarcodeNormal,
+                    child: Image.network(
+                        'https://static.vecteezy.com/system/resources/previews/014/720/616/original/scan-bar-code-label-icon-barcode-tag-scanner-pictogram-product-information-identification-sign-digital-scanning-technology-isolated-illustration-vector.jpg')),
+              ),
+              SizedBox(height: 20),
               Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: controller.id,
+                      controller: id,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the grocery id';
+                          return 'Please enter the grocery id or scan the barcode';
                         }
                         return null;
                       },
@@ -129,24 +148,25 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     DropdownButtonFormField<String>(
-                          hint: const Text('🛍️   ' + groceryCategory),
-                          value: selectedValue,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a category';
-                            }
-                            return null;
-                          },
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(16),
-                          items: categories.
-                          map((String value) {
-                            return DropdownMenuItem<String>(
-                                value: value, child: Text(value));
-                          }).toList(),
-                          onChanged: (value) async {
-                            setState(() {selectedValue = value!;});
-                          },
+                      hint: const Text('🛍️   ' + groceryCategory),
+                      value: selectedValue,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a category';
+                        }
+                        return null;
+                      },
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(16),
+                      items: categories.map((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value));
+                      }).toList(),
+                      onChanged: (value) async {
+                        setState(() {
+                          selectedValue = value!;
+                        });
+                      },
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
@@ -195,7 +215,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final groceryData = GroceryModel(
-                              id: controller.id.text.trim(),
+                              id: id.text.trim(),
                               name: controller.name.text.trim(),
                               description: controller.description.text.trim(),
                               imageUrl: controller.imageUrl.text.trim(),
