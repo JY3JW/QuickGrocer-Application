@@ -33,7 +33,8 @@ class GroceryRepository extends GetxController {
   Future<GroceryModel> getGroceryDetails(String id) async {
     final snapshot =
         await _db.collection("users").where("id", isEqualTo: id).get();
-    final groceryData = snapshot.docs.map((e) => GroceryModel.fromSnapshot(e)).single;
+    final groceryData =
+        snapshot.docs.map((e) => GroceryModel.fromSnapshot(e)).single;
     return groceryData;
   }
 
@@ -50,16 +51,30 @@ class GroceryRepository extends GetxController {
     final snapshot = await _db.collection("groceries").get();
     final groceryData =
         snapshot.docs.map((e) => GroceryModel.fromSnapshot(e)).toList();
-    final groceryDataOfCategory = <GroceryModel> [
-    for(int i=0; i<groceryData.length; i++)
-      if(groceryData[i].category == category)
-        GroceryModel(id: groceryData[i].id, name: groceryData[i].name, category: groceryData[i].category, imageUrl: groceryData[i].imageUrl, description: groceryData[i].description, price: groceryData[i].price, quantity: groceryData[i].quantity)
+    final groceryDataOfCategory = <GroceryModel>[
+      for (int i = 0; i < groceryData.length; i++)
+        if (groceryData[i].category == category)
+          GroceryModel(
+              id: groceryData[i].id,
+              name: groceryData[i].name,
+              category: groceryData[i].category,
+              imageUrl: groceryData[i].imageUrl,
+              description: groceryData[i].description,
+              price: groceryData[i].price,
+              quantity: groceryData[i].quantity)
     ];
     return groceryDataOfCategory;
   }
 
   Future<void> updateGroceryRecord(GroceryModel grocery) async {
     await _db.collection("groceries").doc(grocery.id).update(grocery.toJson());
+  }
+
+  // used by stock counting using barcode scanner
+  Future<void> updateGroceryStockQuantity(String id, int quantity) async {
+    await _db.collection("groceries").doc(id).update({
+      'quantity': FieldValue.increment(quantity),
+    });
   }
 
   Future<void> deleteGroceryRecord(GroceryModel grocery) async {

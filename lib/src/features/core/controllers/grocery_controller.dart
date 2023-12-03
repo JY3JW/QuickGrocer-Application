@@ -51,6 +51,17 @@ class GroceryController extends GetxController {
     }
   }
 
+  // update the stock of grocery
+  updateGroceryStock(String id, int quantity) async {
+    try {
+      await _grocRepo.updateGroceryStockQuantity(id, quantity);
+    } catch (e) {
+      Get.snackbar("Grocery Stock Update Failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
+  }
+
   deleteGrocery(GroceryModel grocery) async {
     try {
       await _grocRepo.deleteGroceryRecord(grocery);
