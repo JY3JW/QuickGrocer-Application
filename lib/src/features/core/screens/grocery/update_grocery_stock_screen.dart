@@ -102,7 +102,7 @@ class _UpdateGroceyStockScreenState extends State<UpdateGroceyStockScreen> {
                               ],
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter the stock in qunatity';
+                                  return 'Please enter the stock in quantity';
                                 }
                                 return null;
                               },
@@ -122,7 +122,7 @@ class _UpdateGroceyStockScreenState extends State<UpdateGroceyStockScreen> {
                               ],
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter the stock out qunatity';
+                                  return 'Please enter the stock out quantity';
                                 }
                                 return null;
                               },
