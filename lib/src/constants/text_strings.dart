@@ -111,3 +111,7 @@ const String browseGroceryTitle = "Home";
 
 // View Order Status Screen
 const String orderHistoryTitle = "Order History";
+
+// View Shopping Cart Screen
+const String shoppingCartScreenTitle = "Shopping Cart";
+const String checkoutShoppingCart = "Checkout";

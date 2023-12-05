@@ -98,22 +98,22 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
           ),
         ),
       bottomSheet: BottomAppBar(
+        height: MediaQuery.of(context).size.height/12,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
           width: double.infinity,
-          height: MediaQuery.of(context).size.height/11,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '\RM' '${grocery.price.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               ElevatedButton.icon(
                 onPressed: grocery.quantity == 0? () => {} :() => {},
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(buttonHeight),
+                  padding: EdgeInsets.all(10),
                   backgroundColor: grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,
                   side:  grocery.quantity == 0? BorderSide(color: Colors.grey) : BorderSide(color: AppColors.mainPineColor),
                   foregroundColor: Colors.white,
