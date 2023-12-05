@@ -45,14 +45,14 @@ class _GroceryCardBuyerState extends State<GroceryCardBuyer> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.mainPineColor,
+                  decoration: BoxDecoration(
+                    color: widget.grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   child:
                     IconButton(
-                        icon: Icon(Icons.add_shopping_cart, color: Colors.white),
-                        onPressed: () => Get.to(() => ViewGroceryDetailsScreen(grocery: widget.grocery)),
+                        icon: widget.grocery.quantity == 0? Icon(Icons.remove_shopping_cart, color: Colors.white) : Icon(Icons.add_shopping_cart, color: Colors.white),
+                        onPressed: widget.grocery.quantity == 0? () => {} : () => Get.to(() => ViewGroceryDetailsScreen(grocery: widget.grocery)),
                         ),
                 ),
               ],
