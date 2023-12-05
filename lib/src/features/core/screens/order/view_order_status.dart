@@ -16,29 +16,38 @@ class _ViewOrderStatusState extends State<ViewOrderStatusScreen> {
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
-            appBar: AppBar(
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.cached, color: Colors.amber),
-                  Text('Ongoing', style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              )),
-              Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.done, color: AppColors.subLimeColor),
-                  Text('Completed', style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              )),
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.cached, color: Colors.amber),
+                    Text('Ongoing',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ],
+                )),
+                Tab(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.done, color: AppColors.subLimeColor),
+                    Text('Completed',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ],
+                )),
+              ],
+            ),
+            title: const Text(orderHistoryTitle),
+          ),
+          body: const TabBarView(
+            children: [
+              Center(child: Text('ongoing order screen')),
+              Center(child: Text('completed order screen')),
             ],
           ),
-          title: const Text(orderHistoryTitle),
-        )),
+        ),
       ),
     );
   }
