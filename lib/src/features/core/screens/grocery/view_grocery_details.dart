@@ -103,24 +103,23 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
           alignment: Alignment.center,
           width: double.infinity,
           height: MediaQuery.of(context).size.height/11,
-          decoration: const BoxDecoration(
-            color: AppColors.mainPineColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10),),
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '\RM' '${grocery.price.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: grocery.quantity == 0? () => {} :() => {},
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: buttonHeight),
+                  padding: EdgeInsets.all(buttonHeight),
+                  backgroundColor: grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,
+                  side:  grocery.quantity == 0? BorderSide(color: Colors.grey) : BorderSide(color: AppColors.mainPineColor),
+                  foregroundColor: Colors.white,
                 ),
-                icon: const Icon(Icons.add_shopping_cart_rounded),
-                label: const Text(addToCart)
+                icon: grocery.quantity == 0? Icon(Icons.remove_shopping_cart_rounded) : Icon(Icons.add_shopping_cart_rounded),
+                label: grocery.quantity == 0? Text(outOfStock) : Text(addToCart)
               ),
             ]
           ),
