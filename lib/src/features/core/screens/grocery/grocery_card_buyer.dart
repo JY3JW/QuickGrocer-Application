@@ -54,7 +54,7 @@ class _GroceryCardBuyerState extends State<GroceryCardBuyer> {
                   child:
                     IconButton(
                         icon: widget.grocery.quantity == 0? Icon(Icons.remove_shopping_cart, color: Colors.white) : Icon(Icons.add_shopping_cart, color: Colors.white),
-                        onPressed: widget.grocery.quantity == 0? () => {} : () => CartController.instance.addProductToCart(widget.grocery),
+                        onPressed: widget.grocery.quantity == 0? () => {} : () => controller.addProductToCart(widget.grocery),
                         ),
                 ),
               ],
