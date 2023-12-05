@@ -12,8 +12,15 @@ class SignUpController extends GetxController {
   final password = TextEditingController();
   final name = TextEditingController();
   final phone = TextEditingController();
-  
+
   final userRepo = Get.put(UserRepository());
+
+  clearControllers() {
+    email.clear();
+    name.clear();
+    password.clear();
+    phone.clear();
+  }
 
   //Call this Function from Design and it will do the rest
   Future<String?> registerUser(String email, String password) {
@@ -30,7 +37,8 @@ class SignUpController extends GetxController {
     try {
       String? userID = await registerUser(user.email, user.password);
       await userRepo.createUser(user, userID);
-      AuthenticationRepository.instance.setInitialScreen(AuthenticationRepository.instance.firebaseUser.value);
+      AuthenticationRepository.instance.setInitialScreen(
+          AuthenticationRepository.instance.firebaseUser.value);
     } catch (e) {
       Get.snackbar("Sign Up Failed", e.toString().toString(),
           snackPosition: SnackPosition.BOTTOM,

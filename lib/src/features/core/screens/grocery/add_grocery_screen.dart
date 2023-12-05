@@ -265,6 +265,10 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
 
                             await controller.createNewGrocery(groceryData);
                             Navigator.pop(context);
+
+                            // clear controllers
+                            controller.clearControllers();
+
                             setState(() {});
                           }
                         },

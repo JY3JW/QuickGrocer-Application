@@ -16,7 +16,17 @@ class GroceryController extends GetxController {
   final category = TextEditingController();
   final price = TextEditingController();
   final quantity = TextEditingController();
-  
+
+  clearControllers() {
+    id.clear();
+    name.clear();
+    description.clear();
+    imageUrl.clear();
+    category.clear();
+    price.clear();
+    quantity.clear();
+  }
+
   // create new grocery
   createNewGrocery(GroceryModel grocery) async {
     try {
