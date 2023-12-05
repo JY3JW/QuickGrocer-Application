@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/constants/text_strings.dart';
 
 class ViewOrderStatusScreen extends StatefulWidget {
   const ViewOrderStatusScreen({super.key});
@@ -10,20 +12,32 @@ class ViewOrderStatusScreen extends StatefulWidget {
 class _ViewOrderStatusState extends State<ViewOrderStatusScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
+    return Scaffold(
+      body: DefaultTabController(
+        length: 2,
         child: Scaffold(
             appBar: AppBar(
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(
-                  icon: Icon(Icons.cached, color: Colors.amber),
-                  text: 'Ongoing'),
-              Tab(icon: Icon(Icons.assignment_turned_in_rounded)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.cached, color: Colors.amber),
+                  Text('Ongoing', style: Theme.of(context).textTheme.bodyLarge),
+                ],
+              )),
+              Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.done, color: AppColors.subLimeColor),
+                  Text('Completed', style: Theme.of(context).textTheme.bodyLarge),
+                ],
+              )),
             ],
           ),
-          title: const Text('Order Demo'),
+          title: const Text(orderHistoryTitle),
         )),
       ),
     );

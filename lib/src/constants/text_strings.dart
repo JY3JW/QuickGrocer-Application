@@ -108,3 +108,6 @@ const String updateGroceryStockButton = "Update Stock";
 
 // Browse Grocery Screen
 const String browseGroceryTitle = "Home";
+
+// View Order Status Screen
+const String orderHistoryTitle = "Order History";
