@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
 
 class GroceryCardBuyer extends StatefulWidget {
   final GroceryModel grocery;
@@ -16,6 +16,8 @@ class GroceryCardBuyer extends StatefulWidget {
 class _GroceryCardBuyerState extends State<GroceryCardBuyer> {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CartController());
+
     return Container(
         width: MediaQuery.of(context).size.width / 2,
         padding: const EdgeInsets.all(10),
@@ -52,7 +54,7 @@ class _GroceryCardBuyerState extends State<GroceryCardBuyer> {
                   child:
                     IconButton(
                         icon: widget.grocery.quantity == 0? Icon(Icons.remove_shopping_cart, color: Colors.white) : Icon(Icons.add_shopping_cart, color: Colors.white),
-                        onPressed: widget.grocery.quantity == 0? () => {} : () => Get.to(() => ViewGroceryDetailsScreen(grocery: widget.grocery)),
+                        onPressed: widget.grocery.quantity == 0? () => {} : () => CartController.instance.addProductToCart(widget.grocery),
                         ),
                 ),
               ],

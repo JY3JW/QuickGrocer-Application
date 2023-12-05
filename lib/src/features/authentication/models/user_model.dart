@@ -23,7 +23,7 @@ class UserModel {
       "password": password,
     };
   }
-
+  
   // map user fetched from Firebase to UserModel
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
@@ -34,7 +34,6 @@ class UserModel {
       password: data["password"],
       fullName: data["name"],
       phoneNo: data["phone"],
-
     );
   }
 }

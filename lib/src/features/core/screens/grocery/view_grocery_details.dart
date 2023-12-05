@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
-import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 
 class ViewGroceryDetailsScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
     var detailsBackground = Get.isDarkMode ? AppColors.greyColor4 : AppColors.greyColor1;
+    final controller = Get.put(CartController());
 
     return Scaffold(
         appBar: AppBar(
@@ -111,7 +112,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               ElevatedButton.icon(
-                onPressed: grocery.quantity == 0? () => {} :() => {},
+                onPressed: grocery.quantity == 0? () => {} :() => controller.addProductToCart(grocery),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(10),
                   backgroundColor: grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,

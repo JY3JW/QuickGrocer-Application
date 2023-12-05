@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:quickgrocer_application/src/repository/cart_repository/cart_repository.dart';
 import 'package:quickgrocer_application/src/repository/user_repository/user_repository.dart';
 
 class SignUpController extends GetxController {
@@ -37,6 +39,7 @@ class SignUpController extends GetxController {
     try {
       String? userID = await registerUser(user.email, user.password);
       await userRepo.createUser(user, userID);
+      await CartRepository.instance.createCart(CartModel(id: userID as String, cart: []));
       AuthenticationRepository.instance.setInitialScreen(
           AuthenticationRepository.instance.firebaseUser.value);
     } catch (e) {

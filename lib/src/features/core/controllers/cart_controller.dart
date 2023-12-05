@@ -1,0 +1,140 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quickgrocer_application/src/constants/app_constant.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
+import 'package:quickgrocer_application/src/repository/cart_repository/cart_repository.dart';
+import 'package:uuid/uuid.dart';
+
+class CartController extends GetxController {
+  static CartController instance = Get.find();
+  final _cartRepo = Get.put(CartRepository());
+
+  @override
+  void onReady() async {
+    super.onReady();
+    Rx<CartModel> currentUserCart = Rx<CartModel>(await getCartData());
+    ever(currentUserCart, changeCartTotalPrice);
+  }
+
+  void addProductToCart(GroceryModel grocery) async {
+    try {
+      bool groceryIsInCart = await _isItemAlreadyAdded(grocery);
+      if (groceryIsInCart == true) {
+        CartItemModel itemInCart = await getAddedItem(grocery);
+        if (await checkQuantity(itemInCart) == true) {
+          increaseQuantity(itemInCart);
+          Get.snackbar("Check your cart", "${grocery.name} is already added");
+        } else {
+          Get.snackbar("Invalid Operation",
+              "Quantity to purchase cannot exceed the quantity of item in stock");
+        }
+      } else {
+        String itemId = Uuid().v4();
+        await _cartRepo.updateCartData({
+          "cart": FieldValue.arrayUnion([
+            {
+              "id": itemId,
+              "groceryId": grocery.id,
+              "name": grocery.name,
+              "quantity": 1,
+              "price": grocery.price,
+              "image": grocery.imageUrl,
+              "cost": grocery.price,
+            }
+          ])
+        });
+        Get.snackbar("Item added", "${grocery.name} was added to your cart");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Cannot add this item");
+      debugPrint(e.toString());
+    }
+  }
+
+  void removeCartItem(CartItemModel cartItem) async {
+    try {
+      await _cartRepo.updateCartData({
+        "cart": FieldValue.arrayRemove([cartItem.toJson()])
+      });
+    } catch (e) {
+      Get.snackbar("Error", "Cannot remove this item");
+      debugPrint(e.toString());
+    }
+  }
+
+  // calculate the newest total price of items in cart
+  double changeCartTotalPrice(CartModel cartModel) {
+    double totalCartPrice = 0.0;
+
+    if (cartModel.cart.isNotEmpty) {
+      cartModel.cart.forEach((cartItem) {
+        totalCartPrice += cartItem.cost;
+      });
+    }
+
+    return totalCartPrice;
+  }
+
+  Future<bool> _isItemAlreadyAdded(GroceryModel grocery) async {
+    CartModel? cartModel = await CartController.instance.getCartData();
+    if (cartModel.cart.length > 0) {
+      for (int i = 0; i < cartModel.cart.length; i++) {
+        if (cartModel.cart[i].groceryId == grocery.id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  Future<CartItemModel> getAddedItem(GroceryModel grocery) async {
+    CartModel? cartModel = await CartController.instance.getCartData();
+    if (cartModel.cart.length > 0) {
+      for (int i = 0; i < cartModel.cart.length; i++) {
+        if (cartModel.cart[i].groceryId == grocery.id) {
+          return cartModel.cart[i];
+        }
+      }
+    }
+    return CartModel(id: "", cart: []) as Future<CartItemModel>;
+  }
+
+  void decreaseQuantity(CartItemModel item) async {
+    if (item.quantity == 1) {
+      removeCartItem(item);
+    } else {
+      removeCartItem(item);
+      item.quantity--;
+      await _cartRepo.updateCartData({
+        "cart": FieldValue.arrayUnion([item.toJson()])
+      });
+    }
+  }
+
+  Future<bool> checkQuantity(CartItemModel item) async {
+    GroceryModel groc =
+        await GroceryController.instance.getGroceryData(item.groceryId);
+    if ((item.quantity + 1) <= groc.quantity) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void increaseQuantity(CartItemModel item) async {
+    removeCartItem(item);
+    item.quantity++;
+    logger.i({"quantity": item.quantity});
+    await _cartRepo.updateCartData({
+      "cart": FieldValue.arrayUnion([item.toJson()])
+    });
+  }
+
+  Future<CartModel> getCartData() async {
+    return await _cartRepo.getCartDetails();
+  }
+}
