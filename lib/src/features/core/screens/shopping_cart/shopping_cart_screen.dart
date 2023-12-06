@@ -122,6 +122,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 side: store.status == true
                                     ? BorderSide(color: AppColors.mainPineColor)
                                     : BorderSide(color: Colors.grey),
+                                shape: StadiumBorder(),
                               ),
                               icon: storeStatus == true
                                   ? Icon(Icons.shopping_cart_checkout)

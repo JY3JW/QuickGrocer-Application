@@ -14,7 +14,6 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: Text(
           manageOrder,

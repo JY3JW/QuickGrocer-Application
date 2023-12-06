@@ -93,9 +93,13 @@ class _BarcodeScanningScreenState extends State<BarcodeScanningScreen> {
                                   child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    Get.to(() => UpdateGroceyStockScreen(groceryId: id.text.trim()));
+                                    Get.to(() => UpdateGroceyStockScreen(
+                                        groceryId: id.text.trim()));
                                   }
                                 },
+                                style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder(),
+                                ),
                                 child: const Text(next),
                               )),
                             ]),

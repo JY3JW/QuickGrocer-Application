@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/manage_grocery_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/manage_order_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/seller_profile_screen.dart';
 
 class SellerDashboard extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SellerDashboardState extends State<SellerDashboard> {
       child: ManageGroceryScreen(),
     ),
     SafeArea(
-      child: Text('ManageOrderScreen'),
+      child: ManageOrderScreen(),
     ),
     SafeArea(
       child: Text('ViewSalesReportScreen & ViewFeedback'),

@@ -262,7 +262,9 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                               id: id.text.trim(),
                               name: name.text.trim(),
                               description: description.text.trim(),
-                              imageUrl: image == '' ? imageUrl.text.trim() : url.text.trim(),
+                              imageUrl: image == ''
+                                  ? imageUrl.text.trim()
+                                  : url.text.trim(),
                               category: selectedValue.isNotNull
                                   ? selectedValue!
                                   : category.text.trim(),
@@ -274,6 +276,9 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                           }
                           Navigator.pop(context);
                         },
+                        style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                        ),
                         child: const Text(updateGroceryButton),
                       )),
                     ]),

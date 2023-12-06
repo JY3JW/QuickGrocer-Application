@@ -272,6 +272,9 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                             setState(() {});
                           }
                         },
+                        style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                        ),
                         child: const Text(addGroceryButton),
                       )),
                     ]),

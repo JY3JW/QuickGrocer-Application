@@ -32,8 +32,8 @@ class _OrderCardState extends State<OrderCard> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("OR0000001", style: TextStyle(fontSize: 18)),
-                      Text("Price: \$345", style: TextStyle(fontSize: 16)),
+                      Text("OR0000001", style: TextStyle(fontSize: 18, color: Colors.black)),
+                      Text("Price: \$345", style: TextStyle(fontSize: 16, color: Colors.black)),
                     ],
                   ),
                   Container(
@@ -43,7 +43,7 @@ class _OrderCardState extends State<OrderCard> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text("Preparing", style: TextStyle(fontSize: 16)),
+                        child: Text("Preparing", style: TextStyle(fontSize: 16, color: Colors.black)),
                       ))
                 ],
               ),
@@ -60,7 +60,7 @@ class _OrderCardState extends State<OrderCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Date ${DateTime.now().toString().substring(0, 10)}",
-                      style: TextStyle(fontSize: 18)),
+                      style: TextStyle(fontSize: 18, color: Colors.black)),
                   Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -68,7 +68,7 @@ class _OrderCardState extends State<OrderCard> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Details", style: TextStyle(fontSize: 16)),
+                        child: Text("Details", style: TextStyle(fontSize: 16, color: Colors.black)),
                       ))
                 ],
               ),

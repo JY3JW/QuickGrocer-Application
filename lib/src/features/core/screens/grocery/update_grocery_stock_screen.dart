@@ -19,7 +19,6 @@ class UpdateGroceyStockScreen extends StatefulWidget {
 }
 
 class _UpdateGroceyStockScreenState extends State<UpdateGroceyStockScreen> {
-
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
@@ -51,10 +50,12 @@ class _UpdateGroceyStockScreenState extends State<UpdateGroceyStockScreen> {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
                         GroceryModel grocery = snapshot.data as GroceryModel;
-                        final id = TextEditingController(text: widget.groceryId);
+                        final id =
+                            TextEditingController(text: widget.groceryId);
                         final name = TextEditingController(text: grocery.name);
                         final image = grocery.imageUrl;
-                        final quantity = TextEditingController(text: grocery.quantity.toString());
+                        final quantity = TextEditingController(
+                            text: grocery.quantity.toString());
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -155,6 +156,9 @@ class _UpdateGroceyStockScreenState extends State<UpdateGroceyStockScreen> {
                                           Navigator.pop(context);
                                         }
                                       },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: StadiumBorder(),
+                                      ),
                                       child:
                                           const Text(updateGroceryStockButton),
                                     )),
