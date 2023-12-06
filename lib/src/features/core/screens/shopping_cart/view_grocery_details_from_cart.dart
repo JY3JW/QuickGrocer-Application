@@ -139,12 +139,14 @@ class _ViewGroceryDetailsFromCartScreenState
               style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             ElevatedButton.icon(
-                onPressed: widget.grocery.quantity == 0
-                    ? () => {}
-                    : () {
-                        controller.increaseQuantity(widget.grocery);
-                        setState(() {});
-                      },
+                onPressed: () async {
+                  await controller.checkQuantity(widget.grocery) ==
+                          true
+                      ? controller.increaseQuantity(widget.grocery)
+                      : Get.snackbar("Invalid Operation",
+                          "Quantity to purchase cannot exceed the quantity of item in stock");
+                  setState(() {});
+                },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(10),
                   backgroundColor: widget.grocery.quantity == 0

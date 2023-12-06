@@ -9,7 +9,7 @@ import 'package:quickgrocer_application/src/features/core/controllers/store_cont
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details_from_cart.dart';
+import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -32,7 +32,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     late CartModel cart;
 
     return Scaffold(
