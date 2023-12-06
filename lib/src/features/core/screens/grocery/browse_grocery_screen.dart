@@ -47,9 +47,9 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-            setState(() {});
-            await Future.delayed(const Duration(seconds: 1));
-          },
+          setState(() {});
+          await Future.delayed(const Duration(seconds: 1));
+        },
         child: Container(
           margin: const EdgeInsets.all(10),
           child: Column(
@@ -122,35 +122,39 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
           {required int index, required String name, required String img}) =>
       GestureDetector(
         onTap: () => setState(() => isSelected = index),
-        child: Container(
-            width: 40,
-            height: 40,
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: isSelected == index
-                  ? AppColors.mainPineColor
-                  : AppColors.greyColor1,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Image.network(img, fit: BoxFit.cover)),
+        child: Card(
+          color: isSelected == index
+              ? AppColors.mainPineColor
+              : AppColors.greyColor1,
+          child: Container(
+              width: 40,
+              height: 40,
+              margin: const EdgeInsets.all(8),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
               ),
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: isSelected == index ? Colors.white : Colors.black,
-                    fontSize: 12),
-              ),
-            ])),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Image.network(img, fit: BoxFit.cover)),
+                    ),
+                    Text(
+                      name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color:
+                              isSelected == index ? Colors.white : Colors.black,
+                          fontSize: 12),
+                    ),
+                  ])),
+        ),
       );
 
   // grocery card widget
