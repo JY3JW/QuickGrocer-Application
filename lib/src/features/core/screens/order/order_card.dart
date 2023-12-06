@@ -5,11 +5,9 @@ import 'package:quickgrocer_application/src/constants/image_strings.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({Key? key}) : super(key: key);
-
   @override
   State<OrderCard> createState() => _OrderCardState();
 }
-
 class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
@@ -33,17 +31,13 @@ class _OrderCardState extends State<OrderCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("OR0000001", style: TextStyle(fontSize: 18, color: Colors.black)),
-                      Text("Price: \$345", style: TextStyle(fontSize: 16, color: Colors.black)),
+                      Text("Username", style: TextStyle(fontSize: 16, color: Colors.black)),
                     ],
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text("Preparing", style: TextStyle(fontSize: 16, color: Colors.black)),
+                        child: Text("Total: \RM345", style: TextStyle(fontSize: 16, color: Colors.black)),
                       ))
                 ],
               ),
