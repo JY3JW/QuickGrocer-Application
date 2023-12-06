@@ -123,3 +123,10 @@ const String storeId = "ST001";
 
 // Manage Grocery Screen
 const String manageOrder = "Manage Order";
+
+// View Order Details Screen
+const String viewOrderDetailsTitle = "Order Details";
+const String orderID = "Order ID: ";
+const String totalPrice = "Total Price: ";
+const String placeOrder = "Place Order";
+const String orderDate = "Order Date: ";

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details.dart';
+import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/shopping_cart_screen.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({Key? key}) : super(key: key);
@@ -56,13 +58,23 @@ class _OrderCardState extends State<OrderCard> {
                   Text("Date ${DateTime.now().toString().substring(0, 10)}",
                       style: TextStyle(fontSize: 18, color: Colors.black)),
                   Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.subDarkerLimeColor,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Details", style: TextStyle(fontSize: 16, color: Colors.black)),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ViewOrderDetailsScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              backgroundColor: AppColors.subDarkerLimeColor,
+                              shape: StadiumBorder(),
+                            ),
+                            child: const Text("Details"),
+                        ),
+
                       ))
                 ],
               ),

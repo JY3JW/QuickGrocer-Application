@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details.dart';
 
 class OrderCardBuyer extends StatefulWidget {
   const OrderCardBuyer({Key? key}) : super(key: key);
@@ -41,15 +42,22 @@ class _OrderCardBuyerState extends State<OrderCardBuyer> {
                       ],
                     ),
                     Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text("Details",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black)),
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ViewOrderDetailsScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              backgroundColor: AppColors.subDarkerLimeColor,
+                              shape: StadiumBorder(),
+                            ),
+                            child: const Text("Details"),
+                        ),
                         ))
                   ],
                 ),
