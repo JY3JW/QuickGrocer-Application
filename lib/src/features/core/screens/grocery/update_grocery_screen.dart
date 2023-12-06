@@ -12,7 +12,6 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
-import 'package:quickgrocer_application/src/repository/grocery_repository/grocery_repository.dart';
 
 class UpdateGroceryScreen extends StatefulWidget {
   final GroceryModel grocery;
@@ -74,7 +73,7 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
     final controller = Get.put(GroceryController());
 
     final _formKey = GlobalKey<FormState>();
-    final id = widget.grocery.id;
+    final id = TextEditingController(text: widget.grocery.id);
     final name = TextEditingController(text: widget.grocery.name);
     final imageUrl = TextEditingController(text: widget.grocery.imageUrl);
     final url = TextEditingController(text: image);
@@ -124,6 +123,17 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    TextFormField(
+                      controller: id,
+                      enabled: false,
+                      decoration: const InputDecoration(
+                        label: Text(groceryId),
+                        prefixIcon: Icon(
+                          Icons.code_rounded,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: formHeight - 20.0),
                     TextFormField(
                       controller: name,
                       validator: (value) {
@@ -249,7 +259,7 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final groceryData = GroceryModel(
-                              id: id,
+                              id: id.text.trim(),
                               name: name.text.trim(),
                               description: description.text.trim(),
                               imageUrl: image == '' ? imageUrl.text.trim() : url.text.trim(),
@@ -265,41 +275,6 @@ class _UpdateGroceryScreenState extends State<UpdateGroceryScreen> {
                           Navigator.pop(context);
                         },
                         child: const Text(updateGroceryButton),
-                      )),
-                      const SizedBox(width: formHeight),
-                      Expanded(
-                          child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                      title: Text('Delete Grocery'),
-                                      content: Text(
-                                          'Confirm to delete this grocery?'),
-                                      actions: [
-                                        ElevatedButton(
-                                          child: Text('NO'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                        ),
-                                        ElevatedButton(
-                                          child: Text('YES'),
-                                          onPressed: () => {
-                                            GroceryRepository.instance
-                                                .deleteGroceryRecord(
-                                                    widget.grocery),
-                                            Navigator.pop(context),
-                                            Navigator.pop(context),
-                                          },
-                                        ),
-                                      ]));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          side: BorderSide(color: Colors.red),
-                        ),
-                        child: const Text(deleteGroceryButton),
                       )),
                     ]),
                   ],
