@@ -121,6 +121,16 @@ class CartController extends GetxController {
     }
   }
 
+  Future<bool> itemOutOfStock(CartItemModel item) async {
+    GroceryModel groc =
+        await GroceryController.instance.getGroceryData(item.groceryId);
+    if (groc.quantity == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void increaseQuantity(CartItemModel item) async {
     removeCartItem(item);
     item.quantity++;
@@ -131,6 +141,16 @@ class CartController extends GetxController {
   }
 
   Future<CartModel> getCartData() async {
-    return await _cartRepo.getCartDetails();
+    CartModel cartModel = await _cartRepo.getCartDetails();
+    return cartModel;
+  }
+
+  Future<void> removeOutOfStockData() async {
+    CartModel cartModel = await getCartData();
+    for (int i = 0; i < cartModel.cart.length; i++) {
+      if (await itemOutOfStock(cartModel.cart[i]) == true) {
+        removeCartItem(cartModel.cart[i]);
+      }
+    }
   }
 }
