@@ -115,3 +115,6 @@ const String orderHistoryTitle = "Order History";
 // View Shopping Cart Screen
 const String shoppingCartScreenTitle = "Shopping Cart";
 const String checkoutShoppingCart = "Checkout";
+
+// Manage Grocery Screen
+const String manageOrder = "Manage Order";

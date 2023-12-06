@@ -16,3 +16,7 @@ const String resetPasswordImage =
 // Profile Image
 const String profileImage =
     "assets/images/profile_images/profile_logo.png";
+
+// Order Image
+const String orderImage =
+    "assets/images/order_images/order_logo.png";
