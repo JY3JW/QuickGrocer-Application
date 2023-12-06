@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -16,10 +20,19 @@ class ShoppingCartScreen extends StatefulWidget {
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   late List<CartItemModel> cartItems;
+  late StoreModel store;
+  final cartController = Get.put(CartController());
+  final storeController = Get.put(StoreController());
+
+  @override
+  void initState() {
+    super.initState();
+    cartController.removeOutOfStockData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final cartController = Get.put(CartController());
+    
     late CartModel cart;
 
     return Scaffold(
@@ -32,53 +45,103 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(children: [
-            Container(
-              child: FutureBuilder(
-                  future: cartController.getCartData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        cart = snapshot.data as CartModel;
-                        cartItems = cart.cart;
-                        cartController.changeCartTotalPrice(cart);
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+            await Future.delayed(const Duration(seconds: 1));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(children: [
+              Container(
+                child: FutureBuilder(
+                    future: cartController.getCartData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          cart = snapshot.data as CartModel;
+                          cartItems = cart.cart;
+                          cartController.totalPrice =
+                              cartController.changeCartTotalPrice(cart);
 
-                        return Column(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height *
-                                  8.75 /
-                                  12,
-                              child: _buildAllCartItems(cartItems),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 9 / 12,
-                              child: ElevatedButton.icon(
-                                  onPressed: () => {},
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(10),
-                                  ),
-                                  icon: Icon(Icons.shopping_cart_checkout),
-                                  label: Text(checkoutShoppingCart +
-                                      '\ (Total RM'
-                                          '${cartController.changeCartTotalPrice(cart).toStringAsFixed(2)})')),
-                            ),
-                          ],
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text("No items added into cart"));
+                          return Column(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 8 / 12,
+                                child: _buildAllCartItems(cartItems),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
+                    }),
+              )
+            ]),
+          ),
+        ),
+      ),
+      bottomSheet: BottomAppBar(
+        height: MediaQuery.of(context).size.height / 12,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: Container(
+            child: FutureBuilder(
+                future: storeController.getStoreData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      StoreModel store = snapshot.data as StoreModel;
+                      bool storeStatus = store.status;
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '\RM'
+                            '${cartController.totalPrice.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton.icon(
+                              onPressed:
+                                  storeStatus == true ? () => {} : () => {},
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.all(10),
+                                backgroundColor: store.status == true
+                                    ? AppColors.mainPineColor
+                                    : Colors.grey,
+                                side: store.status == true
+                                    ? BorderSide(color: AppColors.mainPineColor)
+                                    : BorderSide(color: Colors.grey),
+                              ),
+                              icon: storeStatus == true
+                                  ? Icon(Icons.shopping_cart_checkout)
+                                  : Icon(Icons.remove_shopping_cart_rounded),
+                              label: storeStatus == true
+                                  ? Text(checkoutShoppingCart)
+                                  : Text(storeClosed)),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
                     } else {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: Text("Something went wrong"));
                     }
-                  }),
-            )
-          ]),
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                }),
+          ),
         ),
       ),
     );
@@ -102,6 +165,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 label: 'Delete')
           ]),
           child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewGroceryDetailsFromCartScreen(
+                          grocery: cartItems[index])));
+            },
             visualDensity: VisualDensity(vertical: 4),
             leading: Image.network(
               cartItems[index].image,

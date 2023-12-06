@@ -52,68 +52,73 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
               ))
         ],
       ),
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              child: FutureBuilder(
-                  future: catController.getAllCategories(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      
-                      if (snapshot.hasData) {
-                        category = snapshot.data as List<CategoryModel>;
-                        return SizedBox(
-                          height: 120,
-                          child: GridView.count(
-                            crossAxisCount: 1,
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(category.length, (index) {
-                              return _buildProductCategory(
-                                  index: index,
-                                  name: category[index].name,
-                                  img: category[index].imageUrl);
-                            }),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+          await Future.delayed(const Duration(seconds: 1));
+        },
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                child: FutureBuilder(
+                    future: catController.getAllCategories(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          category = snapshot.data as List<CategoryModel>;
+                          return SizedBox(
+                            height: 120,
+                            child: GridView.count(
+                              crossAxisCount: 1,
+                              scrollDirection: Axis.horizontal,
+                              children: List.generate(category.length, (index) {
+                                return _buildProductCategory(
+                                    index: index,
+                                    name: category[index].name,
+                                    img: category[index].imageUrl);
+                              }),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: FutureBuilder(
-                  future: isSelected == 0
-                      ? grocController.getAllGroceries()
-                      : grocController
-                          .getGroceriesByCategory(category[isSelected].name),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        List<GroceryModel> grocery =
-                            snapshot.data as List<GroceryModel>;
-                        return SizedBox(
-                            height: 500, child: _buildAllGroceries(grocery));
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+                    }),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: FutureBuilder(
+                    future: isSelected == 0
+                        ? grocController.getAllGroceries()
+                        : grocController
+                            .getGroceriesByCategory(category[isSelected].name),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          List<GroceryModel> grocery =
+                              snapshot.data as List<GroceryModel>;
+                          return SizedBox(
+                              height: 500, child: _buildAllGroceries(grocery));
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
-          ],
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );

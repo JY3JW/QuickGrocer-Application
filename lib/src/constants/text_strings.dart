@@ -82,6 +82,7 @@ const String viewGroceryDetailsTitle = "Details";
 const String quantityInStock = "Available Stock";
 const String addToCart = "Add to Cart";
 const String outOfStock = "Out of Stock";
+const String quantityInCart = "Quantity In Cart";
 
 // Update Grocery Details Screen
 const String updateGroceryDetailsTitle = "Update Details";
@@ -115,6 +116,10 @@ const String orderHistoryTitle = "Order History";
 // View Shopping Cart Screen
 const String shoppingCartScreenTitle = "Shopping Cart";
 const String checkoutShoppingCart = "Checkout";
+const String storeClosed = "Store Closed";
+
+// Store Model ID
+const String storeId = "ST001";
 
 // Manage Grocery Screen
 const String manageOrder = "Manage Order";

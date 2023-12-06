@@ -11,9 +11,14 @@ import 'package:quickgrocer_application/src/features/core/screens/profile/update
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
@@ -138,8 +143,7 @@ class ProfileScreen extends StatelessWidget {
                 title: Text(logout,
                     style: Theme.of(context)
                         .textTheme
-                        .titleMedium
-                        ?.apply(color: Colors.red)),
+                        .titleMedium),
               ),
               const SizedBox(height: 10),
               ListTile(
@@ -168,9 +172,9 @@ class ProfileScreen extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: iconColor.withOpacity(0.3),
+                    color: Colors.red.withOpacity(0.3),
                   ),
-                  child: Icon(Icons.delete_forever_rounded, color: iconColor),
+                  child: Icon(Icons.delete_forever_rounded, color: Colors.red),
                 ),
                 title: Text(deleteAccount,
                     style: Theme.of(context)

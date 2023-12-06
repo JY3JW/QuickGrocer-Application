@@ -5,6 +5,8 @@ class CartItemModel {
   static const IMAGE = "image";
   static const NAME = "name";
   static const QUANTITY = "quantity";
+  static const DESCRIPTION = "description";
+  static const CATEGORY = "category";
   static const COST = "cost";
   static const PRICE = "price";
   static const GROCERY_ID = "groceryId";
@@ -13,6 +15,8 @@ class CartItemModel {
   String image;
   String name;
   int quantity;
+  String description;
+  String category;
   double cost;
   String groceryId;
   double price;
@@ -24,16 +28,19 @@ class CartItemModel {
       required this.name,
       required this.cost,
       required this.price,
-      required this.quantity});
+      required this.quantity,
+      required this.description,
+      required this.category});
 
-  factory CartItemModel.fromSnapshot(
-      Map<String, dynamic> document) {
+  factory CartItemModel.fromSnapshot(Map<String, dynamic> document) {
     final data = document;
     return CartItemModel(
       id: data[ID],
       image: data[IMAGE],
       name: data[NAME],
-      quantity: data[QUANTITY],
+      quantity: toInt(data[QUANTITY]),
+      description: data[DESCRIPTION],
+      category: data[CATEGORY],
       cost: toDouble(data[COST]),
       groceryId: data[GROCERY_ID],
       price: toDouble(data[PRICE]),
@@ -47,6 +54,8 @@ class CartItemModel {
       IMAGE: image,
       NAME: name,
       QUANTITY: quantity,
+      DESCRIPTION: description,
+      CATEGORY: category,
       COST: price * quantity,
       PRICE: price,
     };

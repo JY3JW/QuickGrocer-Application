@@ -12,13 +12,7 @@ import 'package:uuid/uuid.dart';
 class CartController extends GetxController {
   static CartController instance = Get.find();
   final _cartRepo = Get.put(CartRepository());
-
-  @override
-  void onReady() async {
-    super.onReady();
-    Rx<CartModel> currentUserCart = Rx<CartModel>(await getCartData());
-    ever(currentUserCart, changeCartTotalPrice);
-  }
+  double totalPrice = 0.0;
 
   void addProductToCart(GroceryModel grocery) async {
     try {
@@ -43,6 +37,8 @@ class CartController extends GetxController {
               "quantity": 1,
               "price": grocery.price,
               "image": grocery.imageUrl,
+              "description": grocery.description,
+              "category": grocery.category,
               "cost": grocery.price,
             }
           ])
@@ -68,15 +64,15 @@ class CartController extends GetxController {
 
   // calculate the newest total price of items in cart
   double changeCartTotalPrice(CartModel cartModel) {
-    double totalCartPrice = 0.0;
+    totalPrice = 0.0;
 
     if (cartModel.cart.isNotEmpty) {
       cartModel.cart.forEach((cartItem) {
-        totalCartPrice += cartItem.cost;
+        totalPrice += cartItem.cost;
       });
     }
 
-    return totalCartPrice;
+    return totalPrice;
   }
 
   Future<bool> _isItemAlreadyAdded(GroceryModel grocery) async {
@@ -125,6 +121,16 @@ class CartController extends GetxController {
     }
   }
 
+  Future<bool> itemOutOfStock(CartItemModel item) async {
+    GroceryModel groc =
+        await GroceryController.instance.getGroceryData(item.groceryId);
+    if (groc.quantity == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void increaseQuantity(CartItemModel item) async {
     removeCartItem(item);
     item.quantity++;
@@ -135,6 +141,16 @@ class CartController extends GetxController {
   }
 
   Future<CartModel> getCartData() async {
-    return await _cartRepo.getCartDetails();
+    CartModel cartModel = await _cartRepo.getCartDetails();
+    return cartModel;
+  }
+
+  Future<void> removeOutOfStockData() async {
+    CartModel cartModel = await getCartData();
+    for (int i = 0; i < cartModel.cart.length; i++) {
+      if (await itemOutOfStock(cartModel.cart[i]) == true) {
+        removeCartItem(cartModel.cart[i]);
+      }
+    }
   }
 }
