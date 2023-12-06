@@ -115,3 +115,7 @@ const String orderHistoryTitle = "Order History";
 // View Shopping Cart Screen
 const String shoppingCartScreenTitle = "Shopping Cart";
 const String checkoutShoppingCart = "Checkout";
+const String storeClosed = "Store Closed";
+
+// Store Model ID
+const String storeId = "ST001";

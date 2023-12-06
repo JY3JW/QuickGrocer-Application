@@ -6,10 +6,15 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 
-class ViewGroceryDetailsScreen extends StatelessWidget {
+class ViewGroceryDetailsScreen extends StatefulWidget {
   final GroceryModel grocery;
   const ViewGroceryDetailsScreen({super.key, required this.grocery,});
 
+  @override
+  State<ViewGroceryDetailsScreen> createState() => _ViewGroceryDetailsScreenState();
+}
+
+class _ViewGroceryDetailsScreenState extends State<ViewGroceryDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground = Get.isDarkMode ? Colors.white : Colors.black;
@@ -41,7 +46,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: AppColors.greyColor2,
                     ),
-                    child: Image.network(grocery.imageUrl, fit: BoxFit.cover),
+                    child: Image.network(widget.grocery.imageUrl, fit: BoxFit.cover),
                   ),
                 ],
               ),
@@ -64,13 +69,13 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width*4/7,
                           child: Text(
                             textAlign: TextAlign.left,
-                            grocery.name.toUpperCase(),
+                            widget.grocery.name.toUpperCase(),
                             style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                           ),),
                           SizedBox(
                             width: MediaQuery.of(context).size.width*2/7,
                             child: Text(
-                              '\RM' '${grocery.price.toStringAsFixed(2)}',
+                              '\RM' '${widget.grocery.price.toStringAsFixed(2)}',
                               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold,),
                               textAlign: TextAlign.right
                             ),
@@ -78,7 +83,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                       ],),
                     const SizedBox(height: 14,),
                     Text(
-                      grocery.description,
+                      widget.grocery.description,
                       textAlign: TextAlign.justify,
                       style: const TextStyle(fontSize: 14),
                     ),
@@ -89,7 +94,7 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 14,),
                     Text(
-                      grocery.quantity.toString(),
+                      widget.grocery.quantity.toString(),
                       style: const TextStyle(fontSize: 14),
                     ),
                   ],
@@ -108,19 +113,19 @@ class ViewGroceryDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\RM' '${grocery.price.toStringAsFixed(2)}',
+                '\RM' '${widget.grocery.price.toStringAsFixed(2)}',
                 style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               ElevatedButton.icon(
-                onPressed: grocery.quantity == 0? () => {} :() => controller.addProductToCart(grocery),
+                onPressed: widget.grocery.quantity == 0? () => {} :() => controller.addProductToCart(widget.grocery),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(10),
-                  backgroundColor: grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,
-                  side:  grocery.quantity == 0? BorderSide(color: Colors.grey) : BorderSide(color: AppColors.mainPineColor),
+                  backgroundColor: widget.grocery.quantity == 0? Colors.grey : AppColors.mainPineColor,
+                  side:  widget.grocery.quantity == 0? BorderSide(color: Colors.grey) : BorderSide(color: AppColors.mainPineColor),
                   foregroundColor: Colors.white,
                 ),
-                icon: grocery.quantity == 0? Icon(Icons.remove_shopping_cart_rounded) : Icon(Icons.add_shopping_cart_rounded),
-                label: grocery.quantity == 0? Text(outOfStock) : Text(addToCart)
+                icon: widget.grocery.quantity == 0? Icon(Icons.remove_shopping_cart_rounded) : Icon(Icons.add_shopping_cart_rounded),
+                label: widget.grocery.quantity == 0? Text(outOfStock) : Text(addToCart)
               ),
             ]
           ),

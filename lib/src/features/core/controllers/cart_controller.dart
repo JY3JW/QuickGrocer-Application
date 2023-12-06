@@ -12,13 +12,7 @@ import 'package:uuid/uuid.dart';
 class CartController extends GetxController {
   static CartController instance = Get.find();
   final _cartRepo = Get.put(CartRepository());
-
-  @override
-  void onReady() async {
-    super.onReady();
-    Rx<CartModel> currentUserCart = Rx<CartModel>(await getCartData());
-    ever(currentUserCart, changeCartTotalPrice);
-  }
+  double totalPrice = 0.0;
 
   void addProductToCart(GroceryModel grocery) async {
     try {
@@ -41,8 +35,11 @@ class CartController extends GetxController {
               "groceryId": grocery.id,
               "name": grocery.name,
               "quantity": 1,
+              "quantityInStock": grocery.quantity,
               "price": grocery.price,
               "image": grocery.imageUrl,
+              "description": grocery.description,
+              "category": grocery.category,
               "cost": grocery.price,
             }
           ])
@@ -68,15 +65,15 @@ class CartController extends GetxController {
 
   // calculate the newest total price of items in cart
   double changeCartTotalPrice(CartModel cartModel) {
-    double totalCartPrice = 0.0;
+    totalPrice = 0.0;
 
     if (cartModel.cart.isNotEmpty) {
       cartModel.cart.forEach((cartItem) {
-        totalCartPrice += cartItem.cost;
+        totalPrice += cartItem.cost;
       });
     }
 
-    return totalCartPrice;
+    return totalPrice;
   }
 
   Future<bool> _isItemAlreadyAdded(GroceryModel grocery) async {

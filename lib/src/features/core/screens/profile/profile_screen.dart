@@ -138,8 +138,7 @@ class ProfileScreen extends StatelessWidget {
                 title: Text(logout,
                     style: Theme.of(context)
                         .textTheme
-                        .titleMedium
-                        ?.apply(color: Colors.red)),
+                        .titleMedium),
               ),
               const SizedBox(height: 10),
               ListTile(
@@ -168,9 +167,9 @@ class ProfileScreen extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: iconColor.withOpacity(0.3),
+                    color: Colors.red.withOpacity(0.3),
                   ),
-                  child: Icon(Icons.delete_forever_rounded, color: iconColor),
+                  child: Icon(Icons.delete_forever_rounded, color: Colors.red),
                 ),
                 title: Text(deleteAccount,
                     style: Theme.of(context)
