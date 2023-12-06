@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 class CartController extends GetxController {
   static CartController instance = Get.find();
   final _cartRepo = Get.put(CartRepository());
+  int maxQuantity = 0;
   double totalPrice = 0.0;
 
   void addProductToCart(GroceryModel grocery) async {
@@ -150,6 +151,18 @@ class CartController extends GetxController {
     for (int i = 0; i < cartModel.cart.length; i++) {
       if (await itemOutOfStock(cartModel.cart[i]) == true) {
         removeCartItem(cartModel.cart[i]);
+      } else if (await checkQuantity(cartModel.cart[i]) == false) {
+        removeCartItem(cartModel.cart[i]);
+        Future.delayed(const Duration(milliseconds: 250));
+        GroceryModel groc = await GroceryController.instance
+            .getGroceryData(cartModel.cart[i].groceryId);
+        while (cartModel.cart[i].quantity > groc.quantity) {
+          cartModel.cart[i].quantity--;
+        }
+        logger.i({"quantity": cartModel.cart[i].quantity});
+        await _cartRepo.updateCartData({
+          "cart": FieldValue.arrayUnion([cartModel.cart[i].toJson()])
+        });
       }
     }
   }
