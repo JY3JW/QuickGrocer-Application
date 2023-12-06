@@ -5,7 +5,6 @@ class CartItemModel {
   static const IMAGE = "image";
   static const NAME = "name";
   static const QUANTITY = "quantity";
-  static const QUANTITYINSTOCK = "quantityInStock";
   static const DESCRIPTION = "description";
   static const CATEGORY = "category";
   static const COST = "cost";
@@ -16,7 +15,6 @@ class CartItemModel {
   String image;
   String name;
   int quantity;
-  int quantityInStock;
   String description;
   String category;
   double cost;
@@ -31,7 +29,6 @@ class CartItemModel {
       required this.cost,
       required this.price,
       required this.quantity,
-      required this.quantityInStock,
       required this.description,
       required this.category});
 
@@ -42,7 +39,6 @@ class CartItemModel {
       image: data[IMAGE],
       name: data[NAME],
       quantity: toInt(data[QUANTITY]),
-      quantityInStock: toInt(data[QUANTITYINSTOCK]),
       description: data[DESCRIPTION],
       category: data[CATEGORY],
       cost: toDouble(data[COST]),
@@ -58,7 +54,6 @@ class CartItemModel {
       IMAGE: image,
       NAME: name,
       QUANTITY: quantity,
-      QUANTITYINSTOCK: quantityInStock,
       DESCRIPTION: description,
       CATEGORY: category,
       COST: price * quantity,

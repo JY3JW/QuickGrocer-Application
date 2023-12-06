@@ -11,9 +11,14 @@ import 'package:quickgrocer_application/src/features/core/screens/profile/update
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());

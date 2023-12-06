@@ -82,6 +82,7 @@ const String viewGroceryDetailsTitle = "Details";
 const String quantityInStock = "Available Stock";
 const String addToCart = "Add to Cart";
 const String outOfStock = "Out of Stock";
+const String quantityInCart = "Quantity In Cart";
 
 // Update Grocery Details Screen
 const String updateGroceryDetailsTitle = "Update Details";

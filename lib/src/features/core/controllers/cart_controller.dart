@@ -35,7 +35,6 @@ class CartController extends GetxController {
               "groceryId": grocery.id,
               "name": grocery.name,
               "quantity": 1,
-              "quantityInStock": grocery.quantity,
               "price": grocery.price,
               "image": grocery.imageUrl,
               "description": grocery.description,

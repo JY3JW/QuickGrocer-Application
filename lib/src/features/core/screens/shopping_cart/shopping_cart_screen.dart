@@ -8,9 +8,8 @@ import 'package:quickgrocer_application/src/features/core/controllers/cart_contr
 import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
-import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
@@ -39,40 +38,47 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(children: [
-            Container(
-              child: FutureBuilder(
-                  future: cartController.getCartData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        cart = snapshot.data as CartModel;
-                        cartItems = cart.cart;
-                        cartController.totalPrice = cartController.changeCartTotalPrice(cart);
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+            await Future.delayed(const Duration(seconds: 1));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(children: [
+              Container(
+                child: FutureBuilder(
+                    future: cartController.getCartData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          cart = snapshot.data as CartModel;
+                          cartItems = cart.cart;
+                          cartController.totalPrice =
+                              cartController.changeCartTotalPrice(cart);
 
-                        return Column(
-                          children: [
-                            Container(
-                              height:
-                                  MediaQuery.of(context).size.height * 8 / 12,
-                              child: _buildAllCartItems(cartItems),
-                            ),
-                          ],
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+                          return Column(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 8 / 12,
+                                child: _buildAllCartItems(cartItems),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            )
-          ]),
+                    }),
+              )
+            ]),
+          ),
         ),
       ),
       bottomSheet: BottomAppBar(
@@ -94,7 +100,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '\RM' '${cartController.totalPrice.toStringAsFixed(2)}',
+                            '\RM'
+                            '${cartController.totalPrice.toStringAsFixed(2)}',
                             style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
@@ -155,15 +162,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewGroceryDetailsScreen(
-                          grocery: GroceryModel(
-                              category: cartItems[index].category,
-                              id: cartItems[index].groceryId,
-                              name: cartItems[index].name,
-                              price: cartItems[index].price,
-                              imageUrl: cartItems[index].image,
-                              quantity: cartItems[index].quantityInStock,
-                              description: cartItems[index].description))));
+                      builder: (context) => ViewGroceryDetailsFromCartScreen(
+                          grocery: cartItems[index])));
             },
             visualDensity: VisualDensity(vertical: 4),
             leading: Image.network(
