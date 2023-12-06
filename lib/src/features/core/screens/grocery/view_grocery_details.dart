@@ -143,7 +143,7 @@ class _ViewGroceryDetailsScreenState extends State<ViewGroceryDetailsScreen> {
                     ? () => {}
                     : () => controller.addProductToCart(widget.grocery),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   backgroundColor: widget.grocery.quantity == 0
                       ? Colors.grey
                       : AppColors.mainPineColor,

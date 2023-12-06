@@ -115,7 +115,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               onPressed:
                                   storeStatus == true ? () => {} : () => {},
                               style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true
                                     ? AppColors.mainPineColor
                                     : Colors.grey,
@@ -151,74 +151,78 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   _buildAllCartItems(List<CartItemModel> cartItems) => ListView.builder(
       itemCount: cartItems.length,
       itemBuilder: ((context, index) {
-        return Slidable(
-          endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-            SlidableAction(
-                onPressed: (context) async {
-                  CartController.instance.removeCartItem(cartItems[index]);
-                  cartItems.removeAt(index);
-                  setState(() {});
-                },
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-                icon: Icons.delete,
-                label: 'Delete')
-          ]),
-          child: ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ViewGroceryDetailsFromCartScreen(
-                          grocery: cartItems[index])));
-            },
-            visualDensity: VisualDensity(vertical: 4),
-            leading: Image.network(
-              cartItems[index].image,
-              width: 50,
-              height: 50,
-            ),
-            title: Text(
-              cartItems[index].name,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              '\RM'
-              '${cartItems[index].price.toStringAsFixed(2)}',
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: SizedBox(
-              width: 120,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () async {
-                        CartController.instance
-                            .decreaseQuantity(cartItems[index]);
-                        setState(() {});
-                      },
-                      icon: Icon(LineAwesomeIcons.chevron_circle_left),
-                    ),
-                    Text(
-                      cartItems[index].quantity.toString(),
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
+        return Card(
+          color: Colors.white,
+          child: Slidable(
+            endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+              SlidableAction(
+                  onPressed: (context) async {
+                    CartController.instance.removeCartItem(cartItems[index]);
+                    cartItems.removeAt(index);
+                    setState(() {});
+                  },
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                  label: 'Delete')
+            ]),
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewGroceryDetailsFromCartScreen(
+                            grocery: cartItems[index])));
+              },
+              visualDensity: VisualDensity(vertical: 4),
+              leading: Image.network(
+                cartItems[index].image,
+                width: 50,
+                height: 50,
+              ),
+              title: Text(
+                cartItems[index].name,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              subtitle: Text(
+                '\RM'
+                '${cartItems[index].price.toStringAsFixed(2)}',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+              ),
+              trailing: SizedBox(
+                width: 120,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
                         onPressed: () async {
-                          await CartController.instance
-                                      .checkQuantity(cartItems[index]) ==
-                                  true
-                              ? CartController.instance
-                                  .increaseQuantity(cartItems[index])
-                              : Get.snackbar("Invalid Operation",
-                                  "Quantity to purchase cannot exceed the quantity of item in stock");
+                          CartController.instance
+                              .decreaseQuantity(cartItems[index]);
                           setState(() {});
                         },
-                        icon: Icon(LineAwesomeIcons.chevron_circle_right)),
-                  ]),
+                        icon: Icon(LineAwesomeIcons.chevron_circle_left, color: Colors.black),
+                      ),
+                      Text(
+                        cartItems[index].quantity.toString(),
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            await CartController.instance
+                                        .checkQuantity(cartItems[index]) ==
+                                    true
+                                ? CartController.instance
+                                    .increaseQuantity(cartItems[index])
+                                : Get.snackbar("Invalid Operation",
+                                    "Quantity to purchase cannot exceed the quantity of item in stock");
+                            setState(() {});
+                          },
+                          icon: Icon(LineAwesomeIcons.chevron_circle_right), color: Colors.black),
+                    ]),
+              ),
             ),
           ),
         );

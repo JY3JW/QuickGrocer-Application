@@ -148,7 +148,7 @@ class _ViewGroceryDetailsFromCartScreenState
                   setState(() {});
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   backgroundColor: widget.grocery.quantity == 0
                       ? Colors.grey
                       : AppColors.mainPineColor,
@@ -156,6 +156,7 @@ class _ViewGroceryDetailsFromCartScreenState
                       ? BorderSide(color: Colors.grey)
                       : BorderSide(color: AppColors.mainPineColor),
                   foregroundColor: Colors.white,
+                  shape: StadiumBorder(),
                 ),
                 icon: widget.grocery.quantity == 0
                     ? Icon(Icons.remove_shopping_cart_rounded)
