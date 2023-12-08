@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 
@@ -29,12 +31,53 @@ class UserRepository extends GetxController {
     });
   }
 
+  createGoogleSignInUser(UserModel user, String? uid) async {
+    await _db
+        .collection("users")
+        .doc(uid)
+        .set(user.toJson())
+        .whenComplete(() => {})
+        .catchError((error, stackTrace) {
+      Get.snackbar("Error", "Something went wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent.withOpacity(0.1),
+          colorText: Colors.red);
+      print(error.toString());
+    });
+  }
+
   // Fetch single user details
   Future<UserModel> getUserDetails(String email) async {
-    final snapshot =
+    var snapshot =
         await _db.collection("users").where("email", isEqualTo: email).get();
-    final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
-    return userData;
+    try {
+      final userData =
+          snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+      return userData;
+    } catch (e) {
+      await createGoogleSignInUser(
+          UserModel(
+              email: FirebaseAuth.instance.currentUser?.email.isNotNull == true
+                  ? FirebaseAuth.instance.currentUser?.email as String
+                  : '',
+              password:
+                  FirebaseAuth.instance.currentUser?.phoneNumber.isNotNull ==
+                          true
+                      ? FirebaseAuth.instance.currentUser?.phoneNumber as String
+                      : '',
+              fullName:
+                  FirebaseAuth.instance.currentUser?.displayName.isNotNull ==
+                          true
+                      ? FirebaseAuth.instance.currentUser?.displayName as String
+                      : '',
+              phoneNo:
+                  FirebaseAuth.instance.currentUser?.phoneNumber.isNotNull ==
+                          true
+                      ? FirebaseAuth.instance.currentUser?.phoneNumber as String
+                      : ''),
+          FirebaseAuth.instance.currentUser?.uid);
+      return getUserDetails(email);
+    }
   }
 
   // Fetch all user details

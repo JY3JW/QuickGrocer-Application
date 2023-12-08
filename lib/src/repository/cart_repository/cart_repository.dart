@@ -26,10 +26,19 @@ class CartRepository extends GetxController {
 
   // Fetch cart details
   Future<CartModel> getCartDetails() async {
-    var snapshot =
-        await _db.collection("carts").where("id", isEqualTo: FirebaseAuth.instance.currentUser?.uid).get();
-    final cartData = snapshot.docs.map((e) => CartModel.fromSnapshot(e)).single;
-    return cartData;
+    var snapshot = await _db
+        .collection("carts")
+        .where("id", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    try {
+      final cartData =
+          snapshot.docs.map((e) => CartModel.fromSnapshot(e)).single;
+      return cartData;
+    } catch (e) {
+      await createCart(CartModel(
+          id: FirebaseAuth.instance.currentUser?.uid as String, cart: []));
+      return getCartDetails();
+    }
   }
 
   Future<void> updateCartData(Map<String, dynamic> data) async {
@@ -37,5 +46,9 @@ class CartRepository extends GetxController {
         .collection("carts")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .update(data);
+  }
+
+  Future<void> deleteCartRecord(String id) async {
+    await _db.collection("carts").doc(id).delete();
   }
 }
