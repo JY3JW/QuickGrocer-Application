@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 //import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
@@ -32,10 +29,11 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
             const SizedBox(height: 36),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -43,6 +41,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                   style: const TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 10),
                 Text(
                   orderDate,
                   style: const TextStyle(
@@ -53,7 +52,6 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
             const SizedBox(height: 36),
             Container(
               width: double.infinity,
-              height: double.negativeInfinity,
               decoration: BoxDecoration(
                 color: AppColors.greyColor1,
                 borderRadius: BorderRadius.circular(40)
@@ -65,7 +63,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 4/7,
+                        width: MediaQuery.of(context).size.width * 1/7,
                         child: Text(
                           //order item quantity
                           "2x",
@@ -113,7 +111,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                       backgroundColor: AppColors.mainPineColor,
                       shape: StadiumBorder()
                     ), 
-                    child: Text(placeOrder),
+                    child: Text('Rate'),
                   )
                 ])
           )),

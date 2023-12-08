@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/browse_grocery_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/order/manage_order_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/order/view_order_status.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/profile_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/shopping_cart_screen.dart';
@@ -24,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
       child: ShoppingCartScreen(), // cart screen
     ),
     SafeArea(
-      child: ManageOrderScreen(), // order history screen
+      child: ViewOrderStatusScreen(), // order history screen
     ),
     SafeArea(
       child: ProfileScreen(),
