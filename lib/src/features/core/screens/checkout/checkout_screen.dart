@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
+import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+  const CheckoutScreen({super.key, required this.cartModel, required this.total});
+
+  final CartModel cartModel;
+  final double total;
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -28,9 +29,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: Container(
         child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, 
-              children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 orderSummary,
                 textAlign: TextAlign.left,
@@ -38,11 +38,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
               SizedBox(
                 height: 400,
-                child: ListView(children: [
-                  CheckoutCard(),
-                  CheckoutCard(),
-                ]),
-              ),
+                child: ListView.builder(
+                  itemCount: widget.cartModel.cart.length,
+                  itemBuilder: (context, index) {
+                    return CheckoutCard(cartItem: widget.cartModel.cart[index]);
+                  },
+              )),
               SizedBox(
                 height: 50,
               ),
@@ -62,8 +63,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      //'\RM' '${widget.grocery.price.toStringAsFixed(2)}',
-                      totalPrice,
+                      '\RM' '${widget.total.toStringAsFixed(2)}',
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.bold),
                     ),
