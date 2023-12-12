@@ -136,3 +136,8 @@ const String orderSummary = "Order Summary";
 const String quantity = "Quantity";
 const String orderItem = "Order Item";
 const String price = "RM";
+
+//Feedback Screen
+const String feedback = "Feedback";
+const String passiveFeedback = "I have an issue.";
+const String activeFeedback = "Do a feedback on my order";
