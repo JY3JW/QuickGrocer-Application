@@ -20,6 +20,7 @@ class BrowseGroceryScreen extends StatefulWidget {
 class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
   int isSelected = 0;
   late List<CategoryModel> category;
+  late List<GroceryModel> grocery;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () => Get.to(() => SearchBarApp()),
+              onPressed: () => Get.to(() => SearchBarApp(
+                    groceries: grocery,
+                  )),
               icon: Icon(
                 Icons.search,
                 color: iconColorWithoutBackground,
@@ -95,8 +98,7 @@ class _BrowseGroceryScreenState extends State<BrowseGroceryScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          List<GroceryModel> grocery =
-                              snapshot.data as List<GroceryModel>;
+                          grocery = snapshot.data as List<GroceryModel>;
                           return SizedBox(
                               height: 500, child: _buildAllGroceries(grocery));
                         } else if (snapshot.hasError) {

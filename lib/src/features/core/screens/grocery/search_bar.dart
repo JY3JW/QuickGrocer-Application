@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card_buyer.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
 
 class SearchBarApp extends StatefulWidget {
-  const SearchBarApp({super.key});
+  const SearchBarApp({
+    super.key,
+    required this.groceries,
+  });
+
+  final List<GroceryModel> groceries;
 
   @override
   State<SearchBarApp> createState() => _SearchBarAppState();
@@ -11,21 +20,12 @@ class _SearchBarAppState extends State<SearchBarApp> {
   final TextEditingController _searchController = TextEditingController();
   bool isSearchClicked = false;
   String searchText = '';
-  List<String> items = [
-    '123',
-    'wer',
-    'r343',
-    '232r3',
-    '12',
-    '2fff',
-    'qw2',
-  ];
 
-  List<String> filteredItems = [];
+  List<GroceryModel> filteredItems = [];
   @override
   void initState() {
     super.initState();
-    filteredItems = List.from(items);
+    filteredItems = List.from(widget.groceries);
   }
 
   void _onSearchChanged(String value) {
@@ -37,11 +37,11 @@ class _SearchBarAppState extends State<SearchBarApp> {
 
   void myFilterItems() {
     if (searchText.isEmpty) {
-      filteredItems = List.from(items);
+      filteredItems = List.from(widget.groceries);
     } else {
-      filteredItems = items
-          .where(
-              (item) => item.toLowerCase().contains(searchText.toLowerCase()))
+      filteredItems = widget.groceries
+          .where((item) =>
+              item.name.toLowerCase().contains(searchText.toLowerCase()))
           .toList();
     }
   }
@@ -83,13 +83,45 @@ class _SearchBarAppState extends State<SearchBarApp> {
         ],
       ),
       //body
-      body: ListView.builder(
+      /*body: ListView.builder(
           itemCount: filteredItems.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(filteredItems[index]),
+              title: Text(''),
             );
-          }),
+          }),*/
+      //body
+      body: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+            await Future.delayed(const Duration(seconds: 1));
+          },
+          child: SizedBox(
+              height: MediaQuery.of(context).size.height * 11 / 12,
+              child: _buildAllGroceries(filteredItems))),
     );
   }
+}
+
+//grocery card widget
+_buildAllGroceries(List<GroceryModel> myFilterItems) {
+  return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: (100 / 135),
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
+      scrollDirection: Axis.vertical,
+      itemCount: myFilterItems.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ViewGroceryDetailsScreen(grocery: myFilterItems[index]))),
+          child: GroceryCardBuyer(grocery: myFilterItems[index]),
+        );
+      });
 }
