@@ -129,6 +129,7 @@ const String viewOrderDetailsTitle = "Order Details";
 const String orderID = "Order ID";
 const String totalPrice = "Total Price: ";
 const String orderTime = "Order Time";
+const String paymentTime = "Payment Time";
 const String completeTime = "Completed Time";
 const String orderComplete = "Order Completed";
 
@@ -138,3 +139,6 @@ const String orderSummary = "Order Summary";
 const String quantity = "Quantity";
 const String orderItem = "Order Item";
 const String price = "RM";
+
+// Feedback Screen
+const String feedback = "Feedback";

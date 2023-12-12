@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
-import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details_buyer.dart';
 
 class OrderCardBuyer extends StatefulWidget {
   const OrderCardBuyer({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _OrderCardBuyerState extends State<OrderCardBuyer> {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => ViewOrderDetailsScreen()),
+                                  builder: (context) => ViewOrderDetailsBuyerScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
