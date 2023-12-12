@@ -37,9 +37,9 @@ class _ViewOrderDetailsBuyerScreenState extends State<ViewOrderDetailsBuyerScree
                 height: 400,
                 child: ListView(
                   children: [
-                    CheckoutCard(),
-                    CheckoutCard(),
-                    CheckoutCard()
+                    //CheckoutCard(),
+                    //CheckoutCard(),
+                    //CheckoutCard()
                   ],
                 ),
               ),
