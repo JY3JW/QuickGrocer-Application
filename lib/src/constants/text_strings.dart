@@ -129,6 +129,10 @@ const String viewOrderDetailsTitle = "Order Details";
 const String orderID = "Order ID: ";
 const String totalPrice = "Total Price: ";
 const String orderDate = "Order Date: ";
+const String orderTime = "Order Time";
+const String paymentTime = "Payment Time";
+const String completeTime = "Completed Time";
+const String orderComplete = "Order Completed";
 
 // Checkout Screen
 const String placeOrder = "Place Order";
