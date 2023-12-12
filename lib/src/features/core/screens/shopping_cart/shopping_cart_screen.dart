@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:path/path.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
@@ -115,7 +114,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           ),
                           ElevatedButton.icon(
                               onPressed:
-                                  storeStatus == true ? () => Get.to(() => CheckoutScreen()) : () => {},
+                                  storeStatus == true ? () => Get.to(() => CheckoutScreen(cartModel: cart, total: cartController.totalPrice)) : () => {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true
@@ -149,7 +148,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     );
   }
 
-  // user list widget
+  // cart items list widget
   _buildAllCartItems(List<CartItemModel> cartItems) => ListView.builder(
       itemCount: cartItems.length,
       itemBuilder: ((context, index) {

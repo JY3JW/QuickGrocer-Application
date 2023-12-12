@@ -4,14 +4,15 @@ import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 
 class ViewOrderDetailsScreen extends StatefulWidget {
-  const ViewOrderDetailsScreen ({super.key,});
+  const ViewOrderDetailsScreen({
+    super.key,
+  });
 
   @override
   State<ViewOrderDetailsScreen> createState() => _ViewOrderDetailsScreenState();
 }
 
 class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
