@@ -45,9 +45,39 @@ class OrderController extends GetxController {
     return userData;
   }
 
+  Future<List<OrderModel>> singleBuyerOrdersOngoing() async {
+    final userData = await _orderRepo.getAllBuyerOrdersBySingleBuyerOngoing('completed');
+    return userData;
+  }
+
+  Future<List<OrderModel>> singleBuyerOrdersCompleted() async {
+    final userData = await _orderRepo.getAllBuyerOrdersBySingleBuyerCompleted('completed');
+    return userData;
+  }
+
   // Fetch all user orders
   Future<List<OrderModel>> allBuyersOrders() async {
     final userData = await _orderRepo.getAllBuyersOrders();
+    return userData;
+  }
+
+  Future<List<OrderModel>> allBuyersOrdersNew() async {
+    final userData = await _orderRepo.getAllBuyersOrdersByCategory('accepted');
+    return userData;
+  }
+
+  Future<List<OrderModel>> allBuyersOrdersPreparing() async {
+    final userData = await _orderRepo.getAllBuyersOrdersByCategory('preparing');
+    return userData;
+  }
+
+  Future<List<OrderModel>> allBuyersOrdersReady() async {
+    final userData = await _orderRepo.getAllBuyersOrdersByCategory('ready');
+    return userData;
+  }
+
+  Future<List<OrderModel>> allBuyersOrdersCompleted() async {
+    final userData = await _orderRepo.getAllBuyersOrdersByCategory('completed');
     return userData;
   }
 

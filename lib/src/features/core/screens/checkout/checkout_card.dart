@@ -13,55 +13,28 @@ class CheckoutCard extends StatefulWidget {
 class _CheckoutCardState extends State<CheckoutCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      color: Colors.white,
-      child: Padding(
-          padding: const EdgeInsets.all(1.5),
-          child: Container(
-              child: Column(children: [
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 50,
-                      child: Text(
-                        widget.cartItem.quantity.toString(),
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.cartItem.name,
-                            style: Theme.of(context).textTheme.bodySmall,
-                            textAlign: TextAlign.left,
-                          ),
-                          Text(
-                            '\RM' '${widget.cartItem.price.toStringAsFixed(2)}',
-                            style: Theme.of(context).textTheme.bodySmall,
-                            textAlign: TextAlign.left,
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 80,
-                      child: Text(
-                        '\RM' '${widget.cartItem.cost.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textAlign: TextAlign.left,
-                      ),
-                    )
-                  ],
-                )),
-          ]))),
+    return ListTile(
+      visualDensity: VisualDensity(vertical: -4),
+      leading: Text(
+        widget.cartItem.quantity.toString() + 'x',
+        style: Theme.of(context).textTheme.bodyMedium,
+        textAlign: TextAlign.left,
+      ),
+      title: Text(
+        widget.cartItem.name,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        '\RM'
+        '${widget.cartItem.price.toStringAsFixed(2)}',
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
+      trailing: Text(
+        '\RM' '${widget.cartItem.cost.toStringAsFixed(2)}',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
     );
   }
 }

@@ -130,6 +130,7 @@ const String orderID = "Order ID: ";
 const String totalPrice = "Total Price: ";
 const String orderDate = "Order Date: ";
 const String orderTime = "Order Time";
+const String orderStatus = "Order Status";
 const String paymentTime = "Payment Time";
 const String completeTime = "Completed Time";
 const String orderComplete = "Order Completed";

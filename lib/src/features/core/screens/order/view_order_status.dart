@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/completed_order_screen_buyer.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/ongoing_order_screen_buyer.dart';
 
 class ViewOrderStatusScreen extends StatefulWidget {
   const ViewOrderStatusScreen({super.key});
@@ -43,8 +45,8 @@ class _ViewOrderStatusState extends State<ViewOrderStatusScreen> {
           ),
           body: const TabBarView(
             children: [
-              Center(child: Text('ongoing order screen')),
-              Center(child: Text('completed order screen')),
+              OngoingOrderScreenBuyer(),
+              CompleteOrderScreenBuyer(),
             ],
           ),
         ),

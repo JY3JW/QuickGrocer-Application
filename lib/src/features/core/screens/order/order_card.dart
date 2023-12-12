@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details.dart';
-import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/shopping_cart_screen.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({Key? key}) : super(key: key);
   @override
   State<OrderCard> createState() => _OrderCardState();
 }
+
 class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
@@ -33,28 +33,34 @@ class _OrderCardState extends State<OrderCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("OR0000001", style: TextStyle(fontSize: 18, color: Colors.black)),
-                        Text("Total: \RM345", style: TextStyle(fontSize: 16, color: Colors.black)),
+                        Text("OR0000001",
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.black)),
+                        Text("Total: \RM345",
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black)),
                       ],
                     ),
                     Container(
-                          child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewOrderDetailsScreen()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                backgroundColor: AppColors.subDarkerLimeColor,
-                                shape: StadiumBorder(),
-                              ),
-                              child: const Text("Preparing"),
-                          ),
-                          ))
+                        child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => ViewOrderDetailsScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          backgroundColor: AppColors.subDarkerLimeColor,
+                          side: BorderSide(color: AppColors.subDarkerLimeColor),
+                          foregroundColor: Colors.white,
+                          shape: StadiumBorder(),
+                        ),
+                        child: const Text("Preparing"),
+                      ),
+                    ))
                   ],
                 ),
               ),
@@ -73,23 +79,24 @@ class _OrderCardState extends State<OrderCard> {
                         style: TextStyle(fontSize: 18, color: Colors.black)),
                     Container(
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewOrderDetailsScreen()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                backgroundColor: AppColors.subDarkerLimeColor,
-                                shape: StadiumBorder(),
-                              ),
-                              child: const Text("Details"),
-                          ),
-        
-                        ))
+                      padding: const EdgeInsets.all(10.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => ViewOrderDetailsScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          backgroundColor: AppColors.subDarkerLimeColor,
+                          side: BorderSide(color: AppColors.subDarkerLimeColor),
+                          foregroundColor: Colors.white,
+                          shape: StadiumBorder(),
+                        ),
+                        child: const Text("Details"),
+                      ),
+                    ))
                   ],
                 ),
               ),

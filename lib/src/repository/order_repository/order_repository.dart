@@ -34,28 +34,53 @@ class OrderRepository extends GetxController {
   }
 
   Future<List<OrderModel>> getAllBuyerOrdersBySingleBuyer() async {
-    var snapshot = await _db
-        .collection("orders")
-        .orderBy('date time', descending: true)
-        .where("buyer email",
-            isEqualTo: FirebaseAuth.instance.currentUser?.email)
-        .get();
-    final orderData =
-        snapshot.docs.map((e) => OrderModel.fromSnapshot(e)).toList();
+    List<OrderModel> allOrderData = await getAllBuyersOrders();
+    List<OrderModel> orderData = allOrderData
+        .where((item) => item.email == FirebaseAuth.instance.currentUser?.email)
+        .toList();
+    return orderData;
+  }
+
+  Future<List<OrderModel>> getAllBuyerOrdersBySingleBuyerOngoing(
+      String status) async {
+    List<OrderModel> allOrderData = await getAllBuyerOrdersBySingleBuyer();
+    List<OrderModel> orderData =
+        allOrderData.where((item) => item.status != (status)).toList();
+    return orderData;
+  }
+
+  Future<List<OrderModel>> getAllBuyerOrdersBySingleBuyerCompleted(
+      String status) async {
+    List<OrderModel> allOrderData = await getAllBuyerOrdersBySingleBuyer();
+    List<OrderModel> orderData =
+        allOrderData.where((item) => item.status == (status)).toList();
     return orderData;
   }
 
   Future<List<OrderModel>> getAllBuyersOrders() async {
-    var snapshot = await _db
-        .collection("orders")
-        .orderBy('date time', descending: true)
-        .get();
-    final orderData =
-        snapshot.docs.map((e) => OrderModel.fromSnapshot(e)).toList();
+    try {
+    final snapshot = await _db.collection("orders").get();
+    if (snapshot.docs.isEmpty) {
+      return []; // Return an empty list if there are no documents
+    }
+
+    final orderData = snapshot.docs.map((e) => OrderModel.fromSnapshot(e)).toList();
+    return orderData;
+  } catch (e) {
+    print("Error fetching orders: $e");
+    return []; // Return an empty list in case of an error
+  }
+  }
+
+  Future<List<OrderModel>> getAllBuyersOrdersByCategory(String status) async {
+    List<OrderModel> allOrderData = await getAllBuyersOrders();
+    List<OrderModel> orderData =
+        allOrderData.where((item) => item.status == (status)).toList();
     return orderData;
   }
 
-  Future<void> updateOrderStatus(String orderId, Map<String, dynamic> data) async {
+  Future<void> updateOrderStatus(
+      String orderId, Map<String, dynamic> data) async {
     await _db.collection("orders").doc(orderId).update(data);
   }
 }

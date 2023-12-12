@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FeedbackModel {
   static const ID = "id";
-  static const ORDERID = "order id";
-  static const EMAIL = "buyer email";
-  static const DATETIME = "date time";
+  static const ORDERID = "orderId";
+  static const EMAIL = "buyerEmail";
+  static const DATETIME = "dateTime";
   static const CATEGORY = "category";
   static const DESCRIPTION = "description";
 

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -6,11 +5,9 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
-import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
-import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
@@ -27,7 +24,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   late StoreModel store;
   final cartController = Get.put(CartController());
   final storeController = Get.put(StoreController());
-  final orderController = Get.put(OrderController());
 
   @override
   void initState() {
@@ -118,7 +114,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           ),
                           ElevatedButton.icon(
                               onPressed:
-                                  storeStatus == true ? () => Get.to(() => CheckoutScreen(cartModel: cart, total: cartController.totalPrice)) : () => {},
+                                  storeStatus == true && cartItems.length != 0 ? () => Get.to(() => CheckoutScreen(cartModel: cart, total: cartController.totalPrice)) : () => {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true

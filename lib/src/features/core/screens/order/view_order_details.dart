@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
-import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 
 class ViewOrderDetailsScreen extends StatefulWidget {
   const ViewOrderDetailsScreen({

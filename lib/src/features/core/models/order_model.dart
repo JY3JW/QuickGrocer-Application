@@ -6,9 +6,9 @@ import 'package:quickgrocer_application/src/features/core/models/cart_item_model
 class OrderModel {
   static const ID = "id";
   static const CART = "cart";
-  static const EMAIL = "buyer email";
-  static const DATETIME = "date time";
-  static const TOTALPRICE = "total price";
+  static const EMAIL = "buyerEmail";
+  static const DATETIME = "dateTime";
+  static const TOTALPRICE = "totalPrice";
   static const REMARK = "remarks";
   static const STATUS = "status";
 
@@ -22,7 +22,7 @@ class OrderModel {
 
   OrderModel({required this.id, required this.cart, required this.email, this.dateTime, required this.totalPrice, required this.remarks, required this.status});
 
-  static List<CartItemModel> convertCartItems(List cartFromDb) {
+  static List<CartItemModel> _convertCartItems(List cartFromDb) {
     List<CartItemModel> _result = [];
     logger.i(cartFromDb.length);
     cartFromDb.forEach((element) {
@@ -37,7 +37,7 @@ class OrderModel {
     final data = document.data()!;
     return OrderModel(
       id: data[ID],
-      cart: convertCartItems(data[CART] ?? []),
+      cart: _convertCartItems(data[CART] ?? []),
       email: data[EMAIL],
       dateTime: (data[DATETIME] as Timestamp).toDate(),
       totalPrice: toDouble(data[TOTALPRICE]),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/screens/order/order_card.dart';
-import 'package:quickgrocer_application/src/features/core/screens/order/order_card_buyer.dart';
 
 class ManageOrderScreen extends StatefulWidget {
   const ManageOrderScreen({super.key});
@@ -23,7 +21,6 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       ),
       body: ListView(
         children: [
-          OrderCardBuyer(),
           OrderCard(),
           OrderCard(),
           OrderCard(),

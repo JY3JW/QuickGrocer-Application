@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card_buyer.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
