@@ -128,5 +128,11 @@ const String manageOrder = "Manage Order";
 const String viewOrderDetailsTitle = "Order Details";
 const String orderID = "Order ID: ";
 const String totalPrice = "Total Price: ";
-const String placeOrder = "Place Order";
 const String orderDate = "Order Date: ";
+
+// Checkout Screen
+const String placeOrder = "Place Order";
+const String orderSummary = "Order Summary";
+const String quantity = "Quantity";
+const String orderItem = "Order Item";
+const String price = "RM";

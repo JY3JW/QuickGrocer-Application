@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:path/path.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
@@ -9,6 +10,7 @@ import 'package:quickgrocer_application/src/features/core/controllers/store_cont
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
@@ -113,7 +115,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           ),
                           ElevatedButton.icon(
                               onPressed:
-                                  storeStatus == true ? () => {} : () => {},
+                                  storeStatus == true ? () => Get.to(() => CheckoutScreen()) : () => {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true
