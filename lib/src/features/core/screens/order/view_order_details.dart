@@ -27,94 +27,67 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              Text(
-                orderComplete,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-
-              SizedBox(
-                height: 400,
-                child: ListView(
-                  children: [
-                    CheckoutCard(),
-                    CheckoutCard(),
-                    CheckoutCard()
-                  ],
-                ),
-              ),
-
-              Column(
+          child: Column(children: [
+            Text(
+              orderComplete,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            SizedBox(
+              height: 400,
+              child: ListView(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        orderID,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                      Text(
-                        'OR00000001',
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        orderTime,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                      Text(
-                        '12-12-2023 12:12',
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        completeTime,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                      Text(
-                        '13-12-2023 13:12',
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ],
-                  ),
+                  //CheckoutCard(),
+                  //CheckoutCard(),
+                  //CheckoutCard()
                 ],
               ),
-            ]
-          ),
-          child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(children: [
-          Text(
-            orderID,
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-          Text(
-            orderDate,
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-          SizedBox(
-            height: 400,
-            child: ListView(
+            ),
+            Column(
               children: [
-                //CheckoutCard(),
-                //CheckoutCard(),
-                //CheckoutCard()
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      orderID,
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    Text(
+                      'OR00000001',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      orderTime,
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    Text(
+                      '12-12-2023 12:12',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      completeTime,
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    Text(
+                      '13-12-2023 13:12',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ],
+                ),
               ],
             ),
-          )
-        ]),
-      )),
+          ]),
+        ),
+      ),
       bottomSheet: BottomAppBar(
           height: MediaQuery.of(context).size.height / 12,
           child: Container(
