@@ -16,21 +16,23 @@ class _CheckoutCardState extends State<CheckoutCard> {
        child: Container(
                   child: Card(
                     margin: EdgeInsets.zero,
+                    color: Colors.white,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            SizedBox(
                           width: 50,
                           child: Text(
                             quantity,
                             style: Theme.of(context).textTheme.bodySmall,
                             textAlign: TextAlign.left,
-                          ),
-                        ),
+                            ),
+                            ),
+
                         SizedBox(
                           width: 200,
                           child: Column(
@@ -49,6 +51,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                             ],
                           ),
                         ),
+                        
                         SizedBox(
                           width: 80,
                           child: Text(
