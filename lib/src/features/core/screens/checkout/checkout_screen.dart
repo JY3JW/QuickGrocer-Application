@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -13,9 +14,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  @override 
+  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,50 +25,56 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
+      body: Container(
+        child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
               Text(
                 orderSummary,
-                style: Theme.of(context).textTheme.bodyLarge
+                style: TextStyle(fontSize: 20, color: Colors.black),
               ),
-
-              ListView(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        quantity,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            orderItem,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          Text(
-                            price,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                      Text(
-                        price,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )
-                    ],
-                  )
-                ],
+              SizedBox(
+                height: 400,
+                child: ListView(children: [
+                  CheckoutCard(),
+                  CheckoutCard(),
+                ]),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Remark...'),
               )
-            ],
-          ),
-        )
-      )
+            ])),
+      ),
+      bottomSheet: BottomAppBar(
+          height: MediaQuery.of(context).size.height / 12,
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              alignment: Alignment.center,
+              width: double.infinity,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      //'\RM' '${widget.grocery.price.toStringAsFixed(2)}',
+                      totalPrice,
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () => {},
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          backgroundColor: AppColors.mainPineColor,
+                          shape: StadiumBorder()),
+                      icon: Icon(Icons.payment_rounded),
+                      label: Text('Pay'),
+                    )
+                  ]))),
     );
   }
 }
