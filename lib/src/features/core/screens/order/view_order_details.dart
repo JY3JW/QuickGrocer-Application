@@ -32,13 +32,10 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
           child: Column(
             children: [
               Text(
-                orderID,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                orderComplete,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              Text(
-                orderDate,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
+
               SizedBox(
                 height: 400,
                 child: ListView(
@@ -48,7 +45,53 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                     CheckoutCard()
                   ],
                 ),
-              ) 
+              ),
+
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderID,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        'OR00000001',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderTime,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        '12-12-2023 12:12',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        completeTime,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        '13-12-2023 13:12',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ]
           ),
       )),
