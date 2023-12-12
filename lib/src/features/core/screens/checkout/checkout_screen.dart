@@ -29,9 +29,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, 
               children: [
               Text(
                 orderSummary,
+                textAlign: TextAlign.left,
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(
