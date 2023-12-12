@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -5,9 +6,11 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_item_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
 
@@ -23,6 +26,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   late StoreModel store;
   final cartController = Get.put(CartController());
   final storeController = Get.put(StoreController());
+  final orderController = Get.put(OrderController());
 
   @override
   void initState() {
@@ -112,8 +116,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           ElevatedButton.icon(
-                              onPressed:
-                                  storeStatus == true ? () => {} : () => {},
+                              onPressed: storeStatus == true
+                                  ? () async {
+                                      await orderController.createNewOrder(new OrderModel(
+                                          id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                          cart: List<CartItemModel>.from(cart.cart), // error in this line dont know why cannot directly put a list as argument
+                                          email: FirebaseAuth.instance.currentUser?.email as String,
+                                          totalPrice: cartController.totalPrice,
+                                          remarks: 'abc',
+                                          status: 'accepted'));
+                                    }
+                                  : () => {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true
@@ -183,13 +196,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               title: Text(
                 cartItems[index].name,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
               ),
               subtitle: Text(
                 '\RM'
                 '${cartItems[index].price.toStringAsFixed(2)}',
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+                style:
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
               ),
               trailing: SizedBox(
                 width: 120,
@@ -202,12 +217,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               .decreaseQuantity(cartItems[index]);
                           setState(() {});
                         },
-                        icon: Icon(LineAwesomeIcons.chevron_circle_left, color: Colors.black),
+                        icon: Icon(LineAwesomeIcons.chevron_circle_left,
+                            color: Colors.black),
                       ),
                       Text(
                         cartItems[index].quantity.toString(),
                         style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                       IconButton(
                           onPressed: () async {
@@ -220,7 +238,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     "Quantity to purchase cannot exceed the quantity of item in stock");
                             setState(() {});
                           },
-                          icon: Icon(LineAwesomeIcons.chevron_circle_right), color: Colors.black),
+                          icon: Icon(LineAwesomeIcons.chevron_circle_right),
+                          color: Colors.black),
                     ]),
               ),
             ),

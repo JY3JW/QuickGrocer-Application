@@ -52,6 +52,10 @@ class CartController extends GetxController {
     }
   }
 
+  void clearItemsInTheCart() async {
+    await _cartRepo.updateCartData({"cart": []});
+  }
+
   void removeCartItem(CartItemModel cartItem) async {
     try {
       await _cartRepo.updateCartData({
