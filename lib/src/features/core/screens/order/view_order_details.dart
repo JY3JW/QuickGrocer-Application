@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 
 class ViewOrderDetailsScreen extends StatefulWidget {
@@ -13,8 +15,15 @@ class ViewOrderDetailsScreen extends StatefulWidget {
 class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
+        
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(LineAwesomeIcons.angle_left,
+                color: iconColorWithoutBackground)),
         title: Text(
           viewOrderDetailsTitle,
           style: Theme.of(context).textTheme.headlineSmall,

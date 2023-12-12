@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_helper_utils/flutter_helper_utils.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
@@ -22,8 +24,15 @@ class _ViewOrderDetailsBuyerScreenState
     extends State<ViewOrderDetailsBuyerScreen> {
   @override
   Widget build(BuildContext context) {
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(LineAwesomeIcons.angle_left,
+                color: iconColorWithoutBackground)),
         title: Text(
           viewOrderDetailsTitle,
           style: Theme.of(context).textTheme.headlineSmall,
