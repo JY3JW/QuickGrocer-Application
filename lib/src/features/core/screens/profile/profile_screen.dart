@@ -118,15 +118,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               content:
                                   Text('Confirm to log out of your account?'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('NO'),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                ElevatedButton(
-                                  child: Text('YES'),
-                                  onPressed: () => AuthenticationRepository
-                                      .instance
-                                      .logout(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('NO'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('YES'),
+                                        onPressed: () =>
+                                            AuthenticationRepository.instance
+                                                .logout(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },
@@ -141,9 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: iconColor),
                 ),
                 title: Text(logout,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium),
+                    style: Theme.of(context).textTheme.titleMedium),
               ),
               const SizedBox(height: 10),
               ListTile(
@@ -154,16 +162,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               title: Text('Delete Account'),
                               content: Text('Confirm to delete your account?'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('NO'),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                ElevatedButton(
-                                  child: Text('YES'),
-                                  onPressed: () => {
-                                    AuthenticationRepository.instance
-                                        .deleteUserAccount()
-                                  },
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('NO'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('YES'),
+                                        onPressed: () => {
+                                          AuthenticationRepository.instance
+                                              .deleteUserAccount()
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },

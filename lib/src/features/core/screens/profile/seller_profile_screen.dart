@@ -80,19 +80,28 @@ class SellerProfileScreen extends StatelessWidget {
                               title: Text('Store Status'),
                               content: Text('Change store open status to'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('CLOSED'),
-                                  onPressed: () async {
-                                    storeController.setStoreClose();
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                ElevatedButton(
-                                  child: Text('OPEN'),
-                                  onPressed: () async {
-                                    storeController.setStoreOpen();
-                                    Navigator.pop(context);
-                                  },
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('CLOSED'),
+                                        onPressed: () async {
+                                          storeController.setStoreClose();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('OPEN'),
+                                        onPressed: () async {
+                                          storeController.setStoreOpen();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },
@@ -119,15 +128,24 @@ class SellerProfileScreen extends StatelessWidget {
                               content:
                                   Text('Confirm to log out of your account?'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('NO'),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                ElevatedButton(
-                                  child: Text('YES'),
-                                  onPressed: () => AuthenticationRepository
-                                      .instance
-                                      .logout(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('NO'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('YES'),
+                                        onPressed: () => AuthenticationRepository
+                                            .instance
+                                            .logout(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },
