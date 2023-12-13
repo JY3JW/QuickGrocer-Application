@@ -20,8 +20,6 @@ class ShoppingCartScreen extends StatefulWidget {
 }
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
-  late List<CartItemModel> cartItems;
-  late StoreModel store;
   final cartController = Get.put(CartController());
   final storeController = Get.put(StoreController());
 
@@ -33,8 +31,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    late CartModel cart;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -59,18 +55,102 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          cart = snapshot.data as CartModel;
-                          cartItems = cart.cart;
+                          CartModel cart = snapshot.data as CartModel;
+                          List<CartItemModel> cartItems = cart.cart;
                           cartController.totalPrice =
                               cartController.changeCartTotalPrice(cart);
 
                           return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 8 / 12,
+                                height: MediaQuery.of(context).size.height *
+                                    17 /
+                                    24,
                                 child: _buildAllCartItems(cartItems),
                               ),
+                              FutureBuilder(
+                                  future: storeController.getStoreData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        StoreModel store =
+                                            snapshot.data as StoreModel;
+                                        bool storeStatus = store.status;
+
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '\RM'
+                                                '${cartController.totalPrice.toStringAsFixed(2)}',
+                                                style: const TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              ElevatedButton.icon(
+                                                  onPressed: storeStatus ==
+                                                              true &&
+                                                          cartItems.length != 0
+                                                      ? () => Get.to(() =>
+                                                          CheckoutScreen(
+                                                              cartModel: cart,
+                                                              total: cartController
+                                                                  .totalPrice))
+                                                      : () => {},
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20),
+                                                    backgroundColor:
+                                                        store.status == true
+                                                            ? AppColors
+                                                                .mainPineColor
+                                                            : Colors.grey,
+                                                    side: store.status == true
+                                                        ? BorderSide(
+                                                            color: AppColors
+                                                                .mainPineColor)
+                                                        : BorderSide(
+                                                            color: Colors.grey),
+                                                    foregroundColor:
+                                                        Colors.white,
+                                                    shape: StadiumBorder(),
+                                                  ),
+                                                  icon: storeStatus == true
+                                                      ? Icon(Icons
+                                                          .shopping_cart_checkout)
+                                                      : Icon(Icons
+                                                          .remove_shopping_cart_rounded),
+                                                  label: storeStatus == true
+                                                      ? Text(
+                                                          checkoutShoppingCart)
+                                                      : Text(storeClosed)),
+                                            ],
+                                          ),
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return Center(
+                                            child: Text(
+                                                snapshot.error.toString()));
+                                      } else {
+                                        return const Center(
+                                            child:
+                                                Text("Something went wrong"));
+                                      }
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  }),
                             ],
                           );
                         } else if (snapshot.hasError) {
@@ -85,63 +165,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     }),
               )
             ]),
-          ),
-        ),
-      ),
-      bottomSheet: BottomAppBar(
-        height: MediaQuery.of(context).size.height / 12,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          alignment: Alignment.center,
-          width: double.infinity,
-          child: Container(
-            child: FutureBuilder(
-                future: storeController.getStoreData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
-                      StoreModel store = snapshot.data as StoreModel;
-                      bool storeStatus = store.status;
-
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '\RM'
-                            '${cartController.totalPrice.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          ElevatedButton.icon(
-                              onPressed:
-                                  storeStatus == true && cartItems.length != 0 ? () => Get.to(() => CheckoutScreen(cartModel: cart, total: cartController.totalPrice)) : () => {},
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                backgroundColor: store.status == true
-                                    ? AppColors.mainPineColor
-                                    : Colors.grey,
-                                side: store.status == true
-                                    ? BorderSide(color: AppColors.mainPineColor)
-                                    : BorderSide(color: Colors.grey),
-                                shape: StadiumBorder(),
-                              ),
-                              icon: storeStatus == true
-                                  ? Icon(Icons.shopping_cart_checkout)
-                                  : Icon(Icons.remove_shopping_cart_rounded),
-                              label: storeStatus == true
-                                  ? Text(checkoutShoppingCart)
-                                  : Text(storeClosed)),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
-                    } else {
-                      return const Center(child: Text("Something went wrong"));
-                    }
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }),
           ),
         ),
       ),
