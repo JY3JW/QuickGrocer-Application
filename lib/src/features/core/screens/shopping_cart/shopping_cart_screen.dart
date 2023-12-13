@@ -21,7 +21,6 @@ class ShoppingCartScreen extends StatefulWidget {
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   late List<CartItemModel> cartItems;
-  late StoreModel store;
   final cartController = Get.put(CartController());
   final storeController = Get.put(StoreController());
 
