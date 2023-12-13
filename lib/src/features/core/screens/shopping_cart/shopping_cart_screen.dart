@@ -64,8 +64,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 17 / 24,
+                                height: MediaQuery.of(context).size.height *
+                                    17 /
+                                    24,
                                 child: _buildAllCartItems(cartItems),
                               ),
                               FutureBuilder(
@@ -120,6 +121,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                                 .mainPineColor)
                                                         : BorderSide(
                                                             color: Colors.grey),
+                                                    foregroundColor:
+                                                        Colors.white,
                                                     shape: StadiumBorder(),
                                                   ),
                                                   icon: storeStatus == true

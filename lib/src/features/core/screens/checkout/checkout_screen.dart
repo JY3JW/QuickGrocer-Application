@@ -58,7 +58,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         child: ListView.separated(
                           itemCount: widget.cartModel.cart.length,
                           separatorBuilder: (context, index) {
-                            return Divider(thickness: 1.0,  height: 0, endIndent: 0);
+                            return Divider(
+                                thickness: 1.0, height: 0, endIndent: 0);
                           },
                           itemBuilder: (context, index) {
                             return CheckoutCard(
@@ -108,6 +109,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 40),
                           backgroundColor: AppColors.mainPineColor,
+                          side: BorderSide(color: AppColors.mainPineColor),
+                          foregroundColor: Colors.white,
                           shape: StadiumBorder()),
                       icon: Icon(Icons.payment_rounded),
                       label: Text('Pay'),
