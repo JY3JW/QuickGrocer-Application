@@ -113,6 +113,9 @@ const String browseGroceryTitle = "Home";
 // View Order Status Screen
 const String orderHistoryTitle = "Order History";
 
+// Manage Order Screen
+const String manageOrderTitle = "Manage Order";
+
 // View Shopping Cart Screen
 const String shoppingCartScreenTitle = "Shopping Cart";
 const String checkoutShoppingCart = "Checkout";
@@ -121,16 +124,15 @@ const String storeClosed = "Store Closed";
 // Store Model ID
 const String storeId = "ST001";
 
-// Manage Grocery Screen
-const String manageOrder = "Manage Order";
-
 // View Order Details Screen
 const String viewOrderDetailsTitle = "Order Details";
 const String orderID = "Order ID: ";
 const String totalPrice = "Total Price: ";
 const String orderDate = "Order Date: ";
 const String orderTime = "Order Time";
+const String orderBuyerEmail = "Buyer Email";
 const String orderStatus = "Order Status";
+const String orderRemark = "Remarks: ";
 const String paymentTime = "Payment Time";
 const String completeTime = "Completed Time";
 const String orderComplete = "Order Completed";
@@ -143,6 +145,6 @@ const String orderItem = "Order Item";
 const String price = "RM";
 
 //Feedback Screen
-const String feedback = "Feedback";
+const String feedback = "Feedback: ";
 const String passiveFeedback = "I have an issue.";
 const String activeFeedback = "Do a feedback on my order";

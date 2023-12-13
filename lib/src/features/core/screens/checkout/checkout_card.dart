@@ -13,27 +13,30 @@ class CheckoutCard extends StatefulWidget {
 class _CheckoutCardState extends State<CheckoutCard> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      visualDensity: VisualDensity(vertical: -4),
-      leading: Text(
-        widget.cartItem.quantity.toString() + 'x',
-        style: Theme.of(context).textTheme.bodyMedium,
-        textAlign: TextAlign.left,
-      ),
-      title: Text(
-        widget.cartItem.name,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(
-        '\RM'
-        '${widget.cartItem.price.toStringAsFixed(2)}',
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.w500),
-      ),
-      trailing: Text(
-        '\RM' '${widget.cartItem.cost.toStringAsFixed(2)}',
-        style: Theme.of(context).textTheme.bodyMedium,
+    return SizedBox(
+      height: 57.5,
+      child: ListTile(
+        visualDensity: VisualDensity(vertical: -4),
+        leading: Text(
+          widget.cartItem.quantity.toString() + 'x',
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.left,
+        ),
+        title: Text(
+          widget.cartItem.name,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          '\RM'
+          '${widget.cartItem.price.toStringAsFixed(2)}',
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+        trailing: Text(
+          '\RM' '${widget.cartItem.cost.toStringAsFixed(2)}',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
     );
   }

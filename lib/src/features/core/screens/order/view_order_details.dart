@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 
 class ViewOrderDetailsScreen extends StatefulWidget {
   const ViewOrderDetailsScreen({
     super.key,
+    required this.order,
   });
+
+  final OrderModel order;
 
   @override
   State<ViewOrderDetailsScreen> createState() => _ViewOrderDetailsScreenState();
@@ -17,7 +26,8 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
-        
+    final orderController = Get.put(OrderController());
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,127 +42,239 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Text(
-                  orderComplete,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-        
-                SizedBox(
-                  height: 400,
-                  child: ListView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(children: [
+            Text(
+              orderSummary,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 5 / 12,
+                child: ListView.separated(
+                  itemCount: widget.order.cart.length,
+                  separatorBuilder: (context, index) {
+                    return Divider(thickness: 1.0,  height: 0, endIndent: 0);
+                  },
+                  itemBuilder: (context, index) {
+                    return CheckoutCard(cartItem: widget.order.cart[index]);
+                  },
+                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4.0, 10.0, 4.0, 10.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //CheckoutCard(),
-                      //CheckoutCard(),
-                      //CheckoutCard()
+                      Text(
+                        totalPrice,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        '\RM'
+                        '${widget.order.totalPrice.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                     ],
                   ),
-                ),
-        
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          orderID,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        Text(
-                          'OR00000001',
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ],
-                    ),
-        
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          orderTime,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        Text(
-                          '12-12-2023 12:12',
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ],
-                    ),
-        
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          paymentTime,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        Text(
-                          '12-12-2023 12:21',
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ],
-                    ),
-        
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          completeTime,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        Text(
-                          '13-12-2023 13:12',
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-        
-                SizedBox(
-                  height: 35,
-                ),
-        
-                Card(
-                  margin: EdgeInsets.zero,
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 150,
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderID,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        widget.order.id,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderTime,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        widget.order.dateTime.toString().substring(0, 19),
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderBuyerEmail,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        widget.order.email,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        orderStatus,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Text(
+                        widget.order.status.toPascalCase,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Card(
+                    margin: EdgeInsets.zero,
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                          feedback,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          textAlign: TextAlign.left,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            orderRemark,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          SizedBox(height: 10.0),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 11 / 12,
+                            child: Text(
+                              widget.order.remarks != ''
+                                  ? widget.order.remarks
+                                  : 'none',
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                )
-              ]
+                  SizedBox(height: 20),
+                  // future builder sprint 4 to fetch feedback if feedback exist then will display
+                  Card(
+                    margin: EdgeInsets.zero,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            feedback,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          SizedBox(height: 10.0),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 11 / 12,
+                            child: Text(
+                              widget.order.remarks != ''
+                                  ? widget.order.remarks
+                                  : 'none',
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: TextButton(
+                        onPressed: () => {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                      title: Text('Order Status'),
+                                      content: Text('Change order status to'),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                child: Text('ACCEPTED'),
+                                                onPressed: () async {
+                                                  orderController
+                                                      .setOrderStatusToAccepted(
+                                                          widget.order.id);
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                child: Text('PREPARING'),
+                                                onPressed: () async {
+                                                  orderController
+                                                      .setOrderStatusToPreparing(
+                                                          widget.order.id);
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                child: Text('READY'),
+                                                onPressed: () async {
+                                                  orderController
+                                                      .setOrderStatusToReady(
+                                                          widget.order.id);
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                child: Text('COMPLETED'),
+                                                onPressed: () async {
+                                                  orderController
+                                                      .setOrderStatusToComplete(
+                                                          widget.order.id);
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ]))
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(buttonHeight),
+                            backgroundColor: AppColors.mainPineColor,
+                            side: BorderSide(color: AppColors.mainPineColor),
+                            foregroundColor: Colors.white,
+                            shape: StadiumBorder()),
+                        child: Text(widget.order.status.toPascalCase),
+                      )),
+                    ],
+                  )
+                ],
+              ),
             ),
-        )),
+          ]),
+        ),
       ),
-      bottomSheet: BottomAppBar(
-        height: MediaQuery.of(context).size.height / 12,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          alignment: Alignment.center,
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                //'\RM' '${widget.grocery.price.toStringAsFixed(2)}',
-                totalPrice,
-                style: const TextStyle(
-                fontSize: 22, fontWeight: FontWeight.bold),
-              )
-      ]))),
     );
   }
 }

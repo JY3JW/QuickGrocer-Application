@@ -59,7 +59,7 @@ class OrderRepository extends GetxController {
 
   Future<List<OrderModel>> getAllBuyersOrders() async {
     try {
-    final snapshot = await _db.collection("orders").get();
+    final snapshot = await _db.collection("orders").orderBy("dateTime", descending: true).get();
     if (snapshot.docs.isEmpty) {
       return []; // Return an empty list if there are no documents
     }

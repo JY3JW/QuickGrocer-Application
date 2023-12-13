@@ -58,7 +58,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         child: ListView.separated(
                           itemCount: widget.cartModel.cart.length,
                           separatorBuilder: (context, index) {
-                            return Divider(thickness: 1.0);
+                            return Divider(thickness: 1.0,  height: 0, endIndent: 0);
                           },
                           itemBuilder: (context, index) {
                             return CheckoutCard(
