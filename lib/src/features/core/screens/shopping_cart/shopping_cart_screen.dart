@@ -114,7 +114,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           ),
                           ElevatedButton.icon(
                               onPressed:
-                                  storeStatus == true && cartItems.length != 0 ? () => Get.to(() => CheckoutScreen(cartModel: cart, total: cartController.totalPrice)) : () => {},
+                                  storeStatus == true && cartItems.length != 0
+                                      ? () => Get.to(() => CheckoutScreen(
+                                          cartModel: cart,
+                                          total: cartController.totalPrice))
+                                      : () => {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 backgroundColor: store.status == true
@@ -123,6 +127,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 side: store.status == true
                                     ? BorderSide(color: AppColors.mainPineColor)
                                     : BorderSide(color: Colors.grey),
+                                foregroundColor: Colors.white,
                                 shape: StadiumBorder(),
                               ),
                               icon: storeStatus == true
