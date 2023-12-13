@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
@@ -25,12 +30,64 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
     'Others'
   ];
 
+  late String _scanBarcodeResult = "";
+  String imageUrl = "";
+
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      debugPrint(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+    setState(() {
+      _scanBarcodeResult = barcodeScanRes;
+    });
+  }
+
+  Future<void> getImageFromGallery() async {
+    //1. pick image
+    XFile? pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedImage == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //2. upload to firebase storage
+    // get a reference to storage root
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('images');
+    // create a reference for the image to be stored
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+    // !!! very important, need to set the metadata for putFile function. else, the file will not have data type
+    final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': pickedImage.path});
+
+    // handle errors/success
+    try {
+      // store the file
+      await referenceImageToUpload.putFile(File(pickedImage.path), metadata);
+      // success: get the download url
+      imageUrl = await referenceImageToUpload.getDownloadURL();
+    } catch (error) {
+      // error occured
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
     final controller = Get.put(GroceryController());
     final _formKey = GlobalKey<FormState>();
+    final id = TextEditingController(text: _scanBarcodeResult);
+    final url = TextEditingController(text: imageUrl);
 
     return SafeArea(
       child: Scaffold(
@@ -45,14 +102,6 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          actions: [
-            IconButton(
-                onPressed: () {/*scan barcode*/},
-                icon: Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: iconColorWithoutBackground,
-                ))
-          ],
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -64,19 +113,22 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: controller.id,
+                      controller: id,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the grocery id';
+                          return 'Please enter the grocery id or scan the barcode';
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
-                        label: Text(groceryId),
-                        prefixIcon: Icon(
-                          Icons.code_rounded,
-                        ),
-                      ),
+                      decoration: InputDecoration(
+                          label: Text(groceryId),
+                          prefixIcon: Icon(
+                            Icons.code_rounded,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.qr_code_scanner_rounded),
+                            onPressed: scanBarcodeNormal,
+                          )),
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
@@ -113,40 +165,47 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: controller.imageUrl,
+                      controller: url,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the image URL';
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         label: Text(groceryImageUrl),
                         prefixIcon: Icon(
                           Icons.link_rounded,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: getImageFromGallery,
+                          icon: Icon(
+                            LineAwesomeIcons.camera,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     DropdownButtonFormField<String>(
-                          hint: const Text('🛍️   ' + groceryCategory),
-                          value: selectedValue,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a category';
-                            }
-                            return null;
-                          },
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(16),
-                          items: categories.
-                          map((String value) {
-                            return DropdownMenuItem<String>(
-                                value: value, child: Text(value));
-                          }).toList(),
-                          onChanged: (value) async {
-                            setState(() {selectedValue = value!;});
-                          },
+                      hint: const Text('🛍️   ' + groceryCategory),
+                      value: selectedValue,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a category';
+                        }
+                        return null;
+                      },
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(16),
+                      items: categories.map((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value));
+                      }).toList(),
+                      onChanged: (value) async {
+                        setState(() {
+                          selectedValue = value!;
+                        });
+                      },
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
@@ -195,10 +254,10 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final groceryData = GroceryModel(
-                              id: controller.id.text.trim(),
+                              id: id.text.trim(),
                               name: controller.name.text.trim(),
                               description: controller.description.text.trim(),
-                              imageUrl: controller.imageUrl.text.trim(),
+                              imageUrl: url.text.trim(),
                               category: selectedValue!,
                               price: toDouble(controller.price.text.trim()),
                               quantity: toInt(controller.quantity.text.trim()),
@@ -206,8 +265,16 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
 
                             await controller.createNewGrocery(groceryData);
                             Navigator.pop(context);
+
+                            // clear controllers
+                            controller.clearControllers();
+
+                            setState(() {});
                           }
                         },
+                        style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                        ),
                         child: const Text(addGroceryButton),
                       )),
                     ]),

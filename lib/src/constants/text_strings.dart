@@ -81,6 +81,8 @@ const String groceriesCategory = "Groceries Category";
 const String viewGroceryDetailsTitle = "Details";
 const String quantityInStock = "Available Stock";
 const String addToCart = "Add to Cart";
+const String outOfStock = "Out of Stock";
+const String quantityInCart = "Quantity In Cart";
 
 // Update Grocery Details Screen
 const String updateGroceryDetailsTitle = "Update Details";
@@ -98,5 +100,51 @@ const String addGroceryTitle = "Add New Grocery";
 const String addGroceryButton = "Create Grocery";
 const String groceryId = "Grocery ID";
 
+// Update Grocery Stock Barcode Screen
+const String scanBarcodeTitle = "Scan Grocery Barcode";
+const String updateGroceryStockTitle = "Update Grocery Stock";
+const String stockInQuantity = "Stock In Quantity";
+const String stockOutQuantity = "Stock Out Quantity";
+const String updateGroceryStockButton = "Update Stock";
+
 // Browse Grocery Screen
 const String browseGroceryTitle = "Home";
+
+// View Order Status Screen
+const String orderHistoryTitle = "Order History";
+
+// Manage Order Screen
+const String manageOrderTitle = "Manage Order";
+
+// View Shopping Cart Screen
+const String shoppingCartScreenTitle = "Shopping Cart";
+const String checkoutShoppingCart = "Checkout";
+const String storeClosed = "Store Closed";
+
+// Store Model ID
+const String storeId = "ST001";
+
+// View Order Details Screen
+const String viewOrderDetailsTitle = "Order Details";
+const String orderID = "Order ID: ";
+const String totalPrice = "Total Price: ";
+const String orderDate = "Order Date: ";
+const String orderTime = "Order Time";
+const String orderBuyerEmail = "Buyer Email";
+const String orderStatus = "Order Status";
+const String orderRemark = "Remarks: ";
+const String paymentTime = "Payment Time";
+const String completeTime = "Completed Time";
+const String orderComplete = "Order Completed";
+
+// Checkout Screen
+const String placeOrder = "Place Order";
+const String orderSummary = "Order Summary";
+const String quantity = "Quantity";
+const String orderItem = "Order Item";
+const String price = "RM";
+
+//Feedback Screen
+const String feedback = "Feedback: ";
+const String passiveFeedback = "I have an issue.";
+const String activeFeedback = "Do a feedback on my order";

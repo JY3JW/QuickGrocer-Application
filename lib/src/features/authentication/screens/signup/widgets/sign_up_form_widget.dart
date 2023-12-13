@@ -91,10 +91,10 @@ class SignUpFormWidget extends StatelessWidget {
               },
               obscureText: true,
               decoration: InputDecoration(
-                  label: Text(password),
-                  prefixIcon: Icon(
-                    Icons.fingerprint,
-                  ),
+                label: Text(password),
+                prefixIcon: Icon(
+                  Icons.fingerprint,
+                ),
               ),
             ),
             const SizedBox(height: formHeight - 10.0),
@@ -118,6 +118,7 @@ class SignUpFormWidget extends StatelessWidget {
                       phoneNo: controller.phone.text.trim(),
                     );
                     SignUpController.instance.createUser(user);
+                    controller.clearControllers();
                   }
                 },
                 child: Text(signup.toUpperCase()),

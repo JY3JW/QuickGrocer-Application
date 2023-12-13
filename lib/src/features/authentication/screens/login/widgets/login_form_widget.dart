@@ -33,9 +33,10 @@ class LoginForm extends StatelessWidget {
                 return null;
               },
               decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person_outline_outlined),
-                  labelText: email,
-                  hintText: email,),
+                prefixIcon: Icon(Icons.person_outline_outlined),
+                labelText: email,
+                hintText: email,
+              ),
             ),
             const SizedBox(height: formHeight),
             TextFormField(
@@ -54,9 +55,9 @@ class LoginForm extends StatelessWidget {
               },
               obscureText: true,
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.fingerprint),
-                  labelText: password,
-                  hintText: password,
+                prefixIcon: Icon(Icons.fingerprint),
+                labelText: password,
+                hintText: password,
               ),
             ),
             const SizedBox(height: formHeight - 10.0),
@@ -79,8 +80,11 @@ class LoginForm extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    LoginController.instance.loginUser(controller.email.text.trim(), controller.password.text.trim());
+                    LoginController.instance.loginUser(
+                        controller.email.text.trim(),
+                        controller.password.text.trim());
                   }
+                  controller.clearControllers();
                 },
                 child: Text(login.toUpperCase()),
               ),

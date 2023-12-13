@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/manage_grocery_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/order/manage_order_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/profile/seller_profile_screen.dart';
 
 class SellerDashboard extends StatefulWidget {
   const SellerDashboard({super.key});
@@ -17,10 +19,13 @@ class _SellerDashboardState extends State<SellerDashboard> {
       child: ManageGroceryScreen(),
     ),
     SafeArea(
-      child: Text('ManageOrderScreen'),
+      child: ManageOrderScreen(),
     ),
     SafeArea(
-      child: Text('ViewSalesReportScreen'),
+      child: Text('ViewSalesReportScreen & ViewFeedback'),
+    ),
+    SafeArea(
+      child: SellerProfileScreen(),
     ),
   ];
 
@@ -51,9 +56,15 @@ class _SellerDashboardState extends State<SellerDashboard> {
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.file_copy),
-            icon: Icon(Icons.file_copy_outlined),
-            label: 'Report',
+            activeIcon: Icon(Icons.grade),
+            icon: Icon(Icons.grade_outlined),
+            label: 'Performance',
+            backgroundColor: AppColors.mainPineColor,
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.account_circle),
+            icon: Icon(Icons.account_circle_outlined),
+            label: 'Profile',
             backgroundColor: AppColors.mainPineColor,
           ),
         ],

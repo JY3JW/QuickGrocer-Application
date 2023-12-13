@@ -5,7 +5,9 @@ import 'package:quickgrocer_application/src/features/authentication/screens/mail
 import 'package:quickgrocer_application/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:quickgrocer_application/src/features/core/screens/dashboard/seller_dashboard.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/exceptions/authentication_exceptions.dart';
+import 'package:quickgrocer_application/src/repository/cart_repository/cart_repository.dart';
 import 'package:quickgrocer_application/src/repository/user_repository/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
@@ -36,12 +38,14 @@ class AuthenticationRepository extends GetxController {
     //check whether user already logged in, if logged in direct to dashboard page, else direct to welcome page
     user == null
         ? Get.offAll(() => const WelcomeScreen())
-        : user.emailVerified
-            ? Get.offAll(() => const Dashboard())
-            : Get.offAll(() => const MailVerificationScreen());
+        : (user.email == 'admin@gmail.com'
+            ? Get.offAll(() => const SellerDashboard())
+            : user.emailVerified
+                ? Get.offAll(() => const Dashboard())
+                : Get.offAll(() => const MailVerificationScreen()));
   }
 
-  //! maybe not used because cannot set UID of phone number
+  //! not used because cannot set UID of phone number
   Future<void> phoneAuthentication(String phone) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phone,
@@ -66,6 +70,7 @@ class AuthenticationRepository extends GetxController {
     );
   }
 
+  //! not used because cannot set UID of phone number
   Future<bool> verifyOTP(String otp) async {
     var credentials = await _auth.signInWithCredential(
         PhoneAuthProvider.credential(
@@ -185,9 +190,9 @@ class AuthenticationRepository extends GetxController {
     try {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       await FirebaseAuth.instance.currentUser?.delete();
-      UserRepository.instance
-          .deleteUserRecord(uid);
-      Get.offAll(() => const WelcomeScreen());
+      UserRepository.instance.deleteUserRecord(uid);
+      CartRepository.instance.deleteCartRecord(uid as String);
+      logout();
     } on FirebaseAuthException catch (e) {
       Get.snackbar(ohSnap, e.toString(),
           snackPosition: SnackPosition.BOTTOM,
@@ -216,6 +221,7 @@ class AuthenticationRepository extends GetxController {
       }
 
       await FirebaseAuth.instance.currentUser?.delete();
+      logout();
     } catch (e) {
       Get.snackbar(ohSnap, e.toString(),
           snackPosition: SnackPosition.BOTTOM,

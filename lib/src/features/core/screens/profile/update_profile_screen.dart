@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
@@ -16,10 +15,6 @@ class UpdateProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
     final _formKey = GlobalKey<FormState>();
-
-    var iconColor =
-        Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
-    var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
 
@@ -64,21 +59,6 @@ class UpdateProfileScreen extends StatelessWidget {
                                   child: const Image(
                                       image: AssetImage(profileImage))),
                             ),
-                            Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        color: iconColor),
-                                    child: Icon(
-                                      LineAwesomeIcons.camera,
-                                      color: iconLineColor,
-                                      size: 20,
-                                    )))
                           ],
                         ),
                         const SizedBox(height: 50),

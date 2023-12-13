@@ -23,7 +23,7 @@ class UserModel {
       "password": password,
     };
   }
-
+  
   // map user fetched from Firebase to UserModel
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {

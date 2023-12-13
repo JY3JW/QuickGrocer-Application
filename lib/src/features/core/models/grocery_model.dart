@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 
 class GroceryModel {
   final String id;
@@ -30,7 +31,7 @@ class GroceryModel {
       "quantity": quantity,
     };
   }
-
+ 
   // map user fetched from Firebase to GroceryModel
   factory GroceryModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
@@ -41,8 +42,8 @@ class GroceryModel {
       category: data["category"],
       imageUrl: data["imageUrl"],
       description: data["description"],
-      price: data["price"],
-      quantity: data["quantity"],
+      price: toDouble(data["price"]),
+      quantity: toInt(data["quantity"]),
     );
   }
 }

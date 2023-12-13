@@ -39,7 +39,7 @@ class TExceptions implements Exception {
         return const TExceptions('The provided Firebase session cookie is expired.');
       case 'uid-already-exists':
         return const TExceptions('The provided uid is already in use by an existing user.');
-      
+
       default:
         return const TExceptions();
     }

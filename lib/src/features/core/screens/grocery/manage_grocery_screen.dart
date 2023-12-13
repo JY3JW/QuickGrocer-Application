@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/features/core/controllers/grocery_co
 import 'package:quickgrocer_application/src/features/core/models/category_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/barcode_scanning_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
 
@@ -42,70 +43,82 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
               icon: Icon(
                 Icons.add_box,
                 color: iconColorWithoutBackground,
+              )),
+          IconButton(
+              onPressed: () => Get.to(() => BarcodeScanningScreen()),
+              icon: Icon(
+                Icons.qr_code_scanner_rounded,
+                color: iconColorWithoutBackground,
               ))
         ],
       ),
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              child: FutureBuilder(
-                  future: catController.getAllCategories(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        category = snapshot.data as List<CategoryModel>;
-                        return SizedBox(
-                          height: 120,
-                          child: GridView.count(
-                            crossAxisCount: 1,
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(category.length, (index) {
-                              return _buildProductCategory(
-                                  index: index,
-                                  name: category[index].name,
-                                  img: category[index].imageUrl);
-                            }),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+          await Future.delayed(const Duration(seconds: 1));
+        },
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                child: FutureBuilder(
+                    future: catController.getAllCategories(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          category = snapshot.data as List<CategoryModel>;
+                          return SizedBox(
+                            height: 120,
+                            child: GridView.count(
+                              crossAxisCount: 1,
+                              scrollDirection: Axis.horizontal,
+                              children: List.generate(category.length, (index) {
+                                return _buildProductCategory(
+                                    index: index,
+                                    name: category[index].name,
+                                    img: category[index].imageUrl);
+                              }),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: FutureBuilder(
-                  future: isSelected == 0
-                      ? grocController.getAllGroceries()
-                      : grocController
-                          .getGroceriesByCategory(category[isSelected].name),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        List<GroceryModel> grocery =
-                            snapshot.data as List<GroceryModel>;
-                        return SizedBox(
-                            height: 500, child: _buildAllGroceries(grocery));
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+                    }),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: FutureBuilder(
+                    future: isSelected == 0
+                        ? grocController.getAllGroceries()
+                        : grocController
+                            .getGroceriesByCategory(category[isSelected].name),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          List<GroceryModel> grocery =
+                              snapshot.data as List<GroceryModel>;
+                          return SizedBox(
+                              height: 500, child: _buildAllGroceries(grocery));
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        } else {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
                       } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
+                        return Center(child: CircularProgressIndicator());
                       }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
-          ],
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -116,35 +129,39 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
           {required int index, required String name, required String img}) =>
       GestureDetector(
         onTap: () => setState(() => isSelected = index),
-        child: Container(
-            width: 40,
-            height: 40,
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: isSelected == index
-                  ? AppColors.mainPineColor
-                  : AppColors.greyColor1,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Image.network(img, fit: BoxFit.cover)),
+        child: Card(
+          color: isSelected == index
+              ? AppColors.mainPineColor
+              : AppColors.greyColor1,
+          child: Container(
+              width: 40,
+              height: 40,
+              margin: const EdgeInsets.all(8),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
               ),
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: isSelected == index ? Colors.white : Colors.black,
-                    fontSize: 12),
-              ),
-            ])),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Image.network(img, fit: BoxFit.cover)),
+                    ),
+                    Text(
+                      name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color:
+                              isSelected == index ? Colors.white : Colors.black,
+                          fontSize: 12),
+                    ),
+                  ])),
+        ),
       );
 
   // grocery card widget
@@ -159,7 +176,11 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
       itemCount: grocery.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateGroceryScreen(grocery: grocery[index]))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UpdateGroceryScreen(grocery: grocery[index]))),
           child: GroceryCard(grocery: grocery[index]),
         );
       });

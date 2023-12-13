@@ -16,7 +16,17 @@ class GroceryController extends GetxController {
   final category = TextEditingController();
   final price = TextEditingController();
   final quantity = TextEditingController();
-  
+
+  clearControllers() {
+    id.clear();
+    name.clear();
+    description.clear();
+    imageUrl.clear();
+    category.clear();
+    price.clear();
+    quantity.clear();
+  }
+
   // create new grocery
   createNewGrocery(GroceryModel grocery) async {
     try {
@@ -46,6 +56,17 @@ class GroceryController extends GetxController {
       await _grocRepo.updateGroceryRecord(grocery);
     } catch (e) {
       Get.snackbar("Grocery Update Failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
+  }
+
+  // update the stock of grocery
+  updateGroceryStock(String id, int quantity) async {
+    try {
+      await _grocRepo.updateGroceryStockQuantity(id, quantity);
+    } catch (e) {
+      Get.snackbar("Grocery Stock Update Failed", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5));
     }

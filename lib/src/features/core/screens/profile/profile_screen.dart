@@ -11,16 +11,20 @@ import 'package:quickgrocer_application/src/features/core/screens/profile/update
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
     var iconColor =
         Get.isDarkMode ? AppColors.subPistachioColor : AppColors.mainPineColor;
-    var iconLineColor = Get.isDarkMode ? Colors.black : Colors.white;
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
 
@@ -50,32 +54,6 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(defaultSize),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage(profileImage))),
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: iconColor),
-                          child: Icon(
-                            LineAwesomeIcons.alternate_pencil,
-                            color: iconLineColor,
-                            size: 20,
-                          )))
-                ],
-              ),
-              const SizedBox(height: 20),
               Container(
                 child: FutureBuilder(
                     future: controller.getUserData(),
@@ -85,6 +63,20 @@ class ProfileScreen extends StatelessWidget {
                           UserModel user = snapshot.data as UserModel;
                           return Column(
                             children: [
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Image(
+                                            image: AssetImage(profileImage))),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
                               Text(user.fullName,
                                   style: Theme.of(context)
                                       .textTheme
@@ -126,15 +118,26 @@ class ProfileScreen extends StatelessWidget {
                               content:
                                   Text('Confirm to log out of your account?'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('NO'),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                ElevatedButton(
-                                  child: Text('YES'),
-                                  onPressed: () => AuthenticationRepository
-                                      .instance
-                                      .logout(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('NO'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('YES'),
+                                        onPressed: () =>
+                                            AuthenticationRepository.instance
+                                                .logout(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },
@@ -149,10 +152,7 @@ class ProfileScreen extends StatelessWidget {
                       color: iconColor),
                 ),
                 title: Text(logout,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.apply(color: Colors.red)),
+                    style: Theme.of(context).textTheme.titleMedium),
               ),
               const SizedBox(height: 10),
               ListTile(
@@ -163,16 +163,26 @@ class ProfileScreen extends StatelessWidget {
                               title: Text('Delete Account'),
                               content: Text('Confirm to delete your account?'),
                               actions: [
-                                ElevatedButton(
-                                  child: Text('NO'),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                ElevatedButton(
-                                  child: Text('YES'),
-                                  onPressed: () => {
-                                    AuthenticationRepository.instance
-                                        .deleteUserAccount()
-                                  },
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('NO'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text('YES'),
+                                        onPressed: () => {
+                                          AuthenticationRepository.instance
+                                              .deleteUserAccount()
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]));
                 },
@@ -181,9 +191,9 @@ class ProfileScreen extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: iconColor.withOpacity(0.3),
+                    color: Colors.red.withOpacity(0.3),
                   ),
-                  child: Icon(Icons.delete_forever_rounded, color: iconColor),
+                  child: Icon(Icons.delete_forever_rounded, color: Colors.red),
                 ),
                 title: Text(deleteAccount,
                     style: Theme.of(context)

@@ -6,9 +6,13 @@ class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
   // TextField Controllers to get data from TextFields
-  final showPassword = false.obs;
   final email = TextEditingController();
   final password = TextEditingController();
+
+  clearControllers() {
+    email.clear();
+    password.clear();
+  }
 
   // Email and Password Login
   Future<void> loginUser(String email, String password) async {
@@ -17,7 +21,9 @@ class LoginController extends GetxController {
       await auth.loginWithEmailAndPassword(email, password);
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.snackbar("Login Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Login Failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 
@@ -26,9 +32,10 @@ class LoginController extends GetxController {
     try {
       final auth = AuthenticationRepository.instance;
       await auth.resetPasswordEmail(email);
-      auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.snackbar("Password Reset Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Password Reset Failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 
@@ -38,7 +45,9 @@ class LoginController extends GetxController {
       await auth.signInWithGoogle();
       auth.setInitialScreen(auth.firebaseUser.value);
     } catch (e) {
-      Get.snackbar("Google Sign In Failed", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Google Sign In Failed", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 }
