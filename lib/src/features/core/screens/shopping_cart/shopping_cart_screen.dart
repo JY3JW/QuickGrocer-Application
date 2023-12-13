@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
-import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/cart_controller.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
