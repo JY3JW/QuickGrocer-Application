@@ -92,6 +92,7 @@ class SellerProfileScreen extends StatelessWidget {
                                         },
                                       ),
                                     ),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('OPEN'),
@@ -137,6 +138,7 @@ class SellerProfileScreen extends StatelessWidget {
                                         onPressed: () => Navigator.pop(context),
                                       ),
                                     ),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('YES'),
