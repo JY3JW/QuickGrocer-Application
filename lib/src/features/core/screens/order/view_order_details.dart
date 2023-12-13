@@ -54,7 +54,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                 child: ListView.separated(
                   itemCount: widget.order.cart.length,
                   separatorBuilder: (context, index) {
-                    return Divider(thickness: 1.0, height: 0, endIndent: 0);
+                    return Divider(thickness: 1.0,  height: 0, endIndent: 0);
                   },
                   itemBuilder: (context, index) {
                     return CheckoutCard(cartItem: widget.order.cart[index]);
@@ -201,8 +201,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                       content: Text('Change order status to'),
                                       actions: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
                                               child: ElevatedButton(
@@ -211,7 +210,6 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                                   orderController
                                                       .setOrderStatusToAccepted(
                                                           widget.order.id);
-                                                  Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
                                               ),
@@ -225,7 +223,6 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                                       .setOrderStatusToPreparing(
                                                           widget.order.id);
                                                   Navigator.pop(context);
-                                                  Navigator.pop(context);
                                                 },
                                               ),
                                             )
@@ -233,8 +230,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                         ),
                                         SizedBox(height: 10),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
                                               child: ElevatedButton(
@@ -243,7 +239,6 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                                   orderController
                                                       .setOrderStatusToReady(
                                                           widget.order.id);
-                                                  Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
                                               ),
@@ -256,7 +251,6 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                                                   orderController
                                                       .setOrderStatusToComplete(
                                                           widget.order.id);
-                                                  Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
                                               ),
