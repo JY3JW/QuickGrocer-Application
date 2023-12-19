@@ -1,5 +1,5 @@
 // Welcome Screen Text
-import 'dart:html';
+//import 'dart:html';
 
 const String welcomeTitle = "Grocery Purchase Apps";
 const String welcomeSubtitle =
