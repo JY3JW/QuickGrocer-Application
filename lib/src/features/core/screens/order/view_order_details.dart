@@ -5,7 +5,9 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/feedback_controller.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/feedback_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 
@@ -27,6 +29,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
     final orderController = Get.put(OrderController());
+    final controller = Get.put(FeedbackController());
 
     return Scaffold(
       appBar: AppBar(
@@ -151,7 +154,7 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                               widget.order.remarks != ''
                                   ? widget.order.remarks
                                   : 'none',
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: Theme.of(context).textTheme.labelLarge,
                               textAlign: TextAlign.justify,
                             ),
                           ),
@@ -160,34 +163,124 @@ class _ViewOrderDetailsScreenState extends State<ViewOrderDetailsScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // future builder sprint 4 to fetch feedback if feedback exist then will display
-                  Card(
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            feedback,
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
-                          SizedBox(height: 10.0),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 11 / 12,
-                            child: Text(
-                              widget.order.remarks != ''
-                                  ? widget.order.remarks
-                                  : 'none',
-                              style: Theme.of(context).textTheme.bodySmall,
-                              textAlign: TextAlign.justify,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  FutureBuilder(
+                      future:
+                          controller.getBuyerFeedbackByOrderId(widget.order.id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            FeedbackModel fb = snapshot.data as FeedbackModel;
+                            return Card(
+                              margin: EdgeInsets.zero,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          feedbackId,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                        Text(
+                                          fb.id,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          feedbackTime,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                        Text(
+                                          fb.dateTime
+                                              .toString()
+                                              .substring(0, 19),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          feedbackCategory,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                        Text(
+                                          fb.category,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 20),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          feedbackDescription,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                        SizedBox(height: 10.0),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              11 /
+                                              12,
+                                          child: Text(
+                                            fb.description,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center();
+                          } else {
+                            return const Center(
+                                child: Text("Something went wrong"));
+                          }
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      }),
                   SizedBox(height: 40),
                   Row(
                     children: [

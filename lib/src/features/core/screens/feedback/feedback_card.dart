@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_helper_utils/flutter_helper_utils.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
-import 'package:quickgrocer_application/src/constants/image_strings.dart';
-import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/order/view_order_details_buyer.dart';
+import 'package:quickgrocer_application/src/features/core/models/feedback_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/feedback/view_feedback_details.dart';
 
-class OrderCardBuyer extends StatefulWidget {
-  const OrderCardBuyer({super.key, required this.order});
+class FeedbackCard extends StatefulWidget {
+  const FeedbackCard({super.key, required this.feedbackModel});
 
-  final OrderModel order;
+  final FeedbackModel feedbackModel;
 
   @override
-  State<OrderCardBuyer> createState() => _OrderCardBuyerState();
+  State<FeedbackCard> createState() => _FeedbackCardState();
 }
 
-class _OrderCardBuyerState extends State<OrderCardBuyer> {
+class _FeedbackCardState extends State<FeedbackCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-              builder: (context) => ViewOrderDetailsBuyerScreen(
-                    order: widget.order,
+              builder: (context) => ViewFeedbackDetailsScreen(
+                    feedbackModel: widget.feedbackModel,
                   )),
         );
       },
@@ -35,31 +33,31 @@ class _OrderCardBuyerState extends State<OrderCardBuyer> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image(
-                    image: AssetImage(orderImage),
-                    width: 80,
-                    height: 80,
+                  Image.network(
+                    "https://cdn-icons-png.flaticon.com/512/4481/4481095.png",
+                    width: 60,
+                    height: 60,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.order.id,
+                      Text(widget.feedbackModel.id,
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                               fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
                       Text(
-                          "Total: \RM ${widget.order.totalPrice.toStringAsFixed(2)}",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          widget.feedbackModel.dateTime
+                              .toString()
+                              .substring(0, 19),
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
-                      Text(widget.order.dateTime.toString().substring(0, 19),
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500)),
-                      const SizedBox(height: 10),
-                      Text(widget.order.status.toPascalCase,
+                      Text(widget.feedbackModel.email,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
@@ -73,8 +71,9 @@ class _OrderCardBuyerState extends State<OrderCardBuyer> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => ViewOrderDetailsBuyerScreen(
-                                  order: widget.order)),
+                              builder: (context) => ViewFeedbackDetailsScreen(
+                                    feedbackModel: widget.feedbackModel,
+                                  )),
                         );
                       },
                       style: ElevatedButton.styleFrom(

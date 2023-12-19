@@ -39,7 +39,6 @@ class _NewOrderScreenSellerState extends State<NewOrderScreenSeller> {
                             child: ListView.builder(
                               itemCount: orders.length,
                               itemBuilder: (context, index) {
-                                print(orders.length);
                                 return OrderCard(order: orders[index]);
                               },
                             ));
