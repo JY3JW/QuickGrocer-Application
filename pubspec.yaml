@@ -66,6 +66,7 @@ dependencies:
   flutter_spinkit: ^5.2.0
   dson: ^2.0.0
   flutter_slidable: ^3.0.1
+  pdf: ^3.10.7
 
 dev_dependencies:
   flutter_test:
