@@ -48,6 +48,11 @@ const String profile = "Profile";
 const String editProfile = "Edit Profile";
 const String logout = "Logout";
 const String deleteAccount = "Delete Account";
+const String support = "Support";
+
+// Support Screen Text
+const String supportScreenTitle = "Contact Us";
+const String supportScreenSubtitle = "Reach us through";
 
 // Manage User Text
 const String manageUser = "Manage User";

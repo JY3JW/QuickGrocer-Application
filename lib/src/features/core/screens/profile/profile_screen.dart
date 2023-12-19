@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/profile_controller.dart';
+import 'package:quickgrocer_application/src/features/core/screens/help/support_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
@@ -110,6 +111,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Divider(),
               const SizedBox(height: 10),
               ListTile(
+                onTap: () => Get.to(() => SupportScreen()),
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: iconColor.withOpacity(0.3),
+                  ),
+                  child: Icon(Icons.help_outline_outlined, color: iconColor),
+                ),
+                title: Text(support,
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
+              const SizedBox(height: 10),
+              ListTile(
                 onTap: () {
                   showDialog(
                       context: context,
@@ -164,7 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               content: Text('Confirm to delete your account?'),
                               actions: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(

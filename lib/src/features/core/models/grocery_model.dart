@@ -32,7 +32,7 @@ class GroceryModel {
     };
   }
  
-  // map user fetched from Firebase to GroceryModel
+  // map grocery fetched from Firebase to GroceryModel
   factory GroceryModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
