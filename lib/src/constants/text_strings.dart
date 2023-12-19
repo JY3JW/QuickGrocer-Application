@@ -145,6 +145,15 @@ const String orderItem = "Order Item";
 const String price = "RM";
 
 //Feedback Screen
-const String feedback = "Feedback: ";
-const String passiveFeedback = "I have an issue.";
+const String feedback = "Feedback";
+const String passiveFeedback = "I have an issue";
 const String activeFeedback = "Do a feedback on my order";
+const String issueTitle = "Issue";
+const String feedbackTitle = "Feedback";
+const String feedbackOrderDetails = "Feedback: ";
+const String feedbackDetails = "Feedback Details";
+const String viewFeedbackScreenTitle = "View Feedback";
+const String feedbackId = "Feedback ID: ";
+const String feedbackTime = "Feedback Time";
+const String feedbackCategory = "Feedback Category";
+const String feedbackDescription = "Description: ";

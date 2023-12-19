@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickgrocer_application/src/features/core/controllers/order_controller.dart';
-import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/order/order_card.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/feedback_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/feedback_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/feedback/feedback_card.dart';
 
-class ReadyOrderScreenSeller extends StatefulWidget {
-  const ReadyOrderScreenSeller({super.key});
+class FeedbackIssueScreen extends StatefulWidget {
+  const FeedbackIssueScreen({super.key});
 
   @override
-  State<ReadyOrderScreenSeller> createState() =>
-      _ReadyOrderScreenSellerState();
+  State<FeedbackIssueScreen> createState() =>
+      _FeedbackIssueScreenState();
 }
 
-class _ReadyOrderScreenSellerState extends State<ReadyOrderScreenSeller> {
+class _FeedbackIssueScreenState extends State<FeedbackIssueScreen> {
   @override
   Widget build(BuildContext context) {
-    final orderController = Get.put(OrderController());
+    final feedbackController = Get.put(FeedbackController());
 
     return Scaffold(
         body: RefreshIndicator(
@@ -29,17 +29,17 @@ class _ReadyOrderScreenSellerState extends State<ReadyOrderScreenSeller> {
           children: [
             Container(
               child: FutureBuilder(
-                  future: orderController.allBuyersOrdersReady(),
+                  future: feedbackController.getAllFeedbackIssues(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
-                        List<OrderModel> orders =
-                            snapshot.data as List<OrderModel>;
+                        List<FeedbackModel> feed =
+                            snapshot.data as List<FeedbackModel>;
                         return Expanded(
                             child: ListView.builder(
-                              itemCount: orders.length,
+                              itemCount: feed.length,
                               itemBuilder: (context, index) {
-                                return OrderCard(order: orders[index]);
+                                return FeedbackCard(feedbackModel: feed[index]);
                               },
                             ));
                       } else if (snapshot.hasError) {

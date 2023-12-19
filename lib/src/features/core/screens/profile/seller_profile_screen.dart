@@ -92,6 +92,7 @@ class SellerProfileScreen extends StatelessWidget {
                                         },
                                       ),
                                     ),
+                                    SizedBox(width: 20),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('OPEN'),
@@ -133,7 +134,7 @@ class SellerProfileScreen extends StatelessWidget {
                   child: Icon(Icons.copy,
                       color: iconColor),
                 ),
-                title: Text('Generate Report',
+                title: Text('View Report',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium),
@@ -157,6 +158,7 @@ class SellerProfileScreen extends StatelessWidget {
                                         onPressed: () => Navigator.pop(context),
                                       ),
                                     ),
+                                    SizedBox(width: 20),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('YES'),

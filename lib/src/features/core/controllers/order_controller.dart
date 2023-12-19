@@ -34,7 +34,7 @@ class OrderController extends GetxController {
   }
 
   // Fetch all single order details
-  Future<OrderModel> singleOrderDeatails(String orderId) async {
+  Future<OrderModel> singleOrderDetails(String orderId) async {
     final userData = await _orderRepo.getOrderDetailsByOrderId(orderId);
     return userData;
   }

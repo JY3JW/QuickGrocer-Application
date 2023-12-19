@@ -128,6 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         onPressed: () => Navigator.pop(context),
                                       ),
                                     ),
+                                    SizedBox(width: 20),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('YES'),
@@ -171,6 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         onPressed: () => Navigator.pop(context),
                                       ),
                                     ),
+                                    SizedBox(width: 20),
                                     Expanded(
                                       child: ElevatedButton(
                                         child: Text('YES'),

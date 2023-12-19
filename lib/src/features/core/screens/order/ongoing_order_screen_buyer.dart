@@ -39,7 +39,6 @@ class _OngoingOrderScreenBuyerState extends State<OngoingOrderScreenBuyer> {
                             child: ListView.builder(
                               itemCount: orders.length,
                               itemBuilder: (context, index) {
-                                print(orders.length);
                                 return OrderCardBuyer(order: orders[index]);
                               },
                             ));
