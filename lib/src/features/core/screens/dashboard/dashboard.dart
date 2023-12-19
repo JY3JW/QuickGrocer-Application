@@ -27,8 +27,7 @@ class _DashboardState extends State<Dashboard> {
       child: ViewOrderStatusScreen(), // order history screen
     ),
     SafeArea(
-      //child: ProfileScreen(),
-      child: ViewReportScreen(),
+      child: ProfileScreen(),
     ),
   ];
 

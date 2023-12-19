@@ -129,6 +129,8 @@ const String storeClosed = "Store Closed";
 
 // Store Model ID
 const String storeId = "ST001";
+const String storeName = "Store Name";
+const String storeAddress = "Store Address";
 
 // View Order Details Screen
 const String viewOrderDetailsTitle = "Order Details";
@@ -150,14 +152,24 @@ const String quantity = "Quantity";
 const String orderItem = "Order Item";
 const String price = "RM";
 
-//Feedback Screen
+// Feedback Screen
 const String feedback = "Feedback";
 const String passiveFeedback = "I have an issue";
 const String activeFeedback = "Do a feedback on my order";
 
-//Sales Report Screen
+// Sales Report Screen
 const String salesReport = "Sales Report";
 const String report = "Report";
+const String salesReportID = 'Sales Report ID: ';
+const String salesGeneratedDate = 'Generated Date: ';
+const String salesReportDate = 'Sales Report Date: ';
+const String salesReportType = 'Sales Report Type: ';
+
+// Stocks Report Screen
+const String stocksReport = 'Stocks Report';
+const String stocksGeneratedDate = 'Generated Date: ';
+
+// Feedback Screen
 const String issueTitle = "Issue";
 const String feedbackTitle = "Feedback";
 const String feedbackDetails = "Feedback Details";
