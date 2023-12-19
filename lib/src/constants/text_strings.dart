@@ -150,7 +150,6 @@ const String passiveFeedback = "I have an issue";
 const String activeFeedback = "Do a feedback on my order";
 const String issueTitle = "Issue";
 const String feedbackTitle = "Feedback";
-const String feedbackOrderDetails = "Feedback: ";
 const String feedbackDetails = "Feedback Details";
 const String viewFeedbackScreenTitle = "View Feedback";
 const String feedbackId = "Feedback ID: ";

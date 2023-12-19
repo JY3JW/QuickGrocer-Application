@@ -142,7 +142,7 @@ class _ViewOrderDetailsBuyerScreenState
                             widget.order.remarks != ''
                                 ? widget.order.remarks
                                 : 'none',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelLarge,
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -167,34 +167,90 @@ class _ViewOrderDetailsBuyerScreenState
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    feedbackOrderDetails,
-                                    style:
-                                        Theme.of(context).textTheme.labelLarge,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        feedbackId,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      Text(
+                                        fb.id,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 10.0),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        11 /
-                                        12,
-                                    child: Text(
-                                      fb.category,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                      textAlign: TextAlign.justify,
-                                    ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        feedbackTime,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      Text(
+                                        fb.dateTime.toString().substring(0, 19),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 10.0),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        11 /
-                                        12,
-                                    child: Text(
-                                      fb.description,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                      textAlign: TextAlign.justify,
-                                    ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        feedbackCategory,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      Text(
+                                        fb.category,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        feedbackDescription,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                11 /
+                                                12,
+                                        child: Text(
+                                          fb.description,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
