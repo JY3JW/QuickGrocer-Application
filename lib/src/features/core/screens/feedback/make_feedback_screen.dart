@@ -117,9 +117,12 @@ class _FeedbackState extends State<Feedback> {
                                   orderId: widget.order.id,
                                   email: widget.order.email,
                                   dateTime: DateTime.now(),
-                                  category: selectedValue == activeFeedback ? feedbackTitle : issueTitle,
+                                  category: selectedValue == activeFeedback
+                                      ? feedbackTitle
+                                      : issueTitle,
                                   description:
                                       controller.description.text.trim()));
+                              controller.clearControllers();
                               Navigator.pop(context);
                             }
                           },
