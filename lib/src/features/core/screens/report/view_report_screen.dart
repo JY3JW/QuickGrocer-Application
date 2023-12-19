@@ -9,6 +9,9 @@ class ViewReportScreen extends StatefulWidget {
 }
 
 class _ViewReportScreenState extends State<ViewReportScreen> {
+  String? selectedValue;
+  List <String> reportList = <String> ['Sales Report', 'Stocks Report'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +24,36 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
           elevation: 0),
       body: Container(
           padding: EdgeInsets.all(32),
-          child: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
               Icon(Icons.picture_as_pdf_rounded),
               Text('Generate Report'),
-            ]),
-          )),
+
+              SizedBox(height: 50),
+              DropdownButtonFormField<String>(
+                hint: const Text(' ' + report),
+                value: selectedValue,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select a report to be generated';
+                  }
+                  return null;
+                },
+                isExpanded: true,
+                borderRadius: BorderRadius.circular(16),
+                items: reportList.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value, child: Text(value));
+                }).toList(),
+                onChanged: (value) async {
+                  setState(() {
+                    selectedValue = value!;
+                  });}
+              ),
+              
+
+          ])),
     );
   }
 }
