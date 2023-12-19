@@ -121,6 +121,26 @@ class SellerProfileScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ListTile(
                 onTap: () {
+                  // go to generate report screen
+                },
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: iconColor.withOpacity(0.3),
+                  ),
+                  child: Icon(Icons.copy,
+                      color: iconColor),
+                ),
+                title: Text('Generate Report',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium),
+              ),
+              const SizedBox(height: 20),
+              ListTile(
+                onTap: () {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
