@@ -1,29 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 
-class StoreModel {
+class SupportModel {
   final String? id;
-  final bool status;
+  final String mode;
+  final String contact;
 
-  const StoreModel({
+  const SupportModel({
     this.id = storeId,
-    required this.status,
+    required this.mode,
+    required this.contact,
   });
 
   toJson() {
     return {
       "id": id,
-      "status": status,
+      "contact": contact,
+      "mode": mode,
     };
   }
-  
-  // map store details fetched from Firebase to StoreModel
-  factory StoreModel.fromSnapshot(
+
+  // map user fetched from Firebase to UserModel
+  factory SupportModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
-    return StoreModel(
+    return SupportModel(
       id: document.id,
-      status: data["status"],
+      mode: data["mode"],
+      contact: data["contact"],
     );
   }
 }
