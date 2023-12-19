@@ -1,4 +1,6 @@
 // Welcome Screen Text
+import 'dart:html';
+
 const String welcomeTitle = "Grocery Purchase Apps";
 const String welcomeSubtitle =
     "Let's join us to purchase your desired groceries.";
@@ -148,3 +150,7 @@ const String price = "RM";
 const String feedback = "Feedback: ";
 const String passiveFeedback = "I have an issue.";
 const String activeFeedback = "Do a feedback on my order";
+
+//Sales Report Screen
+const String salesReport = "Sales Report";
+const String report = "Report";
