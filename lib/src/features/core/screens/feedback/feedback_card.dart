@@ -38,31 +38,34 @@ class _FeedbackCardState extends State<FeedbackCard> {
                     width: 60,
                     height: 60,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.feedbackModel.id,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500)),
-                      const SizedBox(height: 5),
-                      Text(
-                          widget.feedbackModel.dateTime
-                              .toString()
-                              .substring(0, 19),
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500)),
-                      const SizedBox(height: 5),
-                      Text(widget.feedbackModel.email,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400)),
-                    ],
+                  Container(
+                    width: MediaQuery.of(context).size.width * 3 / 7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.feedbackModel.id,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                        const SizedBox(height: 5),
+                        Text(
+                            widget.feedbackModel.dateTime
+                                .toString()
+                                .substring(0, 19),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                        const SizedBox(height: 5),
+                        Text(widget.feedbackModel.email,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400)),
+                      ],
+                    ),
                   ),
                   Container(
                       child: Padding(
