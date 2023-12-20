@@ -21,19 +21,21 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-              onPressed: () => Get.back(),
-              icon: Icon(LineAwesomeIcons.angle_left,
-                  color: iconColorWithoutBackground)),
-          title: Text(
-            feedback,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0),
-      body: Feedback(order: widget.order),
+    return SingleChildScrollView(
+      child: Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(LineAwesomeIcons.angle_left,
+                    color: iconColorWithoutBackground)),
+            title: Text(
+              feedback,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0),
+        body: Feedback(order: widget.order),
+      ),
     );
   }
 }
