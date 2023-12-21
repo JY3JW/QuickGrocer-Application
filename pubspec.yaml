@@ -68,6 +68,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   pdf: ^3.10.7
   flutter_stripe: ^10.0.0
+  http: ^1.1.2
 
 dev_dependencies:
   flutter_test:
