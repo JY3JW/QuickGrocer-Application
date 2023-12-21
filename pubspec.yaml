@@ -67,6 +67,7 @@ dependencies:
   dson: ^2.0.0
   flutter_slidable: ^3.0.1
   pdf: ^3.10.7
+  flutter_stripe: ^10.0.0
 
 dev_dependencies:
   flutter_test:
