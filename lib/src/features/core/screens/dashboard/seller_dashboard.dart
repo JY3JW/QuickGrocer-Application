@@ -23,8 +23,8 @@ class _SellerDashboardState extends State<SellerDashboard> {
       child: ManageGroceryScreen(),
     ),
     SafeArea(
-      child: ManageOrderScreen(),
-      //child: StocksReportScreen(),
+      //child: ManageOrderScreen(),
+      child: ViewReportScreen(),
     ),
     SafeArea(
       child: ViewFeedbackScreen(),

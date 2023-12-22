@@ -498,10 +498,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_helper_utils
-      sha256: "6d5fa1cc753f41305ffcd0431e934193b89e4f166f2c7fc94c391594d328a3d2"
+      sha256: e1376bb7a772a90ccca77b1fc8ee37943bde4b91f5a656b98cc061f4f6a605e0
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "2.0.1"
   flutter_native_splash:
     dependency: "direct main"
     description:
