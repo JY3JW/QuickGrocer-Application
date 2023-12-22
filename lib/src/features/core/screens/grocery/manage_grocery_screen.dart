@@ -9,6 +9,7 @@ import 'package:quickgrocer_application/src/features/core/models/grocery_model.d
 import 'package:quickgrocer_application/src/features/core/screens/grocery/add_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/barcode_scanning_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/search_bar_seller.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
 
 class ManageGroceryScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class ManageGroceryScreen extends StatefulWidget {
 class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
   int isSelected = 0;
   late List<CategoryModel> category;
+  late List<GroceryModel> grocery;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,14 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
+          IconButton(
+              onPressed: () => Get.to(() => SearchBarSeller(
+                    groceries: grocery,
+                  )),
+              icon: Icon(
+                Icons.search,
+                color: iconColorWithoutBackground,
+              )),
           IconButton(
               onPressed: () => Get.to(() => AddGroceryScreen()),
               icon: Icon(
@@ -102,8 +112,7 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          List<GroceryModel> grocery =
-                              snapshot.data as List<GroceryModel>;
+                          grocery = snapshot.data as List<GroceryModel>;
                           return SizedBox(
                               height: 500, child: _buildAllGroceries(grocery));
                         } else if (snapshot.hasError) {

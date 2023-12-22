@@ -7,6 +7,7 @@ import 'package:quickgrocer_application/src/constants/image_strings.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/store_controller.dart';
+import 'package:quickgrocer_application/src/features/core/screens/report/view_report_screen.dart';
 import 'package:quickgrocer_application/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:quickgrocer_application/src/utils/theme/theme.dart';
 
@@ -121,9 +122,7 @@ class SellerProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ListTile(
-                onTap: () {
-                  // go to generate report screen
-                },
+                onTap: () => Get.to(() => ViewReportScreen()),
                 leading: Container(
                   width: 50,
                   height: 50,

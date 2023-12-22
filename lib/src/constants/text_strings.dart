@@ -178,3 +178,8 @@ const String feedbackId = "Feedback ID: ";
 const String feedbackTime = "Feedback Time";
 const String feedbackCategory = "Feedback Category";
 const String feedbackDescription = "Description: ";
+
+// Report Screen Information
+const String storeAddressInfo =
+    "Kedai Serbanika, Blok M01,\nPejabat Kolej Tun Dr. Ismail (KDTI),\nJalan Resak, Skudai,\n81310 Johor Bahru,\nJohor, Malaysia.";
+const String storeNameInfo = "Kedai Serbanika";
