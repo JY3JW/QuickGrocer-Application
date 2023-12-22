@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
+import 'package:quickgrocer_application/src/features/core/controllers/grocery_controller.dart';
+import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/stock_report_model.dart';
+import 'package:quickgrocer_application/src/features/core/screens/report/pdf_api.dart';
+import 'package:quickgrocer_application/src/features/core/screens/report/pdf_stockreport_api.dart';
 import 'package:quickgrocer_application/src/features/core/screens/report/sales_report_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/report/stocks_report_screen.dart';
 
 class ViewReportScreen extends StatefulWidget {
   const ViewReportScreen({super.key});
@@ -21,6 +25,7 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
         Get.isDarkMode ? Colors.white : Colors.black;
+    final grocController = Get.put(GroceryController());
 
     return Scaffold(
       appBar: AppBar(
@@ -61,7 +66,14 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => StocksReportScreen()),
+                    onPressed: () async {
+                      List<GroceryModel> grocery = await grocController.getAllGroceriesReport();
+                      StockReportModel stockReport = StockReportModel(grocery: grocery);
+                      final pdfFile =
+                          await PdfStockReportApi.generate(stockReport);
+
+                      PdfApi.openFile(pdfFile);
+                    },
                     child: Text(reportList[1]),
                   )),
             ])),

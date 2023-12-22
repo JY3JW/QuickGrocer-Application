@@ -47,6 +47,9 @@ class GroceryController extends GetxController {
   Future<List<GroceryModel>> getAllGroceries() async =>
       await _grocRepo.allGroceries();
 
+  Future<List<GroceryModel>> getAllGroceriesReport() async =>
+      await _grocRepo.allGroceriesReport();
+
   // Fetch all of groceries by chosen category
   Future<List<GroceryModel>> getGroceriesByCategory(category) async =>
       await _grocRepo.categoryGroceries(category);
