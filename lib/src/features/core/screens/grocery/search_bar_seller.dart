@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card_buyer.dart';
+import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
 
-class SearchBarApp extends StatefulWidget {
-  const SearchBarApp({
+class SearchBarSeller extends StatefulWidget {
+  const SearchBarSeller({
     super.key,
     required this.groceries,
   });
@@ -14,10 +14,10 @@ class SearchBarApp extends StatefulWidget {
   final List<GroceryModel> groceries;
 
   @override
-  State<SearchBarApp> createState() => _SearchBarAppState();
+  State<SearchBarSeller> createState() => _SearchBarSellerState();
 }
 
-class _SearchBarAppState extends State<SearchBarApp> {
+class _SearchBarSellerState extends State<SearchBarSeller> {
   final TextEditingController _searchController = TextEditingController();
   bool isSearchClicked = false;
   String searchText = '';
@@ -120,7 +120,7 @@ _buildAllGroceries(List<GroceryModel> myFilterItems) {
               MaterialPageRoute(
                   builder: (context) =>
                       ViewGroceryDetailsScreen(grocery: myFilterItems[index]))),
-          child: GroceryCardBuyer(grocery: myFilterItems[index]),
+          child: GroceryCard(grocery: myFilterItems[index]),
         );
       });
 }
