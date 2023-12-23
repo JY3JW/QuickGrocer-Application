@@ -74,7 +74,7 @@ class PdfStockReportApi {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'STOCK REPORT',
+            'STOCKS REPORT',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 0.8 * PdfPageFormat.cm),
