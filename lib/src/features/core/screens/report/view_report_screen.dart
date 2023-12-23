@@ -8,7 +8,7 @@ import 'package:quickgrocer_application/src/features/core/models/grocery_model.d
 import 'package:quickgrocer_application/src/features/core/models/stock_report_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/report/pdf_api.dart';
 import 'package:quickgrocer_application/src/features/core/screens/report/pdf_stockreport_api.dart';
-import 'package:quickgrocer_application/src/features/core/screens/report/sales_report_screen.dart';
+import 'package:quickgrocer_application/src/features/core/screens/report/sales_report_choose_date.dart';
 
 class ViewReportScreen extends StatefulWidget {
   const ViewReportScreen({super.key});
@@ -57,7 +57,8 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => SalesReportScreen()),
+                    onPressed: () =>
+                        Get.to(() => SalesReportChooseDateScreen()),
                     child: Text(reportList[0]),
                   )),
               SizedBox(
@@ -67,8 +68,10 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      List<GroceryModel> grocery = await grocController.getAllGroceriesReport();
-                      StockReportModel stockReport = StockReportModel(grocery: grocery);
+                      List<GroceryModel> grocery =
+                          await grocController.getAllGroceriesReport();
+                      StockReportModel stockReport =
+                          StockReportModel(grocery: grocery);
                       final pdfFile =
                           await PdfStockReportApi.generate(stockReport);
 

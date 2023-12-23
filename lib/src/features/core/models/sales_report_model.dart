@@ -4,11 +4,24 @@ import 'package:quickgrocer_application/src/features/core/models/order_model.dar
 class SalesReportModel {
   String storeName = storeNameInfo;
   String storeAddress = storeAddressInfo;
-  String reportId;
-  String reportType;
-  String reportDuration;
-  DateTime generatedDate;
+  String reportId = DateTime.now().millisecondsSinceEpoch.toString();
+  DateTime reportStartDuration;
+  DateTime reportEndDuration;
+  DateTime generatedDate = DateTime.now();
   List<OrderModel> order;
 
-  SalesReportModel({required this.reportId, required this.reportType, required this.reportDuration, required this.generatedDate, required this.order});
+  SalesReportModel(
+      {required this.reportStartDuration,
+      required this.reportEndDuration,
+      required this.order});
+
+  double getGrandTotal() {
+    double grand = 0;
+
+    for (int i = 0; i < order.length; i++) {
+      grand += order[i].totalPrice;
+    }
+    
+    return grand;
+  }
 }

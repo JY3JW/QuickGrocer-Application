@@ -20,7 +20,14 @@ class OrderModel {
   String remarks;
   String status; //accepted, preparing, ready, completed
 
-  OrderModel({required this.id, required this.cart, required this.email, this.dateTime, required this.totalPrice, required this.remarks, required this.status});
+  OrderModel(
+      {required this.id,
+      required this.cart,
+      required this.email,
+      this.dateTime,
+      required this.totalPrice,
+      required this.remarks,
+      required this.status});
 
   static List<CartItemModel> _convertCartItems(List cartFromDb) {
     List<CartItemModel> _result = [];
@@ -32,24 +39,32 @@ class OrderModel {
     return _result;
   }
 
+  String getListedCartItems() {
+    String items = '';
+
+    for (int i = 0; i < cart.length; i++) {
+      items += (cart[i].quantity.toString() + 'x  ' + cart[i].name + '  RM ' + cart[i].cost.toStringAsFixed(2) + '\n');
+    }
+    return items;
+  }
+
   factory OrderModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return OrderModel(
-      id: data[ID],
-      cart: _convertCartItems(data[CART] ?? []),
-      email: data[EMAIL],
-      dateTime: (data[DATETIME] as Timestamp).toDate(),
-      totalPrice: toDouble(data[TOTALPRICE]),
-      remarks: data[REMARK],
-      status: data[STATUS]
-    );
+        id: data[ID],
+        cart: _convertCartItems(data[CART] ?? []),
+        email: data[EMAIL],
+        dateTime: (data[DATETIME] as Timestamp).toDate(),
+        totalPrice: toDouble(data[TOTALPRICE]),
+        remarks: data[REMARK],
+        status: data[STATUS]);
   }
 
   toJson() {
     return {
       ID: id,
-      CART: cart.map((e)=>e.toJson()).toList(),
+      CART: cart.map((e) => e.toJson()).toList(),
       EMAIL: email,
       DATETIME: FieldValue.serverTimestamp(),
       TOTALPRICE: totalPrice,

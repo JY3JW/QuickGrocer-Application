@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
-import 'package:quickgrocer_application/src/features/core/models/stock_report_model.dart';
+import 'package:quickgrocer_application/src/features/core/models/sales_report_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/report/pdf_api.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class PdfStockReportApi {
-  static Future<File> generate(StockReportModel report) async {
+class PdfSalesReportApi {
+  static Future<File> generate(SalesReportModel report) async {
     final pdf = Document();
 
     pdf.addPage(MultiPage(
@@ -16,6 +16,8 @@ class PdfStockReportApi {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(report),
         buildStockReport(report),
+        Divider(),
+        buildGrandTotal(report),
       ],
       footer: (context) => buildFooter(report),
     ));
@@ -25,7 +27,7 @@ class PdfStockReportApi {
     return PdfApi.saveDocument(name: pdfName, pdf: pdf);
   }
 
-  static Widget buildHeader(StockReportModel report) => Column(
+  static Widget buildHeader(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
@@ -34,7 +36,11 @@ class PdfStockReportApi {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildStoreAddress(report),
-                buildReportId(report),
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  buildReportId(report),
+                  SizedBox(height: 1 * PdfPageFormat.cm),
+                  buildReportDuration(report),
+                ])
               ]),
           SizedBox(height: 1 * PdfPageFormat.cm),
           buildGeneratedDate(report),
@@ -42,16 +48,27 @@ class PdfStockReportApi {
         ],
       );
 
-  static Widget buildReportId(StockReportModel report) => Column(
+  static Widget buildReportId(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(stocksReportID, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(salesReportID, style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
           Text(report.reportId),
         ],
       );
 
-  static Widget buildStoreAddress(StockReportModel report) => Column(
+  static Widget buildReportDuration(SalesReportModel report) => Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(salesReportDate, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 1 * PdfPageFormat.mm),
+          Text(report.reportStartDuration.toString().substring(0, 10) +
+              ' - ' +
+              report.reportEndDuration.toString().substring(0, 10)),
+        ],
+      );
+
+  static Widget buildStoreAddress(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(report.storeName, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -60,7 +77,7 @@ class PdfStockReportApi {
         ],
       );
 
-  static Widget buildGeneratedDate(StockReportModel report) => Column(
+  static Widget buildGeneratedDate(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(stocksGeneratedDate,
@@ -70,32 +87,32 @@ class PdfStockReportApi {
         ],
       );
 
-  static Widget buildTitle(StockReportModel report) => Column(
+  static Widget buildTitle(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'STOCK REPORT',
+            'SALES REPORT',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 0.8 * PdfPageFormat.cm),
         ],
       );
 
-  static Widget buildStockReport(StockReportModel report) {
+  static Widget buildStockReport(SalesReportModel report) {
     final headers = [
       'Id',
-      'Name',
-      'Category',
-      'Price',
-      'Quantity',
+      'Date Time',
+      'Buyer Email',
+      'Grocery Purchased',
+      'Total',
     ];
-    final data = report.grocery.map((item) {
+    final data = report.order.map((item) {
       return [
         item.id,
-        item.name,
-        item.category,
-        '\RM ${item.price.toStringAsFixed(2)}',
-        item.quantity,
+        item.dateTime.toString().substring(0, 19),
+        item.email,
+        item.getListedCartItems(),
+        '\RM ${item.totalPrice.toStringAsFixed(2)}',
       ];
     }).toList();
 
@@ -110,27 +127,67 @@ class PdfStockReportApi {
         0: FixedColumnWidth(1.5 * PdfPageFormat.cm),
         1: FixedColumnWidth(2 * PdfPageFormat.cm),
         2: FixedColumnWidth(2 * PdfPageFormat.cm),
-        3: FixedColumnWidth(1.5 * PdfPageFormat.cm),
+        3: FixedColumnWidth(3.5 * PdfPageFormat.cm),
         4: FixedColumnWidth(1.5 * PdfPageFormat.cm),
       },
-      cellAlignments: {
+      headerAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
         2: Alignment.centerLeft,
-        3: Alignment.centerRight,
+        3: Alignment.centerLeft,
         4: Alignment.centerRight,
+      },
+      cellAlignments: {
+        0: Alignment.topLeft,
+        1: Alignment.topLeft,
+        2: Alignment.topLeft,
+        3: Alignment.topLeft,
+        4: Alignment.topRight,
       },
     );
   }
 
-  static Widget buildFooter(StockReportModel report) => Column(
+  static Widget buildGrandTotal(SalesReportModel report) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: Row(
+        children: [
+          Spacer(flex: 6),
+          Expanded(
+            flex: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(),
+                buildText(
+                  title: 'Grand Total',
+                  titleStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  value: '\RM ${report.getGrandTotal().toStringAsFixed(2)}',
+                  unite: true,
+                ),
+                SizedBox(height: 2 * PdfPageFormat.mm),
+                Container(height: 1, color: PdfColors.grey400),
+                SizedBox(height: 0.5 * PdfPageFormat.mm),
+                Container(height: 1, color: PdfColors.grey400),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildFooter(SalesReportModel report) => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Divider(),
           SizedBox(height: 2 * PdfPageFormat.mm),
           buildSimpleText(
-              title: 'Total number of grocery: ',
-              value: report.grocery.length.toString()),
+              title: 'Total number of order: ',
+              value: report.order.length.toString()),
         ],
       );
 

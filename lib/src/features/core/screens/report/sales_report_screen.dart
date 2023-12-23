@@ -53,10 +53,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                     storeName,
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  Text(
-                    salesReportType,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  )
                 ],
               ),
               SizedBox(height: 20),

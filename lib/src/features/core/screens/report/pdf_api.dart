@@ -15,15 +15,12 @@ class PdfApi {
     final file = File('/storage/emulated/0/Download/$name');
 
     await file.writeAsBytes(bytes);
-
-    OpenFile.open(file.path);
-
+    
     return file;
   }
 
   static Future openFile(File file) async {
     final url = file.path;
-    print(url);
 
     await OpenFile.open(url);
   }

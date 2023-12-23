@@ -81,6 +81,11 @@ class OrderController extends GetxController {
     return userData;
   }
 
+  Future<List<OrderModel>> getAllOrderBetweenDuration(DateTime start, DateTime end) async {
+    final userData = await _orderRepo.getAllOrdersBetweenDuration(start, end);
+    return userData;
+  }
+
   void setOrderStatusToComplete(String orderId) async {
     await _orderRepo.updateOrderStatus(orderId, {"status": 'completed'});
   }

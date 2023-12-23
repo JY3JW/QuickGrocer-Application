@@ -160,13 +160,13 @@ const String activeFeedback = "Do a feedback on my order";
 // Sales Report Screen
 const String salesReport = "Sales Report";
 const String report = "Report";
-const String salesReportID = 'Sales Report ID: ';
+const String salesReportID = 'Sales Report ID:';
 const String salesGeneratedDate = 'Generated Date: ';
-const String salesReportDate = 'Sales Report Date: ';
-const String salesReportType = 'Sales Report Type: ';
+const String salesReportDate = 'Sales Report Duration:';
 
 // Stocks Report Screen
 const String stocksReport = 'Stocks Report';
+const String stocksReportID = 'Stocks Report ID:';
 const String stocksGeneratedDate = 'Generated Date: ';
 
 // Feedback Screen

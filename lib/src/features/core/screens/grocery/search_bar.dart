@@ -84,6 +84,9 @@ class _SearchBarAppState extends State<SearchBarApp> {
                   if (isSearchClicked) {
                     _searchController.clear();
                     myFilterItems();
+                  } else {
+                    searchText = '';
+                    myFilterItems();
                   }
                 });
               },
