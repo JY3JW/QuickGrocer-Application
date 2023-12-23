@@ -59,7 +59,7 @@ class _SalesReportChooseDateScreenState
                           if (value == null || value.isEmpty) {
                             return 'Please choose the start duration';
                           } else if (startDate!.isAfter(endDate!) == true) {
-                            return 'Start date must be before than end date';
+                            return 'Start date must be earlier than end date';
                           }
                           return null;
                         },
@@ -89,7 +89,7 @@ class _SalesReportChooseDateScreenState
                           if (value == null || value.isEmpty) {
                             return 'Please choose the end duration';
                           } else if (startDate!.isAfter(endDate!) == true) {
-                            return 'Start date must be before than end date';
+                            return 'Start date must be earlier than end date';
                           }
                           return null;
                         },
