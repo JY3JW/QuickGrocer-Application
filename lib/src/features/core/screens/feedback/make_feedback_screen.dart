@@ -24,7 +24,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
-              onPressed: () => Get.back(),
+              onPressed: () =>
+                  {Get.back(), FeedbackController.instance.clearControllers()},
               icon: Icon(LineAwesomeIcons.angle_left,
                   color: iconColorWithoutBackground)),
           title: Text(
@@ -61,81 +62,85 @@ class _FeedbackState extends State<Feedback> {
           padding: const EdgeInsets.all(16.0),
           child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child:
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      DropdownButtonFormField<String>(
-                        value: selectedValue,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a feedback category';
-                          }
-                          return null;
-                        },
-                        isExpanded: true,
-                        borderRadius: BorderRadius.circular(16),
-                        items: dropdownOptions.map((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value, child: Text(value));
-                        }).toList(),
-                        onChanged: (value) async {
-                          setState(() {
-                            selectedValue = value!;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: formHeight - 20.0),
-                      TextFormField(
-                        controller: controller.description,
-                        maxLines: 8,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the description of your feedback';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          label: Text('Description'),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: formHeight),
-                      SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                await controller.createNewFeedback(FeedbackModel(
-                                    id: widget.order.id,
-                                    orderId: widget.order.id,
-                                    email: widget.order.email,
-                                    dateTime: DateTime.now(),
-                                    category: selectedValue == activeFeedback
-                                        ? feedbackTitle
-                                        : issueTitle,
-                                    description:
-                                        controller.description.text.trim()));
-                                controller.clearControllers();
-                                Navigator.pop(context);
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: selectedValue,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select a feedback category';
                               }
+                              return null;
                             },
-                            style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(16),
+                            items: dropdownOptions.map((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value, child: Text(value));
+                            }).toList(),
+                            onChanged: (value) async {
+                              setState(() {
+                                selectedValue = value!;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: formHeight - 20.0),
+                          TextFormField(
+                            controller: controller.description,
+                            maxLines: 8,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the description of your feedback';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              label: Text('Description'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
-                            child: const Text("Send Feedback"),
-                          )),
-                    ],
-                  ),
-                ),
-              ]))),
+                          ),
+                          const SizedBox(height: formHeight),
+                          SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    await controller.createNewFeedback(
+                                        FeedbackModel(
+                                            id: widget.order.id,
+                                            orderId: widget.order.id,
+                                            email: widget.order.email,
+                                            dateTime: DateTime.now(),
+                                            category:
+                                                selectedValue == activeFeedback
+                                                    ? feedbackTitle
+                                                    : issueTitle,
+                                            description: controller
+                                                .description.text
+                                                .trim()));
+                                    controller.clearControllers();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder(),
+                                ),
+                                child: const Text("Send Feedback"),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ]))),
     );
   }
 }
