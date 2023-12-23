@@ -4,7 +4,6 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/update_grocery_screen.dart';
-import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
 
 class SearchBarSeller extends StatefulWidget {
   const SearchBarSeller({
