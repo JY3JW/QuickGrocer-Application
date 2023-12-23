@@ -51,7 +51,7 @@ class PdfStockReportApi {
           Text(stocksGeneratedDate,
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          Text(report.generatedDate.toString().substring(0, 10)),
+          Text(report.generatedDate.toString().substring(0, 19)),
         ],
       );
 
