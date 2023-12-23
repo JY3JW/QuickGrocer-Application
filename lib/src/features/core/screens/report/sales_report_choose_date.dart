@@ -59,13 +59,14 @@ class _SalesReportChooseDateScreenState
                           if (value == null || value.isEmpty) {
                             return 'Please choose the start duration';
                           } else if (startDate!.isAfter(endDate!) == true) {
-                            return 'Start date must be earlier than end date';
+                            return 'Start duration must be earlier than end duration';
                           }
                           return null;
                         },
                         controller: start,
                         decoration: InputDecoration(
                           labelText: "Start Duration",
+                          prefixIcon: Icon(Icons.date_range_outlined)
                         ),
                         onTap: () async {
                           FocusScope.of(context).requestFocus(new FocusNode());
@@ -89,13 +90,14 @@ class _SalesReportChooseDateScreenState
                           if (value == null || value.isEmpty) {
                             return 'Please choose the end duration';
                           } else if (startDate!.isAfter(endDate!) == true) {
-                            return 'Start date must be earlier than end date';
+                            return 'Start duration must be earlier than end duration';
                           }
                           return null;
                         },
                         controller: end,
                         decoration: InputDecoration(
                           labelText: "End Duration",
+                          prefixIcon: Icon(Icons.date_range_outlined)
                         ),
                         onTap: () async {
                           FocusScope.of(context).requestFocus(new FocusNode());

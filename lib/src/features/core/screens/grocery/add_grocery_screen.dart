@@ -93,7 +93,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () => Get.back(),
+              onPressed: () => {Get.back(), controller.clearControllers()},
               icon: Icon(LineAwesomeIcons.angle_left,
                   color: iconColorWithoutBackground)),
           title: Text(
@@ -113,7 +113,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: id,
+                      controller: _scanBarcodeResult == "" ? controller.id : id,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the grocery id or scan the barcode';
@@ -165,7 +165,7 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                     ),
                     const SizedBox(height: formHeight - 20.0),
                     TextFormField(
-                      controller: url,
+                      controller: imageUrl == "" ? controller.imageUrl : url,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the image URL';
@@ -254,10 +254,14 @@ class _AddGroceryScreenState extends State<AddGroceryScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final groceryData = GroceryModel(
-                              id: id.text.trim(),
+                              id: _scanBarcodeResult == ""
+                                  ? controller.id.text.trim()
+                                  : id.text.trim(),
                               name: controller.name.text.trim(),
                               description: controller.description.text.trim(),
-                              imageUrl: url.text.trim(),
+                              imageUrl: imageUrl == ""
+                                  ? controller.imageUrl.text.trim()
+                                  : url.text.trim(),
                               category: selectedValue!,
                               price: toDouble(controller.price.text.trim()),
                               quantity: toInt(controller.quantity.text.trim()),
