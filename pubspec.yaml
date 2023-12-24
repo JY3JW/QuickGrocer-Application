@@ -67,8 +67,10 @@ dependencies:
   dson: ^2.0.0
   flutter_slidable: ^3.0.1
   pdf: ^3.10.7
-  flutter_stripe: ^10.0.0
+  #payment
+  flutter_stripe: ^10.0.0 
   http: ^1.1.2
+  #
   printing: ^5.11.1
   open_file: ^3.1.0
   path_provider: ^2.1.1
