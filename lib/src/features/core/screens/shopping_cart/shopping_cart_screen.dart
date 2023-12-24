@@ -10,6 +10,7 @@ import 'package:quickgrocer_application/src/features/core/models/cart_item_model
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_screen.dart';
+
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
@@ -103,7 +104,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                           CheckoutScreen(
                                                               cartModel: cart,
                                                               total: cartController
-                                                                  .totalPrice))
+                                                                  .totalPrice,
+                                                                ))
                                                       : () => {},
                                                   style:
                                                       ElevatedButton.styleFrom(
