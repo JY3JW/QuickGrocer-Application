@@ -53,16 +53,19 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
               ),
               Text('Generate Report',
                   style: Theme.of(context).textTheme.titleMedium),
-              SizedBox(height: 50),
+              SizedBox(height: formHeight),
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () =>
                         Get.to(() => SalesReportChooseDateScreen()),
                     child: Text(reportList[0]),
+                    style: ElevatedButton.styleFrom(
+                      shape: StadiumBorder(),
+                    ),
                   )),
               SizedBox(
-                height: formHeight,
+                height: 10,
               ),
               SizedBox(
                   width: double.infinity,
@@ -77,6 +80,9 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
 
                       PdfApi.openFile(pdfFile);
                     },
+                    style: ElevatedButton.styleFrom(
+                      shape: StadiumBorder(),
+                    ),
                     child: Text(reportList[1]),
                   )),
             ])),

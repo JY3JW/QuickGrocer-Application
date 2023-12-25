@@ -76,6 +76,25 @@ class OrderRepository extends GetxController {
     }
   }
 
+  Future<List<OrderModel>> getAllBuyersOrdersAsc() async {
+    try {
+      final snapshot = await _db
+          .collection("orders")
+          .orderBy("dateTime")
+          .get();
+      if (snapshot.docs.isEmpty) {
+        return []; // Return an empty list if there are no documents
+      }
+
+      final orderData =
+          snapshot.docs.map((e) => OrderModel.fromSnapshot(e)).toList();
+      return orderData;
+    } catch (e) {
+      print("Error fetching orders: $e");
+      return []; // Return an empty list in case of an error
+    }
+  }
+
   Future<List<OrderModel>> getAllBuyersOrdersByCategory(String status) async {
     List<OrderModel> allOrderData = await getAllBuyersOrders();
     List<OrderModel> orderData =
@@ -86,6 +105,18 @@ class OrderRepository extends GetxController {
   Future<List<OrderModel>> getAllOrdersBetweenDuration(
       DateTime start, DateTime end) async {
     List<OrderModel> allOrderData = await getAllBuyersOrders();
+    start = start.subtract(Duration(days: 1));
+    end = end.add(Duration(days: 1));
+    List<OrderModel> orderData = allOrderData
+        .where((item) =>
+            (item.dateTime!.isAfter(start) && item.dateTime!.isBefore(end)))
+        .toList();
+    return orderData;
+  }
+
+  Future<List<OrderModel>> getAllOrdersBetweenDurationAsc(
+      DateTime start, DateTime end) async {
+    List<OrderModel> allOrderData = await getAllBuyersOrdersAsc();
     start = start.subtract(Duration(days: 1));
     end = end.add(Duration(days: 1));
     List<OrderModel> orderData = allOrderData

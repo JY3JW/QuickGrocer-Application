@@ -163,6 +163,8 @@ const String report = "Report";
 const String salesReportID = 'Sales Report ID:';
 const String salesGeneratedDate = 'Generated Date: ';
 const String salesReportDate = 'Sales Report Duration:';
+const String sortByDateAsc = 'Sort ascendingly by date';
+const String sortByDateDec = 'Sort descendingly by date';
 
 // Stocks Report Screen
 const String stocksReport = 'Stocks Report';

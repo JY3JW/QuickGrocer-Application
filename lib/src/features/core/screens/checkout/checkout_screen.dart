@@ -9,7 +9,6 @@ import 'package:quickgrocer_application/src/features/core/controllers/order_cont
 import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
-import 'package:quickgrocer_application/src/features/authentication/models/user_model.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_stripe/flutter_stripe.dart';

@@ -21,6 +21,8 @@ class _SalesReportChooseDateScreenState
     extends State<SalesReportChooseDateScreen> {
   DateTime? startDate = DateTime.now();
   DateTime? endDate = DateTime.now();
+  String selectedValue = sortByDateAsc;
+  List<String> dropdownOptions = [sortByDateAsc, sortByDateDec];
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +67,9 @@ class _SalesReportChooseDateScreenState
                         },
                         controller: start,
                         decoration: InputDecoration(
-                          labelText: "Start Duration",
-                          prefixIcon: Icon(Icons.date_range_outlined)
-                        ),
+                            labelText: "Start Duration",
+                            prefixIcon: Icon(Icons.date_range_outlined)),
                         onTap: () async {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-
                           var date = await showDatePicker(
                               context: context,
                               initialDate: startDate,
@@ -84,7 +83,7 @@ class _SalesReportChooseDateScreenState
                           }
                         },
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -96,12 +95,9 @@ class _SalesReportChooseDateScreenState
                         },
                         controller: end,
                         decoration: InputDecoration(
-                          labelText: "End Duration",
-                          prefixIcon: Icon(Icons.date_range_outlined)
-                        ),
+                            labelText: "End Duration",
+                            prefixIcon: Icon(Icons.date_range_outlined)),
                         onTap: () async {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-
                           var date = await showDatePicker(
                               context: context,
                               initialDate: endDate,
@@ -115,6 +111,27 @@ class _SalesReportChooseDateScreenState
                           }
                         },
                       ),
+                      SizedBox(height: 10),
+                      DropdownButtonFormField<String>(
+                        value: selectedValue,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a sorting option';
+                          }
+                          return null;
+                        },
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(16),
+                        items: dropdownOptions.map((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (value) async {
+                          setState(() {
+                            selectedValue = value!;
+                          });
+                        },
+                      ),
                     ],
                   )),
               SizedBox(
@@ -125,8 +142,11 @@ class _SalesReportChooseDateScreenState
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      List<OrderModel> order = await orderController
-                          .getAllOrderBetweenDuration(startDate!, endDate!);
+                      List<OrderModel> order = (selectedValue == sortByDateAsc
+                          ? await orderController.getAllOrderBetweenDurationAsc(
+                              startDate!, endDate!)
+                          : await orderController.getAllOrderBetweenDuration(
+                              startDate!, endDate!));
                       SalesReportModel stockReport = SalesReportModel(
                           reportStartDuration: startDate!,
                           reportEndDuration: endDate!,
@@ -137,6 +157,9 @@ class _SalesReportChooseDateScreenState
                       PdfApi.openFile(pdfFile);
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    shape: StadiumBorder(),
+                  ),
                   child: const Text('Generate Report'),
                 ),
               ),
