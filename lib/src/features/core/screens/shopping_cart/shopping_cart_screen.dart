@@ -86,8 +86,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 '\RM'
@@ -100,38 +99,34 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                               ElevatedButton.icon(
                                                   onPressed: storeStatus ==
                                                               true &&
-                                                          cartItems
-                                                                  .length !=
+                                                          cartItems.length !=
                                                               0 &&
                                                           cartController
                                                                   .totalPrice >=
                                                               2.0
-                                                      ? () => Get.to(() =>
-                                                          CheckoutScreen(
-                                                            cartModel: cart,
-                                                            total: cartController
-                                                                .totalPrice,
-                                                          ))
+                                                      ? () => Get.to(
+                                                          () => CheckoutScreen(
+                                                                cartModel: cart,
+                                                                total: cartController
+                                                                    .totalPrice,
+                                                              ))
                                                       : () => {},
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                    padding: EdgeInsets
-                                                        .symmetric(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
                                                             horizontal: 20),
-                                                    backgroundColor: store
-                                                                .status ==
-                                                            true
-                                                        ? AppColors
-                                                            .mainPineColor
-                                                        : Colors.grey,
-                                                    side: store.status ==
-                                                            true
+                                                    backgroundColor:
+                                                        store.status == true
+                                                            ? AppColors
+                                                                .mainPineColor
+                                                            : Colors.grey,
+                                                    side: store.status == true
                                                         ? BorderSide(
                                                             color: AppColors
                                                                 .mainPineColor)
                                                         : BorderSide(
-                                                            color: Colors
-                                                                .grey),
+                                                            color: Colors.grey),
                                                     foregroundColor:
                                                         Colors.white,
                                                     shape: StadiumBorder(),
@@ -142,8 +137,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                       : Icon(Icons
                                                           .remove_shopping_cart_rounded),
                                                   label: storeStatus == true
-                                                      ? Text(
-                                                          checkoutShoppingCart + ' (>= RM 2.00)')
+                                                      ? Text(cartController
+                                                                  .totalPrice >=
+                                                              2.0
+                                                          ? checkoutShoppingCart
+                                                          : checkoutShoppingCart +
+                                                              ' (Min order RM 2.00)')
                                                       : Text(storeClosed)),
                                             ],
                                           ),
