@@ -97,14 +97,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        try {
-                          await initPayment(
-                              email: FirebaseAuth.instance.currentUser?.email
-                                  as String,
-                              amount: widget.total * 100,
-                              country: 'MY',
-                              context: context);
+                        bool pay = await initPayment(
+                            email: FirebaseAuth.instance.currentUser?.email
+                                as String,
+                            amount: widget.total * 100,
+                            country: 'MY',
+                            context: context);
 
+                        if (pay) {
                           await orderController.createNewOrder(new OrderModel(
                               id: DateTime.now()
                                   .millisecondsSinceEpoch
@@ -117,12 +117,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               status: 'accepted'));
                           Navigator.pop(context);
                           setState(() {});
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('An error occurred'),
-                            ),
-                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -139,7 +133,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 }
 
-Future<void> initPayment(
+Future<bool> initPayment(
     {required String email,
     required double amount,
     required String country,
@@ -187,6 +181,8 @@ Future<void> initPayment(
         content: const Text('Payment is successful'),
       ),
     );
+
+    return true;
   } catch (errorr) {
     if (errorr is StripeException) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -201,5 +197,7 @@ Future<void> initPayment(
         ),
       );
     }
+
+    return false;
   }
 }
