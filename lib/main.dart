@@ -17,8 +17,7 @@ Future<void> main() async {
     Get.put(UserRepository());
     Get.put(CartRepository());
   });
-  
-  WidgetsFlutterBinding.ensureInitialized();
+
   Stripe.publishableKey =
       "pk_live_51OOsGHH2s1vVpFNUw1bqdXg1tuCKZ3dYKG2iKnFW6LGazdEf6Uozt8uw6oj58hR81TFtwXGxdSh1wsivXV3NEqNK00XnFVBs2T";
   Stripe.instance.applySettings();
