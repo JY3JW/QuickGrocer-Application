@@ -97,24 +97,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        await orderController.createNewOrder(new OrderModel(
-                            id: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
-                            cart: widget.cartModel.cart,
-                            email: FirebaseAuth.instance.currentUser?.email
-                                as String,
-                            totalPrice: widget.total,
-                            remarks: orderController.remarks.text.trim(),
-                            status: 'accepted'));
-                        await initPayment(
-                            email: FirebaseAuth.instance.currentUser?.email
-                                as String,
-                            amount: widget.total * 100,
-                            country: 'MY',
-                            context: context);
-                        Navigator.pop(context);
-                        setState(() {});
+                        try {
+                          await initPayment(
+                              email: FirebaseAuth.instance.currentUser?.email
+                                  as String,
+                              amount: widget.total * 100,
+                              country: 'MY',
+                              context: context);
+
+                          await orderController.createNewOrder(new OrderModel(
+                              id: DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString(),
+                              cart: widget.cartModel.cart,
+                              email: FirebaseAuth.instance.currentUser?.email
+                                  as String,
+                              totalPrice: widget.total,
+                              remarks: orderController.remarks.text.trim(),
+                              status: 'accepted'));
+                          Navigator.pop(context);
+                          setState(() {});
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('An error occurred'),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 40),
