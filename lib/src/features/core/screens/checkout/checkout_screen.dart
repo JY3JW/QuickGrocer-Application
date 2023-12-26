@@ -178,7 +178,7 @@ Future<bool> initPayment(
     await Stripe.instance.presentPaymentSheet();
     Get.snackbar(
       "Payment Success",
-      'Order is placed, check at order page',
+      'Order placed, check at Order History',
       backgroundColor: Colors.green.withOpacity(0.1),
       colorText: Colors.green,
     );
