@@ -163,7 +163,7 @@ Future<bool> initPayment(
     await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
       paymentIntentClientSecret: jsonResponse['paymentIntent'],
-      merchantDisplayName: 'Grocery Flutter Course',
+      merchantDisplayName: 'QuickGrocer',
       customerId: jsonResponse['customer'],
       customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
       billingDetails: BillingDetails(
@@ -176,26 +176,20 @@ Future<bool> initPayment(
     ));
 
     await Stripe.instance.presentPaymentSheet();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: const Text('Payment is successful'),
-      ),
+    Get.snackbar(
+      "Payment Success",
+      'Order is placed, check at order page',
+      backgroundColor: Colors.green.withOpacity(0.1),
+      colorText: Colors.green,
     );
 
     return true;
   } catch (errorr) {
     if (errorr is StripeException) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occurred ${errorr.error.localizedMessage}'),
-        ),
-      );
+      Get.snackbar("Payment Failed",
+          'An error occurred ${errorr.error.localizedMessage}');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occurred $errorr'),
-        ),
-      );
+      Get.snackbar("Payment Failed", 'An error occurred $errorr');
     }
 
     return false;

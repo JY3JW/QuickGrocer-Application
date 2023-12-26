@@ -22,7 +22,12 @@ class CartController extends GetxController {
         CartItemModel itemInCart = await getAddedItem(grocery);
         if (await checkQuantity(itemInCart) == true) {
           increaseQuantity(itemInCart);
-          Get.snackbar("Check your cart", "${grocery.name} is already added");
+          Get.snackbar(
+            "Check your cart",
+            "${grocery.name} is already added",
+            backgroundColor: Colors.green.withOpacity(0.1),
+            colorText: Colors.green,
+          );
         } else {
           Get.snackbar("Invalid Operation",
               "Quantity to purchase cannot exceed the quantity of item in stock");
@@ -44,7 +49,12 @@ class CartController extends GetxController {
             }
           ])
         });
-        Get.snackbar("Item added", "${grocery.name} was added to your cart");
+        Get.snackbar(
+          "Item added",
+          "${grocery.name} was added to your cart",
+          backgroundColor: Colors.green.withOpacity(0.1),
+          colorText: Colors.green,
+        );
       }
     } catch (e) {
       Get.snackbar("Error", "Cannot add this item");
