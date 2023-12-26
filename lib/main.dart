@@ -19,7 +19,7 @@ Future<void> main() async {
   });
 
   Stripe.publishableKey =
-      "pk_live_51OOsGHH2s1vVpFNUw1bqdXg1tuCKZ3dYKG2iKnFW6LGazdEf6Uozt8uw6oj58hR81TFtwXGxdSh1wsivXV3NEqNK00XnFVBs2T";
+      "pk_test_51OOsGHH2s1vVpFNUg2iBVoqB8yAXHoFt5BPCErrPb1GkdBz58hGmof0AlfbrhugQ9jcHtrEHu7EvT8bvWqgabBpn00aoukvZe2";
   Stripe.instance.applySettings();
   
   runApp(const MyApp());

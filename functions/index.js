@@ -8,7 +8,7 @@
  */
 
 const functions = require("firebase-functions");
-const stripe = require("stripe")("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");
+const stripe = require("stripe")("sk_test_51OOsGHH2s1vVpFNU5ZFOoA5yPuUdQf3uv4134JZEw4LgRzIK0QPqtw3iizE5WXdss6FBDr86b87sBwNqVGSnjr0e00SzWSzLXe");
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -27,6 +27,18 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
             email: req.body.email,
             limit: 1
         });
+
+        //Checks if the customer exists, if not creates a new customer
+        if(customerList.data.length !== 0) {
+            customerId = customerList.data[0].id;
+        }
+        else {
+            const customer = await stripe.customers.create({
+                email: req.body.email
+            });
+
+            customerId = customer.data.id;
+        }
 
         //Creates a temporary secret key linked with the customer 
         const ephemeralKey = await stripe.ephemeralKeys.create(
