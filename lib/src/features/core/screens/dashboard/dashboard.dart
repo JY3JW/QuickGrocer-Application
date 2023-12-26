@@ -27,7 +27,6 @@ class _DashboardState extends State<Dashboard> {
     ),
     SafeArea(
       child: ProfileScreen(),
-      //child: FeedbackScreen(),
     ),
   ];
 

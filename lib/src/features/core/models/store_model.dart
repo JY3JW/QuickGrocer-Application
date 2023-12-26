@@ -17,7 +17,7 @@ class StoreModel {
     };
   }
   
-  // map user fetched from Firebase to UserModel
+  // map store details fetched from Firebase to StoreModel
   factory StoreModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;

@@ -10,6 +10,7 @@ import 'package:quickgrocer_application/src/features/core/models/cart_item_model
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
 import 'package:quickgrocer_application/src/features/core/models/store_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_screen.dart';
+
 import 'package:quickgrocer_application/src/features/core/screens/shopping_cart/view_grocery_details_from_cart.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
@@ -98,12 +99,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                               ElevatedButton.icon(
                                                   onPressed: storeStatus ==
                                                               true &&
-                                                          cartItems.length != 0
-                                                      ? () => Get.to(() =>
-                                                          CheckoutScreen(
-                                                              cartModel: cart,
-                                                              total: cartController
-                                                                  .totalPrice))
+                                                          cartItems.length !=
+                                                              0 &&
+                                                          cartController
+                                                                  .totalPrice >=
+                                                              2.0
+                                                      ? () => Get.to(
+                                                          () => CheckoutScreen(
+                                                                cartModel: cart,
+                                                                total: cartController
+                                                                    .totalPrice,
+                                                              ))
                                                       : () => {},
                                                   style:
                                                       ElevatedButton.styleFrom(
@@ -131,8 +137,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                       : Icon(Icons
                                                           .remove_shopping_cart_rounded),
                                                   label: storeStatus == true
-                                                      ? Text(
-                                                          checkoutShoppingCart)
+                                                      ? Text(cartController
+                                                                  .totalPrice >=
+                                                              2.0
+                                                          ? checkoutShoppingCart
+                                                          : checkoutShoppingCart +
+                                                              ' (Min order RM 2.00)')
                                                       : Text(storeClosed)),
                                             ],
                                           ),

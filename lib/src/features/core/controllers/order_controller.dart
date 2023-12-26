@@ -34,7 +34,7 @@ class OrderController extends GetxController {
   }
 
   // Fetch all single order details
-  Future<OrderModel> singleOrderDeatails(String orderId) async {
+  Future<OrderModel> singleOrderDetails(String orderId) async {
     final userData = await _orderRepo.getOrderDetailsByOrderId(orderId);
     return userData;
   }
@@ -78,6 +78,16 @@ class OrderController extends GetxController {
 
   Future<List<OrderModel>> allBuyersOrdersCompleted() async {
     final userData = await _orderRepo.getAllBuyersOrdersByCategory('completed');
+    return userData;
+  }
+
+  Future<List<OrderModel>> getAllOrderBetweenDuration(DateTime start, DateTime end) async {
+    final userData = await _orderRepo.getAllOrdersBetweenDuration(start, end);
+    return userData;
+  }
+
+  Future<List<OrderModel>> getAllOrderBetweenDurationAsc(DateTime start, DateTime end) async {
+    final userData = await _orderRepo.getAllOrdersBetweenDurationAsc(start, end);
     return userData;
   }
 

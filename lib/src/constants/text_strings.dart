@@ -1,4 +1,5 @@
 // Welcome Screen Text
+
 const String welcomeTitle = "Grocery Purchase Apps";
 const String welcomeSubtitle =
     "Let's join us to purchase your desired groceries.";
@@ -47,6 +48,11 @@ const String profile = "Profile";
 const String editProfile = "Edit Profile";
 const String logout = "Logout";
 const String deleteAccount = "Delete Account";
+const String support = "Support";
+
+// Support Screen Text
+const String supportScreenTitle = "Contact Us";
+const String supportScreenSubtitle = "Reach us through";
 
 // Manage User Text
 const String manageUser = "Manage User";
@@ -123,6 +129,8 @@ const String storeClosed = "Store Closed";
 
 // Store Model ID
 const String storeId = "ST001";
+const String storeName = "Store Name";
+const String storeAddress = "Store Address";
 
 // View Order Details Screen
 const String viewOrderDetailsTitle = "Order Details";
@@ -144,7 +152,36 @@ const String quantity = "Quantity";
 const String orderItem = "Order Item";
 const String price = "RM";
 
-//Feedback Screen
-const String feedback = "Feedback: ";
-const String passiveFeedback = "I have an issue.";
+// Feedback Screen
+const String feedback = "Feedback";
+const String passiveFeedback = "I have an issue";
 const String activeFeedback = "Do a feedback on my order";
+
+// Sales Report Screen
+const String salesReport = "Sales Report";
+const String report = "Report";
+const String salesReportID = 'Sales Report ID:';
+const String salesGeneratedDate = 'Generated Date: ';
+const String salesReportDate = 'Sales Report Duration:';
+const String sortByDateAsc = 'Sort ascendingly by date';
+const String sortByDateDec = 'Sort descendingly by date';
+
+// Stocks Report Screen
+const String stocksReport = 'Stocks Report';
+const String stocksReportID = 'Stocks Report ID:';
+const String stocksGeneratedDate = 'Generated Date: ';
+
+// Feedback Screen
+const String issueTitle = "Issue";
+const String feedbackTitle = "Feedback";
+const String feedbackDetails = "Feedback Details";
+const String viewFeedbackScreenTitle = "View Feedback";
+const String feedbackId = "Feedback ID: ";
+const String feedbackTime = "Feedback Time";
+const String feedbackCategory = "Feedback Category";
+const String feedbackDescription = "Description: ";
+
+// Report Screen Information
+const String storeAddressInfo =
+    "Kedai Serbanika, Blok M01,\nPejabat Kolej Tun Dr. Ismail (KDTI),\nJalan Resak, Skudai,\n81310 Johor Bahru,\nJohor, Malaysia.";
+const String storeNameInfo = "Kedai Serbanika";

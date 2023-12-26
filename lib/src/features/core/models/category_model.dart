@@ -9,7 +9,7 @@ class CategoryModel{
     required this.imageUrl,
   });
 
-  // map user fetched from Firebase to CategoryModel
+  // map category fetched from Firebase to CategoryModel
   factory CategoryModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;

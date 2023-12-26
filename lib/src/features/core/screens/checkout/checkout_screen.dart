@@ -9,6 +9,10 @@ import 'package:quickgrocer_application/src/features/core/controllers/order_cont
 import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 import 'package:quickgrocer_application/src/features/core/models/cart_model.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen(
@@ -93,18 +97,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        await orderController.createNewOrder(new OrderModel(
-                            id: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
-                            cart: widget.cartModel.cart,
+                        bool pay = await initPayment(
                             email: FirebaseAuth.instance.currentUser?.email
                                 as String,
-                            totalPrice: widget.total,
-                            remarks: orderController.remarks.text.trim(),
-                            status: 'accepted'));
-                        Navigator.pop(context);
-                        setState(() {});
+                            amount: widget.total * 100,
+                            country: 'MY',
+                            context: context);
+
+                        if (pay) {
+                          await orderController.createNewOrder(new OrderModel(
+                              id: DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString(),
+                              cart: widget.cartModel.cart,
+                              email: FirebaseAuth.instance.currentUser?.email
+                                  as String,
+                              totalPrice: widget.total,
+                              remarks: orderController.remarks.text.trim(),
+                              status: 'accepted'));
+                          Navigator.pop(context);
+                          setState(() {});
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 40),
@@ -117,5 +130,74 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     )
                   ]))),
     );
+  }
+}
+
+Future<bool> initPayment(
+    {required String email,
+    required double amount,
+    required String country,
+    required BuildContext context}) async {
+  try {
+    final response = await http.post(
+        Uri.parse(
+            'https://us-central1-appdev-a0da7.cloudfunctions.net/stripePaymentIntentRequest'),
+        body: {
+          'email': email.toString(),
+          'amount': amount.toString(),
+        });
+
+    final jsonResponse = jsonDecode(response.body);
+    log(jsonResponse.toString());
+
+    final billingAddress = country == 'MY'
+        ? Address(
+            city: '',
+            country: 'MY', // Malaysia country code
+            line1: '',
+            line2: '',
+            postalCode: '',
+            state: '')
+        : null;
+
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+      paymentIntentClientSecret: jsonResponse['paymentIntent'],
+      merchantDisplayName: 'Grocery Flutter Course',
+      customerId: jsonResponse['customer'],
+      customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
+      billingDetails: BillingDetails(
+        address: billingAddress,
+      ),
+      //googlePay: const PaymentSheetGooglePay(
+      //  merchantCountryCode: 'MY',
+      //  testEnv: true,
+      //),
+    ));
+
+    await Stripe.instance.presentPaymentSheet();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: const Text('Payment is successful'),
+      ),
+    );
+
+    return true;
+  } catch (errorr) {
+    if (errorr is StripeException) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred ${errorr.error.localizedMessage}'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred $errorr'),
+        ),
+      );
+    }
+
+    return false;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quickgrocer_application/src/constants/colors.dart';
+import 'package:quickgrocer_application/src/features/core/screens/feedback/seller_view_feedback_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/manage_grocery_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/order/manage_order_screen.dart';
 import 'package:quickgrocer_application/src/features/core/screens/profile/seller_profile_screen.dart';
@@ -22,7 +23,7 @@ class _SellerDashboardState extends State<SellerDashboard> {
       child: ManageOrderScreen(),
     ),
     SafeArea(
-      child: Text('ViewSalesReportScreen & ViewFeedback'),
+      child: ViewFeedbackScreen(),
     ),
     SafeArea(
       child: SellerProfileScreen(),
@@ -58,7 +59,7 @@ class _SellerDashboardState extends State<SellerDashboard> {
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.grade),
             icon: Icon(Icons.grade_outlined),
-            label: 'Performance',
+            label: 'Feedback',
             backgroundColor: AppColors.mainPineColor,
           ),
           BottomNavigationBarItem(

@@ -46,6 +46,14 @@ class GroceryRepository extends GetxController {
     return groceryData;
   }
 
+  // Fetch all grocery details
+  Future<List<GroceryModel>> allGroceriesReport() async {
+    final snapshot = await _db.collection("groceries").get();
+    final groceryData =
+        snapshot.docs.map((e) => GroceryModel.fromSnapshot(e)).toList();
+    return groceryData;
+  }
+
   // Fetch all grocery of the chosen category
   Future<List<GroceryModel>> categoryGroceries(String category) async {
     final snapshot = await _db.collection("groceries").orderBy('name').get();

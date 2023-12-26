@@ -53,6 +53,12 @@ class _OrderCardBuyerState extends State<OrderCardBuyer> {
                           "Total: \RM ${widget.order.totalPrice.toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 16, color: Colors.black)),
                       const SizedBox(height: 5),
+                      Text(widget.order.dateTime.toString().substring(0, 19),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 10),
                       Text(widget.order.status.toPascalCase,
                           style: TextStyle(
                               fontSize: 14,

@@ -26,7 +26,7 @@ class FeedbackRepository extends GetxController {
   // Fetch feedback details
   Future<FeedbackModel> getFeedbackDetailsByOrderId(String orderId) async {
     var snapshot =
-        await _db.collection("feedbacks").where("order id", isEqualTo: orderId).get();
+        await _db.collection("feedbacks").where("orderId", isEqualTo: orderId).get();
     final feedbackData =
         snapshot.docs.map((e) => FeedbackModel.fromSnapshot(e)).single;
     return feedbackData;
@@ -35,10 +35,17 @@ class FeedbackRepository extends GetxController {
   Future<List<FeedbackModel>> getAllBuyersFeedbacks() async {
     var snapshot = await _db
         .collection("feedbacks")
-        .orderBy('date time', descending: true)
+        .orderBy('dateTime', descending: true)
         .get();
     final feedbackData =
         snapshot.docs.map((e) => FeedbackModel.fromSnapshot(e)).toList();
+    return feedbackData;
+  }
+
+  Future<List<FeedbackModel>> getAllBuyersFeedbacksByCategory(String category) async {
+    List<FeedbackModel> allFeedbackData = await getAllBuyersFeedbacks();
+    List<FeedbackModel> feedbackData =
+        allFeedbackData.where((item) => item.category == (category)).toList();
     return feedbackData;
   }
 }

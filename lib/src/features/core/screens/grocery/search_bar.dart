@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:quickgrocer_application/src/features/core/models/grocery_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/grocery_card_buyer.dart';
 import 'package:quickgrocer_application/src/features/core/screens/grocery/view_grocery_details.dart';
@@ -47,8 +49,15 @@ class _SearchBarAppState extends State<SearchBarApp> {
 
   @override
   Widget build(BuildContext context) {
+    var iconColorWithoutBackground =
+        Get.isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(LineAwesomeIcons.angle_left,
+                color: iconColorWithoutBackground)),
         centerTitle: true,
         title: isSearchClicked
             ? Container(
@@ -75,21 +84,15 @@ class _SearchBarAppState extends State<SearchBarApp> {
                   if (isSearchClicked) {
                     _searchController.clear();
                     myFilterItems();
+                  } else {
+                    searchText = '';
+                    myFilterItems();
                   }
                 });
               },
               icon: Icon(isSearchClicked ? Icons.close : Icons.search))
         ],
       ),
-      //body
-      /*body: ListView.builder(
-          itemCount: filteredItems.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(''),
-            );
-          }),*/
-      //body
       body: RefreshIndicator(
           onRefresh: () async {
             setState(() {});
