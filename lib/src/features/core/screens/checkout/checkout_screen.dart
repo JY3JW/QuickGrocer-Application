@@ -116,7 +116,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               remarks: orderController.remarks.text.trim(),
                               status: 'accepted'));
                           Navigator.pop(context);
-                          setState(() {});
                         }
                       },
                       style: ElevatedButton.styleFrom(
