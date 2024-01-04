@@ -8,9 +8,51 @@ import 'package:quickgrocer_application/src/constants/sizes.dart';
 import 'package:quickgrocer_application/src/constants/text_strings.dart';
 import 'package:quickgrocer_application/src/features/core/controllers/support_controller.dart';
 import 'package:quickgrocer_application/src/features/core/models/support_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
+
+  void launchMap() async {
+    String query = Uri.encodeComponent(
+        "Blok M01, Pejabat Kolej Tun Dr Ismail (KTDI), Jalan Resak, Skudai, 81310 Johor Bahru, Johor");
+    Uri googleUrl =
+        Uri.parse("https://www.google.com/maps/search/?api=1&query=$query");
+
+    if (await canLaunchUrl(googleUrl)) {
+      await launchUrl(googleUrl);
+    } else {
+      throw 'Could not launch ${googleUrl.toString()}';
+    }
+  }
+
+  void launchEmail(String email) async {
+    Uri gmailUrl = Uri(
+      scheme: 'mailto',
+      path: email,
+      queryParameters: {'subject': "SubjectHere", 'body': "TellUsHere"},
+    );
+
+    if (await canLaunchUrl(gmailUrl)) {
+      await launchUrl(gmailUrl);
+    } else {
+      throw 'Could not email ${gmailUrl.toString()}';
+    }
+  }
+
+  void launchPhone(String phone) async {
+    Uri phoneUrl = Uri(
+      scheme: 'tel',
+      path: phone,
+    );
+    ;
+
+    if (await canLaunchUrl(phoneUrl)) {
+      await launchUrl(phoneUrl);
+    } else {
+      throw 'Could not call ${phoneUrl.toString()}';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +89,16 @@ class SupportScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: defaultSize),
+              GestureDetector(
+                onTap: () async {
+                  launchMap();
+                },
+                child: supportCard(
+                    iconColor: iconColor,
+                    icon: Icons.store,
+                    label: 'Kedai Serbanika M01'),
+              ),
+              const SizedBox(height: 10),
               Container(
                 height: MediaQuery.of(context).size.height / 2,
                 child: FutureBuilder(
@@ -62,12 +114,21 @@ class SupportScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  supportCard(
-                                      iconColor: iconColor,
-                                      icon: support[index].mode == 'email'
-                                          ? Icons.email_outlined
-                                          : Icons.support_agent_outlined,
-                                      label: support[index].contact),
+                                  GestureDetector(
+                                    onTap: support[index].mode == 'email'
+                                        ? () async {
+                                            launchEmail(support[index].contact);
+                                          }
+                                        : () async {
+                                            launchPhone(support[index].contact);
+                                          },
+                                    child: supportCard(
+                                        iconColor: iconColor,
+                                        icon: support[index].mode == 'email'
+                                            ? Icons.email_outlined
+                                            : Icons.support_agent_outlined,
+                                        label: support[index].contact),
+                                  ),
                                   const SizedBox(height: 10),
                                 ],
                               );

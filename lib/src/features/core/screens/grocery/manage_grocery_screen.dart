@@ -102,7 +102,7 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                       }
                     }),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 5),
               Expanded(
                 child: FutureBuilder(
                     future: isSelected == 0
@@ -113,8 +113,19 @@ class _ManageGroceryScreenState extends State<ManageGroceryScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           grocery = snapshot.data as List<GroceryModel>;
-                          return SizedBox(
-                              height: 500, child: _buildAllGroceries(grocery));
+                          return Column(
+                            children: [
+                              Text(
+                                'Total groceries: ' +
+                                    grocery.length.toString(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              SizedBox(height: 5),
+                              SizedBox(
+                                  height: 500,
+                                  child: _buildAllGroceries(grocery)),
+                            ],
+                          );
                         } else if (snapshot.hasError) {
                           return Center(child: Text(snapshot.error.toString()));
                         } else {

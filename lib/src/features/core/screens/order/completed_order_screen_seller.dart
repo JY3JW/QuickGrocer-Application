@@ -12,7 +12,8 @@ class CompletedOrderScreenSeller extends StatefulWidget {
       _CompletedOrderScreenSellerState();
 }
 
-class _CompletedOrderScreenSellerState extends State<CompletedOrderScreenSeller> {
+class _CompletedOrderScreenSellerState
+    extends State<CompletedOrderScreenSeller> {
   @override
   Widget build(BuildContext context) {
     final orderController = Get.put(OrderController());
@@ -25,36 +26,39 @@ class _CompletedOrderScreenSellerState extends State<CompletedOrderScreenSeller>
       },
       child: Container(
         margin: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              child: FutureBuilder(
-                  future: orderController.allBuyersOrdersCompleted(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        List<OrderModel> orders =
-                            snapshot.data as List<OrderModel>;
-                        return Expanded(
-                            child: ListView.builder(
-                              itemCount: orders.length,
-                              itemBuilder: (context, index) {
-                                return OrderCard(order: orders[index]);
-                              },
-                            ));
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
-                      } else {
-                        return const Center(
-                            child: Text("Something went wrong"));
-                      }
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
-          ],
-        ),
+        child: FutureBuilder(
+            future: orderController.allBuyersOrdersCompleted(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  List<OrderModel> orders = snapshot.data as List<OrderModel>;
+                  return Column(
+                    children: [
+                      Text(
+                        'Total completed order(s): ' + orders.length.toString(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 8.25 / 12,
+                        child: ListView.builder(
+                          itemCount: orders.length,
+                          itemBuilder: (context, index) {
+                            return OrderCard(order: orders[index]);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                } else {
+                  return const Center(child: Text("Something went wrong"));
+                }
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
       ),
     ));
   }

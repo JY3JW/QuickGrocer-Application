@@ -10,6 +10,7 @@ import 'package:quickgrocer_application/src/features/core/models/feedback_model.
 import 'package:quickgrocer_application/src/features/core/models/order_model.dart';
 import 'package:quickgrocer_application/src/features/core/screens/checkout/checkout_card.dart';
 import 'package:quickgrocer_application/src/features/core/screens/feedback/make_feedback_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewOrderDetailsBuyerScreen extends StatefulWidget {
   const ViewOrderDetailsBuyerScreen({
@@ -26,6 +27,19 @@ class ViewOrderDetailsBuyerScreen extends StatefulWidget {
 
 class _ViewOrderDetailsBuyerScreenState
     extends State<ViewOrderDetailsBuyerScreen> {
+  void launchMap() async {
+    String query = Uri.encodeComponent(
+        "Blok M01, Pejabat Kolej Tun Dr Ismail (KTDI), Jalan Resak, Skudai, 81310 Johor Bahru, Johor");
+    Uri googleUrl =
+        Uri.parse("https://www.google.com/maps/search/?api=1&query=$query");
+
+    if (await canLaunchUrl(googleUrl)) {
+      await launchUrl(googleUrl);
+    } else {
+      throw 'Could not launch ${googleUrl.toString()}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var iconColorWithoutBackground =
@@ -275,7 +289,11 @@ class _ViewOrderDetailsBuyerScreenState
                                                                       .order)),
                                                     )
                                                   }
-                                              : () => Get.back(),
+                                              : widget.order.status == 'ready'
+                                                  ? () {
+                                                      launchMap();
+                                                    }
+                                                  : () => Get.back(),
                                       style: ElevatedButton.styleFrom(
                                           padding: EdgeInsets.all(buttonHeight),
                                           backgroundColor:
@@ -286,10 +304,15 @@ class _ViewOrderDetailsBuyerScreenState
                                           shape: StadiumBorder()),
                                       icon: widget.order.status == 'completed'
                                           ? Icon(Icons.star_rate_rounded)
-                                          : Icon(LineAwesomeIcons.angle_left),
+                                          : widget.order.status == 'ready'
+                                              ? Icon(Icons.shopping_bag_outlined)
+                                              : Icon(
+                                                  LineAwesomeIcons.angle_left),
                                       label: widget.order.status == 'completed'
                                           ? Text('Rate')
-                                          : Text('Return'),
+                                          : widget.order.status == 'ready'
+                                              ? Text('Pick Up At')
+                                              : Text('Return'),
                                     ),
                                   ),
                                 ],

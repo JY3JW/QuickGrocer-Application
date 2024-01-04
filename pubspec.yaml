@@ -72,6 +72,7 @@ dependencies:
   flutter_stripe: ^10.0.0
   http: ^1.1.2
   open_file_plus: ^3.4.1
+  url_launcher: ^6.2.2
 
 dev_dependencies:
   flutter_test:
