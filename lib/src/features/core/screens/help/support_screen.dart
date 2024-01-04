@@ -96,7 +96,7 @@ class SupportScreen extends StatelessWidget {
                 child: supportCard(
                     iconColor: iconColor,
                     icon: Icons.store,
-                    label: 'Kedai Serbanika M01'),
+                    label: 'Kedai Serbaneka M01'),
               ),
               const SizedBox(height: 10),
               Container(
